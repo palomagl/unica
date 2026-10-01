@@ -7,10 +7,26 @@ export const CONTACT = {
   instagram: '',
 }
 
-// TODO: vídeo do hero (8–10 s, loop, sem áudio). Coloque em /public e aponte aqui, ex.: '/hero.mp4'.
-// Enquanto for null, a página mostra a animação em SVG.
-export const HERO_VIDEO: string | null = null
-export const HERO_POSTER: string | undefined = undefined
+/**
+ * Vídeo do hero (8–10 s, loop, sem áudio). Quando os arquivos existirem, coloque-os em /public/video
+ * e preencha abaixo; enquanto `HERO_MEDIA` for null, a página mostra uma animação em SVG.
+ *
+ *  - Formatos: informe `webm` (menor) e/ou `mp4` (H.264, compatível com tudo). Se houver os dois, o navegador escolhe.
+ *  - `mobile` é opcional: versão/recorte próprio para o celular (ex.: vertical 4:5). Sem ele, usa o `desktop`.
+ *  - `poster`: imagem mostrada antes do vídeo carregar, com "reduzir movimento" ativado, em economia de dados
+ *    ou se o vídeo falhar.
+ *  - Peso: mire em até ~1,5 MB no celular e ~3 MB no desktop. O vídeo toca mudo, em loop, e pausa fora da tela.
+ *
+ * Exemplo:
+ *   export const HERO_MEDIA: HeroMedia | null = {
+ *     poster: '/video/hero-poster.jpg',
+ *     desktop: { webm: '/video/hero.webm', mp4: '/video/hero.mp4' },
+ *     mobile: { webm: '/video/hero-m.webm', mp4: '/video/hero-m.mp4' },
+ *   }
+ */
+export type VideoSources = { mp4?: string; webm?: string }
+export type HeroMedia = { poster?: string; desktop?: VideoSources; mobile?: VideoSources }
+export const HERO_MEDIA: HeroMedia | null = null
 
 // TODO: foto profissional (ex.: '/paloma.jpg'). null = espaço reservado.
 export const ABOUT_PHOTO: string | null = null
@@ -63,8 +79,8 @@ export const SERVICES: Service[] = [
     name: 'Web App',
     from: 1999,
     what: 'Uma aplicação que funciona no celular e pode ser adicionada à tela inicial.',
-    cta: 'Web App ou Aplicativo?',
-    href: '#diferenca',
+    cta: 'Quero um',
+    href: whatsappLink('Olá! Quero um orçamento de Web App.'),
     installments: null,
   },
   {
@@ -72,8 +88,8 @@ export const SERVICES: Service[] = [
     name: 'Aplicativo',
     from: 3999,
     what: 'Aplicativo desenvolvido para publicação em lojas como Google Play.',
-    cta: 'Web App ou Aplicativo?',
-    href: '#diferenca',
+    cta: 'Quero um',
+    href: whatsappLink('Olá! Quero um orçamento de Aplicativo.'),
     installments: null,
   },
   {

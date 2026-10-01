@@ -5,11 +5,14 @@ import { Parallax } from './Parallax'
 import { QUOTE_LINK, SERVICES } from '../content'
 import { cssVars } from '../fx'
 
-/** Mobile primeiro: logo, frase, texto, CTA e o recorte do vídeo cabem na primeira tela. */
+/**
+ * Mobile: logo → frase → texto → CTA, e logo abaixo o vídeo em largura total.
+ * Desktop: texto à esquerda, vídeo à direita, numa tela só.
+ */
 export function Hero() {
   return (
     <section id="top" data-tone="dark" className="relative overflow-hidden bg-ink text-paper">
-      <div className="mx-auto grid min-h-[100svh] max-w-[1400px] grid-cols-1 content-center gap-7 px-5 pb-8 pt-24 md:grid-cols-12 md:items-center md:gap-8 md:px-10 md:pb-14 md:pt-28">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-1 content-start gap-9 px-5 pb-0 pt-24 md:min-h-[100svh] md:grid-cols-12 md:content-center md:items-center md:gap-8 md:px-10 md:pb-14 md:pt-28">
         <div className="md:col-span-6">
           <Parallax speed={-0.05}>
             <Logo tone="dark" className="hero-logo -ml-[1%] w-[62%] max-w-[560px] md:w-full" />
@@ -29,10 +32,9 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="fade-in md:col-span-6" style={cssVars({ '--d': '2.1s' })}>
-          <Parallax speed={0.06}>
-            <HeroVisual />
-          </Parallax>
+        {/* No celular o vídeo sangra até as bordas da tela (anula o padding de 1.25rem). */}
+        <div className="fade-in -mx-5 md:col-span-6 md:mx-0" style={cssVars({ '--d': '2.1s' })}>
+          <HeroVisual />
         </div>
       </div>
 
