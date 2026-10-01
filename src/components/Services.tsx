@@ -1,38 +1,10 @@
 import { useState, type MouseEvent } from 'react'
 import { SERVICES, IDEA_LINK, formatFrom } from '../content'
 import { CtaStrip } from './CtaStrip'
-import { Reveal } from './Reveal'
 import { ServicePreview } from './ServicePreview'
 import { Words } from './Words'
 
 const isExternal = (h: string) => h.startsWith('http')
-const byId = (id: string) => SERVICES.find((s) => s.id === id)!
-
-/** Web App × Aplicativo: dois blocos lado a lado, sem linguagem técnica. */
-function Compare() {
-  const items = [
-    { s: byId('webapp'), line: 'Funciona pelo navegador e pode ser adicionado à tela inicial do celular.', dark: false },
-    { s: byId('app'), line: 'Desenvolvido para publicação em lojas como Google Play.', dark: true },
-  ]
-  return (
-    <div id="diferenca" className="mt-16 scroll-mt-20 md:mt-28">
-      <p className="label mb-5 text-ash">Web App ou Aplicativo?</p>
-      <div className="grid grid-cols-2 gap-3 md:gap-6">
-        {items.map(({ s, line, dark }, i) => (
-          <Reveal key={s.id} delay={i * 80}>
-            <div className={`flex h-56 items-center justify-center overflow-hidden md:h-80 ${dark ? 'bg-ink' : 'bg-ink'}`}>
-              <div className="origin-center scale-[0.72] md:scale-[0.95]"><ServicePreview id={s.id} /></div>
-            </div>
-            <h3 className="mt-4 font-display text-3xl leading-none md:text-5xl">{s.name}</h3>
-            <p className="mt-1 font-display text-xl text-signal md:text-3xl">{formatFrom(s.from)}+</p>
-            <p className="mt-3 text-sm leading-relaxed text-ink/75 md:max-w-xs md:text-base">{line}</p>
-          </Reveal>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 /**
  * Lista editorial. Desktop: passar o mouse destaca o item, apaga os outros e
  * troca o painel (mockup, descrição, preço). Mobile: lista compacta; tocar expande.
@@ -162,9 +134,7 @@ export function Services() {
           Valores iniciais. O investimento final depende da estrutura e funcionalidades.
         </p>
 
-        <Compare />
-
-        <div className="mt-16 md:mt-28">
+        <div className="mt-20 md:mt-28">
           <CtaStrip lead="Me conte o que você precisa." label="Não sei qual escolher" href={IDEA_LINK} />
         </div>
       </div>
