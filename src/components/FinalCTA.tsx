@@ -3,14 +3,18 @@ import { Btn } from './Btn'
 import { Logo } from './Logo'
 import { Reveal } from './Reveal'
 import { Words } from './Words'
+import { Decode } from './Decode'
+import { useScrollVar } from '../fx'
 
 export function FinalCTA() {
+  const ref = useScrollVar<HTMLElement>(0.95, 0.75)
   return (
-    <footer id="contato" data-tone="dark" className="overflow-hidden bg-ink text-paper">
+    <footer ref={ref} id="contato" data-tone="dark" className="overflow-hidden bg-ink text-paper">
       <div className="mx-auto max-w-[1400px] px-5 pt-20 md:px-10 md:pt-36">
-        <Reveal className="text-center">
+        <Decode text="04 / Contato" as="p" className="label mb-6 text-center text-ash" />
+        <div className="text-center" style={{ transform: 'scale(calc(0.8 + 0.2 * var(--p, 1)))', opacity: 'calc(0.3 + 0.7 * var(--p, 1))', transformOrigin: '50% 60%' }}>
           <Logo tone="dark" className="mx-auto w-[88%] max-w-[900px]" />
-        </Reveal>
+        </div>
         <div className="mt-10 text-center md:mt-20">
           <Words text="Tem uma ideia?" className="font-display text-4xl leading-tight md:text-7xl" />
           <Reveal delay={200}>

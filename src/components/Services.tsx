@@ -3,6 +3,8 @@ import { SERVICES, IDEA_LINK, formatFrom } from '../content'
 import { CtaStrip } from './CtaStrip'
 import { ServicePreview } from './ServicePreview'
 import { Words } from './Words'
+import { Decode } from './Decode'
+import { Count } from './Count'
 
 const isExternal = (h: string) => h.startsWith('http')
 /**
@@ -29,6 +31,7 @@ export function Services() {
     <section id="servicos" data-tone="light" className="bg-paper">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-40">
         <div className="mb-10 md:mb-20">
+          <Decode text="01 / Serviços" as="p" className="label mb-4 text-ash" />
           <Words text="O que você quer *criar?*" className="font-display text-[clamp(3rem,8vw,7.5rem)] leading-[0.95]" />
         </div>
 
@@ -54,7 +57,7 @@ export function Services() {
                     <h3 className={`font-display text-5xl leading-none transition-transform duration-500 ease-out lg:text-7xl ${focused && isActive ? 'translate-x-3' : ''}`}>
                       {sv.name}
                     </h3>
-                    <span className="font-display text-2xl tabular-nums lg:text-3xl">{formatFrom(sv.from)}+</span>
+                    <span className="font-display text-2xl tabular-nums lg:text-3xl"><Count value={sv.from} /></span>
                   </a>
 
                   {/* Mobile: linha compacta, toque expande */}
@@ -65,7 +68,7 @@ export function Services() {
                     className="grid min-h-16 w-full grid-cols-[1fr_auto_1.25rem] items-center gap-x-3 py-4 text-left md:hidden"
                   >
                     <h3 className="font-display text-[1.9rem] leading-none">{sv.name}</h3>
-                    <span className="font-display text-xl tabular-nums">{formatFrom(sv.from)}+</span>
+                    <span className="font-display text-xl tabular-nums"><Count value={sv.from} /></span>
                     <span className={`label text-center text-base transition-transform duration-300 ${mobileOpen ? 'rotate-45' : ''}`} aria-hidden>+</span>
                   </button>
                   <div className={`grid transition-[grid-template-rows] duration-500 ease-out md:hidden ${mobileOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
@@ -135,7 +138,7 @@ export function Services() {
         </p>
 
         <div className="mt-20 md:mt-28">
-          <CtaStrip lead="Me conte o que você precisa." label="Não sei qual escolher" href={IDEA_LINK} />
+          <CtaStrip lead="Conte o que você precisa." label="Não sei qual escolher" href={IDEA_LINK} />
         </div>
       </div>
     </section>
