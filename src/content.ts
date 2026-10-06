@@ -7,30 +7,6 @@ export const CONTACT = {
   instagram: '',
 }
 
-/**
- * Vídeo do hero (8–10 s, loop, sem áudio). Quando os arquivos existirem, coloque-os em /public/video
- * e preencha abaixo; enquanto `HERO_MEDIA` for null, a página mostra uma animação em SVG.
- *
- *  - Formatos: informe `webm` (menor) e/ou `mp4` (H.264, compatível com tudo). Se houver os dois, o navegador escolhe.
- *  - `mobile` é opcional: versão/recorte próprio para o celular (ex.: vertical 4:5). Sem ele, usa o `desktop`.
- *  - `poster`: imagem mostrada antes do vídeo carregar, com "reduzir movimento" ativado, em economia de dados
- *    ou se o vídeo falhar.
- *  - Peso: mire em até ~1,5 MB no celular e ~3 MB no desktop. O vídeo toca mudo, em loop, e pausa fora da tela.
- *
- * Exemplo:
- *   export const HERO_MEDIA: HeroMedia | null = {
- *     poster: '/video/hero-poster.jpg',
- *     desktop: { webm: '/video/hero.webm', mp4: '/video/hero.mp4' },
- *     mobile: { webm: '/video/hero-m.webm', mp4: '/video/hero-m.mp4' },
- *   }
- */
-export type VideoSources = { mp4?: string; webm?: string }
-export type HeroMedia = { poster?: string; desktop?: VideoSources; mobile?: VideoSources }
-export const HERO_MEDIA: HeroMedia | null = null
-
-// TODO: foto profissional (ex.: '/paloma.jpg'). null = espaço reservado.
-export const ABOUT_PHOTO: string | null = null
-
 export const whatsappLink = (msg: string) =>
   `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(msg)}`
 
@@ -123,24 +99,20 @@ export type Project = {
   desc: string
   url: string
   bg: string // imagem minúscula, ampliada = fundo desfocado (atmosfera)
-  devices: Device[] // composição larga (desktop, capa 16:10)
-  devicesTall: Device[] // composição vertical (celular, capa 4:5 = altura 125cqw)
-  tone: string // cor de fundo da cena no palco (desktop)
+  year: string
+  theme: { bg: string; fg: string; acc: string; tone: 'light' | 'dark' } // "mundo de cor" do projeto na seção
+  devices: Device[] // composição de aparelhos da capa (16:10)
 }
 
 export const PROJECTS: Project[] = [
   {
     name: 'DOE+ RS',
     kind: 'Aplicativo',
+    year: '2026',
+    theme: { bg: '#c31f27', fg: '#f7ede7', acc: '#ffd9c9', tone: 'dark' },
     desc: 'Aplicativo digital de apoio à doação de sangue.',
     url: 'https://doe-mais-rs.vercel.app/',
     bg: '/projects/doe-bg.jpg',
-    tone: '#140a0a',
-    devicesTall: [
-      { kind: 'phone', src: '/projects/doe-login.webp', x: -9, y: 30, w: 38 },
-      { kind: 'phone', src: '/projects/doe-locais.webp', x: 71, y: 30, w: 38 },
-      { kind: 'phone', src: '/projects/doe-home.webp', x: 23, y: 5, w: 54, z: 2 },
-    ],
     devices: [
       { kind: 'phone', src: '/projects/doe-login.webp', x: 13, y: 13, w: 21 },
       { kind: 'phone', src: '/projects/doe-locais.webp', x: 66, y: 13, w: 21 },
@@ -149,15 +121,12 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Bruto',
-    kind: 'Hamburgueria',
+    kind: 'Site',
+    year: '2026',
+    theme: { bg: '#17110d', fg: '#f1eee7', acc: '#ff4b1f', tone: 'dark' },
     desc: 'Experiência digital para uma hamburgueria.',
     url: 'https://borapedir-delivery.vercel.app/bruto',
     bg: '/projects/bruto-bg.jpg',
-    tone: '#100c09',
-    devicesTall: [
-      { kind: 'monitor', src: '/projects/bruto-desktop.webp', x: 2, y: 6, w: 96 },
-      { kind: 'phone', src: '/projects/bruto-mobile.webp', x: 52, y: 26, w: 44, z: 2 },
-    ],
     devices: [
       { kind: 'monitor', src: '/projects/bruto-desktop.webp', x: 7, y: 7, w: 72 },
       { kind: 'phone', src: '/projects/bruto-mobile.webp', x: 71, y: 14, w: 21, z: 2 },
@@ -165,15 +134,12 @@ export const PROJECTS: Project[] = [
   },
   {
     name: 'Marmoraria',
-    kind: 'Marmoraria',
+    kind: 'Web App',
+    year: '2026',
+    theme: { bg: '#d8d2c6', fg: '#0b0b0b', acc: '#ff4b1f', tone: 'light' },
     desc: 'Presença digital para uma empresa de marmoraria.',
     url: 'https://vertice-marmores.vercel.app/',
     bg: '/projects/marm-bg.jpg',
-    tone: '#0b0e0c',
-    devicesTall: [
-      { kind: 'monitor', src: '/projects/marm-hero.jpg', x: 2, y: 8, w: 96 },
-      { kind: 'window', src: '/projects/marm-ilha.jpg', x: 30, y: 52, w: 66, z: 2 },
-    ],
     devices: [
       { kind: 'monitor', src: '/projects/marm-hero.jpg', x: 8, y: 6, w: 74 },
       { kind: 'window', src: '/projects/marm-ilha.jpg', x: 59, y: 34, w: 36, z: 2 },
