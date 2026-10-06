@@ -1,133 +1,178 @@
-import { useEffect, useRef } from 'react'
-import { BALY_URL, PROJECTS, QUOTE_LINK, projectLink, type Project } from '../content'
+import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
+import { BALY_URL, PROJECTS, QUOTE_LINK } from '../content'
 import { Btn } from './Btn'
 import { Cover } from './Cover'
-import { CtaStrip } from './CtaStrip'
-import { prefersReducedMotion, subscribe, useMediaQuery } from '../fx'
+import { Decode } from './Decode'
+import { Words } from './Words'
+import { prefersReducedMotion, subscribe } from '../fx'
+import { useReveal } from '../useReveal'
 
 const N = PROJECTS.length
 const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n))
-const ease = (t: number) => t * t * (3 - 2 * t)
+const pad = (n: number) => String(n).padStart(2, '0')
 
-// Logo (920×370) e o ponto dentro das letras (perna do "A") para onde o zoom "entra".
-const LOGO = { w: 920, h: 370 }
-const ANCHOR = { x: 785, y: 229, r: 26.2 } // r = raio do maior círculo cabendo na letra
+/** Uma linha da lista: número, nome, descrição, categoria · ano e seta. As linhas se desenham ao entrar. */
+function Row({ i, active, onActivate, onRelease }: { i: number; active: boolean; onActivate: () => void; onRelease: () => void }) {
+  const p = PROJECTS[i]
+  const ref = useReveal<HTMLLIElement>()
 
-/**
- * Uma cena de tela cheia por projeto. A página rola normalmente: cada cena fica "presa" por um trecho
- * e o aparelho sobe de baixo. A primeira abre com tela preta e o ÚNICA gigante, que se expande
- * (zoom para dentro da letra) e revela o projeto.
- */
-function Scene({ p, i }: { p: Project; i: number }) {
-  const root = useRef<HTMLDivElement>(null)
-  const knock = useRef<HTMLDivElement>(null)
-  const first = i === 0
-  const mobile = useMediaQuery('(max-width: 767px)')
-
-  useEffect(() => {
-    const el = root.current
-    const stage = el?.firstElementChild as HTMLElement | null
-    if (!el || !stage) return
-    const kn = knock.current
-    if (prefersReducedMotion()) {
-      el.style.setProperty('--a', '1')
-      el.style.setProperty('--t', '1')
-      el.style.setProperty('--ko', '0')
-      if (kn) kn.style.display = 'none'
-      return
-    }
-    return subscribe(() => {
-      const r = el.getBoundingClientRect()
-      const vh = stage.offsetHeight
-      const vw = innerWidth
-      if (r.bottom < -50 || r.top > vh + 50) return
-      const pin = Math.max(1, el.offsetHeight - vh)
-      const entering = clamp((vh - r.top) / vh)
-      const prog = clamp(-r.top / pin)
-      let a = entering
-      let t = clamp((entering - 0.35) / 0.5)
-
-      if (first) {
-        const k = clamp(prog / 0.55) // fase de expansão do ÚNICA
-        const e = ease(k)
-        a = e
-        t = clamp((k - 0.6) / 0.4)
-        el.style.setProperty('--ko', (1 - clamp(k * 2.4)).toFixed(3))
-        if (kn) {
-          if (e >= 1) {
-            kn.style.visibility = 'hidden'
-          } else {
-            kn.style.visibility = 'visible'
-            const w0 = Math.min(vw * 0.86, 1100)
-            const wEnd = (Math.hypot(vw, vh) * 0.53 * LOGO.w) / ANCHOR.r // largura em que a letra cobre a tela
-            const w = w0 * Math.pow(wEnd / w0, e) // zoom exponencial = sensação constante
-            const s = w / LOGO.w
-            const ax = LOGO.w / 2 + (ANCHOR.x - LOGO.w / 2) * e // o foco migra do centro do logo para dentro da letra
-            const ay = LOGO.h / 2 + (ANCHOR.y - LOGO.h / 2) * e
-            kn.style.setProperty('--mw', `${w.toFixed(1)}px`)
-            kn.style.setProperty('--ml', `${(vw / 2 - ax * s).toFixed(1)}px`)
-            kn.style.setProperty('--mt', `${(vh / 2 - ay * s).toFixed(1)}px`)
-          }
-        }
-      }
-      el.style.setProperty('--a', a.toFixed(3))
-      el.style.setProperty('--t', t.toFixed(3))
-      el.style.setProperty('--p', prog.toFixed(3))
-    })
-  }, [first])
+  // Sem hover (toque): o 1º toque mostra o preview, o 2º abre o projeto.
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (matchMedia('(hover: hover)').matches || active) return
+    e.preventDefault()
+    onActivate()
+  }
 
   return (
-    <div ref={root} className="sc" style={{ height: first ? '240svh' : '150svh' }}>
-      <div className="sc-stage" style={{ background: p.tone }}>
-        <img className="sc-bg" src={p.bg} alt="" aria-hidden decoding="async" draggable={false} />
-
-        <div className="sc-body">
-          <div className="sc-text">
-            <p className="label text-ash">0{i + 1} / 0{N} — {p.kind}</p>
-            <h3 className="sc-name">{p.name}</h3>
-            <p className="sc-desc">{p.desc}</p>
-            <div className="sc-cta">
-              <Btn href={p.url} variant="signal-on-dark">Ver projeto</Btn>
-              <a href={projectLink(p)} target="_blank" rel="noreferrer" className="ulink text-sm font-medium">Quero algo assim →</a>
-            </div>
-          </div>
-
-          <a href={p.url} target="_blank" rel="noreferrer" aria-label={`Abrir ${p.name}`} data-cursor="Ver projeto" className="sc-dev">
-            <Cover p={p} bare tall={mobile} eager={first} className="sc-cover" />
-          </a>
-        </div>
-
-        {first && (
-          <>
-            <div ref={knock} className="knock" aria-hidden />
-            <div className="knock-text">
-              <p className="label text-ash">Projetos</p>
-              <p className="font-display text-[clamp(1.7rem,3.4vw,3rem)] leading-tight">
-                Algumas coisas que já ganharam <em className="text-signal">forma.</em>
-              </p>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+    <li ref={ref} className="pj-row" data-active={active} style={{ ['--d' as string]: `${i * 120}ms` }}>
+      <span className="pj-rule" aria-hidden />
+      <a
+        href={p.url}
+        target="_blank"
+        rel="noreferrer"
+        data-cursor="Ver projeto"
+        aria-label={`${p.name} — ${p.kind}, ${p.year}. Abrir projeto`}
+        onMouseEnter={onActivate}
+        onMouseLeave={onRelease}
+        onFocus={onActivate}
+        onBlur={onRelease}
+        onClick={onClick}
+        className="pj-link"
+      >
+        <span className="pj-num pj-in">{pad(i + 1)}</span>
+        <span className="pj-name pj-in">{p.name}</span>
+        <span className="pj-meta pj-in">
+          <span className="pj-meta-in">
+            <span className="pj-desc">{p.desc}</span>
+            <span className="label pj-tag">{p.kind} · {p.year}</span>
+          </span>
+        </span>
+        <span className="pj-arrow pj-in" aria-hidden>→</span>
+      </a>
+    </li>
   )
 }
 
+/**
+ * Projetos como galeria editorial: lista à esquerda, preview à direita.
+ * A seção fica "presa" por um trecho curto e o projeto ativo muda com a rolagem
+ * (ou ao passar o mouse/tocar). O preview troca por máscara + opacity + escala sutis.
+ */
 export function Projects() {
+  const root = useRef<HTMLDivElement>(null)
+  const [auto, setAuto] = useState(0) // definido pela rolagem
+  const [manual, setManual] = useState<number | null>(null) // hover / toque (vale até a rolagem mudar de projeto)
+  const [view, setView] = useState({ on: 0, off: -1 }) // projeto visível e o que está saindo
+  const active = manual ?? auto
+
+  useEffect(() => {
+    setView((v) => (v.on === active ? v : { on: active, off: v.on }))
+  }, [active])
+
+  // Rolagem: define o projeto ativo e as variáveis de progresso.
+  useEffect(() => {
+    const el = root.current
+    const stage = el?.firstElementChild as HTMLElement | null
+    if (!el || !stage || prefersReducedMotion()) return
+    return subscribe(() => {
+      const r = el.getBoundingClientRect()
+      const vh = stage.offsetHeight
+      if (r.bottom < -50 || r.top > vh + 50) return
+      const p = clamp(-r.top / Math.max(1, el.offsetHeight - vh))
+      el.style.setProperty('--p', p.toFixed(3))
+      el.style.setProperty('--sy', ((p - 0.5) * -14).toFixed(1))
+      const idx = p < 0.34 ? 0 : p < 0.67 ? 1 : 2
+      setAuto((prev) => {
+        if (prev !== idx) setManual(null) // a rolagem retoma o controle
+        return idx
+      })
+    })
+  }, [])
+
+  // Reação sutil do preview ao mouse.
+  const onMove = (e: PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse') return
+    const r = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mx', (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3))
+    e.currentTarget.style.setProperty('--my', (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3))
+  }
+  const onLeave = (e: PointerEvent<HTMLElement>) => {
+    e.currentTarget.style.setProperty('--mx', '0')
+    e.currentTarget.style.setProperty('--my', '0')
+  }
+
+  const p = PROJECTS[active]
+  const th = p.theme
+
+  useEffect(() => {
+    const t = setTimeout(() => window.dispatchEvent(new Event('scroll')), 60) // o menu relê o tom da seção
+    return () => clearTimeout(t)
+  }, [th.tone])
+
   return (
-    <section id="projetos" data-tone="dark" className="bg-ink text-paper">
-      <h2 className="sr-only">Projetos</h2>
-      {PROJECTS.map((p, i) => (
-        <Scene key={p.name} p={p} i={i} />
-      ))}
-      <div className="mx-auto max-w-[1400px] px-5 pb-20 pt-6 md:px-10 md:pb-32">
-        <CtaStrip dark lead="Quer algo assim para o seu negócio?" label="Quero algo assim" href={QUOTE_LINK} />
-        <p className="label mt-2 text-ash">
-          Gosta de movimento?{' '}
-          <a href={BALY_URL} target="_blank" rel="noreferrer" className="ulink text-paper">
-            Veja a Baly, uma landing conceitual com efeitos no scroll →
-          </a>
-        </p>
+    <section id="projetos" data-tone={th.tone} className="bg-paper-2">
+      <div ref={root} className="pj" style={{ ['--pj-bg' as string]: th.bg, ['--pj-fg' as string]: th.fg, ['--pj-acc' as string]: th.acc }}>
+        <div className="pj-stage">
+          {/* Indicador lateral (desktop) */}
+          <div className="pj-rail" aria-hidden>
+            <span className="pj-rail-line"><span /></span>
+            <span className="pj-rail-text">02 Projetos</span>
+          </div>
+
+          <div className="mx-auto w-full max-w-[1400px] px-5 md:px-10">
+            <Decode text="02 / Projetos" as="p" className="label mb-3 text-ash md:mb-4" />
+            <Words
+              text="Algumas coisas que já *ganharam forma.*"
+              className="font-display text-[clamp(2.3rem,5.2vw,5.2rem)] leading-[0.98]"
+            />
+
+            <div className="pj-grid">
+              <ul className="pj-list">
+                {PROJECTS.map((_, i) => (
+                  <Row key={i} i={i} active={active === i} onActivate={() => setManual(i)} onRelease={() => setManual(null)} />
+                ))}
+                <li className="pj-end" aria-hidden><span className="pj-rule" /></li>
+              </ul>
+
+              <div className="pj-side">
+                <div className="pj-count label" aria-hidden>
+                  <span>{pad(active + 1)} / {pad(N)}</span>
+                  <span className="pj-ticks">
+                    {PROJECTS.map((_, i) => (
+                      <button key={i} type="button" tabIndex={-1} className={i === active ? 'is-on' : ''} onClick={() => setManual(i)}>{pad(i + 1)}</button>
+                    ))}
+                  </span>
+                </div>
+
+                <a href={p.url} target="_blank" rel="noreferrer" aria-label={`Abrir ${p.name}`} data-cursor="Ver projeto" className="pv" onPointerMove={onMove} onPointerLeave={onLeave}>
+                  <div className="pv-par">
+                    {PROJECTS.map((q, i) => (
+                      <div key={q.name} className={`pv-item ${view.on === i ? 'is-on' : view.off === i ? 'is-off' : ''}`}>
+                        <Cover p={q} eager={i === 0} />
+                      </div>
+                    ))}
+                  </div>
+                </a>
+
+                <a href={p.url} target="_blank" rel="noreferrer" className="pj-open ulink label">Ver {p.name} →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Fecho em faixa preta: o convite depois da prova */}
+      <div data-tone="dark" className="bg-ink text-paper">
+        <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-6 px-5 py-10 md:flex-row md:items-center md:px-10 md:py-14">
+          <div>
+            <p className="font-display text-3xl italic leading-tight md:text-5xl">Quer algo assim para o seu negócio?</p>
+            <p className="label mt-3 text-ash">
+              Gosta de movimento?{' '}
+              <a href={BALY_URL} target="_blank" rel="noreferrer" className="ulink text-paper">Veja a Baly, uma landing conceitual →</a>
+            </p>
+          </div>
+          <Btn href={QUOTE_LINK} variant="signal-on-dark" className="shrink-0">Quero algo assim</Btn>
+        </div>
       </div>
     </section>
   )
