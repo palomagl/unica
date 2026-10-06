@@ -7,7 +7,7 @@ import { Decode } from './Decode'
 /** Diferencial: "você não precisa saber exatamente o que precisa" + espaço para depoimento real. */
 export function Confidence() {
   return (
-    <section id="ideia" data-tone="light" className="bg-paper">
+    <section id="ideia" data-tone="light" className="bg-paper-2">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-40">
         <Words
           text="Você não precisa saber | exatamente *o que precisa.*"

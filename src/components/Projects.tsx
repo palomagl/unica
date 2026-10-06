@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import { BALY_URL, PROJECTS, QUOTE_LINK } from '../content'
 import { Btn } from './Btn'
-import { Cover } from './Cover'
 import { Decode } from './Decode'
 import { Words } from './Words'
 import { prefersReducedMotion, subscribe } from '../fx'
@@ -11,8 +10,8 @@ const N = PROJECTS.length
 const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n))
 const pad = (n: number) => String(n).padStart(2, '0')
 
-/** Uma linha da lista: número, nome, descrição, categoria · ano e seta. As linhas se desenham ao entrar. */
-function Row({ i, active, pos, onActivate, onRelease }: { i: number; active: boolean; pos: number; onActivate: () => void; onRelease: () => void }) {
+/** Uma linha da lista: número, nome, descrição, categoria · ano e seta. A divisória se desenha ao entrar. */
+function Row({ i, active, onActivate, onRelease }: { i: number; active: boolean; onActivate: () => void; onRelease: () => void }) {
   const p = PROJECTS[i]
   const ref = useReveal<HTMLLIElement>()
 
@@ -24,7 +23,7 @@ function Row({ i, active, pos, onActivate, onRelease }: { i: number; active: boo
   }
 
   return (
-    <li ref={ref} className="pj-row" data-active={active} data-pos={pos} style={{ ['--d' as string]: `${i * 120}ms` }}>
+    <li ref={ref} className="pj-row" data-active={active} style={{ ['--d' as string]: `${i * 120}ms` }}>
       <span className="pj-rule" aria-hidden />
       <a
         href={p.url}
@@ -54,23 +53,23 @@ function Row({ i, active, pos, onActivate, onRelease }: { i: number; active: boo
 }
 
 /**
- * Projetos como galeria editorial: lista à esquerda, preview à direita.
+ * Projetos como galeria editorial: lista à esquerda, fotografia à direita.
  * A seção fica "presa" por um trecho curto e o projeto ativo muda com a rolagem
- * (ou ao passar o mouse/tocar). O preview troca por máscara + opacity + escala sutis.
+ * (ou ao passar o mouse/tocar). A foto troca por máscara + opacity + escala sutis.
  */
 export function Projects() {
   const root = useRef<HTMLDivElement>(null)
   const sideRef = useReveal<HTMLDivElement>()
   const [auto, setAuto] = useState(0) // definido pela rolagem
   const [manual, setManual] = useState<number | null>(null) // hover / toque (vale até a rolagem mudar de projeto)
-  const [view, setView] = useState({ on: 0, off: -1 }) // projeto visível e o que está saindo
+  const [view, setView] = useState({ on: 0, off: -1 }) // foto visível e a que está saindo
   const active = manual ?? auto
 
   useEffect(() => {
     setView((v) => (v.on === active ? v : { on: active, off: v.on }))
   }, [active])
 
-  // Rolagem: define o projeto ativo e as variáveis de progresso.
+  // Rolagem: define o projeto ativo e o deslocamento sutil da foto.
   useEffect(() => {
     const el = root.current
     const stage = el?.firstElementChild as HTMLElement | null
@@ -89,7 +88,7 @@ export function Projects() {
     })
   }, [])
 
-  // Reação sutil do preview ao mouse.
+  // Reação sutil da foto ao mouse.
   const onMove = (e: PointerEvent<HTMLElement>) => {
     if (e.pointerType !== 'mouse') return
     const r = e.currentTarget.getBoundingClientRect()
@@ -102,58 +101,74 @@ export function Projects() {
   }
 
   const p = PROJECTS[active]
+  const ticks = PROJECTS.map((_, i) => (
+    <button key={i} type="button" tabIndex={-1} className={i === active ? 'is-on' : ''} onClick={() => setManual(i)}>{pad(i + 1)}</button>
+  ))
+  const counter = (
+    <span className="pj-counter">
+      <span className="mask-box"><span key={active} className="mask-in">{pad(active + 1)}</span></span> / {pad(N)}
+    </span>
+  )
 
   return (
-    <section id="projetos" data-tone="light" className="bg-paper-2">
+    <section id="projetos" data-tone="light" className="bg-paper">
       <div ref={root} className="pj">
         <div className="pj-stage">
-          <div className="mx-auto w-full max-w-[1400px] px-5 md:px-10">
+          {/* Indicador à esquerda (telas largas): linha que acompanha o projeto + rótulo vertical */}
+          <div className="pj-left" aria-hidden>
+            <span className="pj-left-line"><span style={{ transform: `scaleY(${(active + 1) / N})` }} /></span>
+            <span className="pj-left-text">02 Projetos</span>
+          </div>
+
+          <div className="pj-inner mx-auto w-full max-w-[1400px] px-5 md:px-10">
             <Decode text="02 / Projetos" as="p" className="label mb-3 text-ash md:mb-4" />
-            <Words
-              text="Algumas coisas que já *ganharam forma.*"
-              className="font-display text-[clamp(2.3rem,5.2vw,5.2rem)] leading-[0.98]"
-            />
+            <Words text="Algumas coisas que já *ganharam forma.*" className="pj-title font-display leading-[0.98]" />
 
             <div className="pj-grid">
               <ul className="pj-list">
                 {PROJECTS.map((_, i) => (
-                  <Row key={i} i={i} active={active === i} pos={Math.max(-1, Math.min(2, i - active))} onActivate={() => setManual(i)} onRelease={() => setManual(null)} />
+                  <Row key={i} i={i} active={active === i} onActivate={() => setManual(i)} onRelease={() => setManual(null)} />
                 ))}
-                <li className="pj-end" aria-hidden><span className="pj-rule" /></li>
               </ul>
 
               <div ref={sideRef} className="pj-side">
                 <div className="pj-count label" aria-hidden>
-                  <span className="pj-counter"><span className="mask-box"><span key={active} className="mask-in">{pad(active + 1)}</span></span> / {pad(N)}</span>
-                  <span className="pj-ticks">
-                    {PROJECTS.map((_, i) => (
-                      <button key={i} type="button" tabIndex={-1} className={i === active ? 'is-on' : ''} onClick={() => setManual(i)}>{pad(i + 1)}</button>
-                    ))}
-                  </span>
+                  {counter}
+                  <span className="pj-ticks">{ticks}</span>
                 </div>
 
                 <a href={p.url} target="_blank" rel="noreferrer" aria-label={`Abrir ${p.name}`} data-cursor="Ver projeto" className="pv" onPointerMove={onMove} onPointerLeave={onLeave}>
                   <div className="pv-par">
                     {PROJECTS.map((q, i) => (
                       <div key={q.name} className={`pv-item ${view.on === i ? 'is-on' : view.off === i ? 'is-off' : ''}`}>
-                        <Cover p={q} eager={i === 0} />
+                        <img className="pv-img" src={q.photo} alt={`Projeto ${q.name}`} width={760} height={532} decoding="async" loading={i === 0 ? 'eager' : 'lazy'} draggable={false} />
                       </div>
                     ))}
                   </div>
                 </a>
+              </div>
 
+              {/* Coluna à direita (telas largas): contador e índice vertical */}
+              <div className="pj-idx label" aria-hidden>
+                {counter}
+                <span className="pj-idx-list">
+                  <span className="pj-idx-line"><span style={{ transform: `translateY(${active * 100}%)` }} /></span>
+                  <span className="pj-idx-btns">{ticks}</span>
+                </span>
               </div>
             </div>
 
-            {/* Celular: contador, progresso e atalhos (o desktop usa o contador acima da moldura) */}
+            {/* Celular: contador, progresso e atalhos */}
             <div className="pj-foot label" aria-hidden>
               <span>{pad(active + 1)} / {pad(N)}</span>
               <span className="pj-prog"><span style={{ transform: `scaleX(${(active + 1) / N})` }} /></span>
-              <span className="pj-ticks">
-                {PROJECTS.map((_, i) => (
-                  <button key={i} type="button" tabIndex={-1} className={i === active ? 'is-on' : ''} onClick={() => setManual(i)}>{pad(i + 1)}</button>
-                ))}
-              </span>
+              <span className="pj-ticks">{ticks}</span>
+            </div>
+
+            {/* Rodapé (telas largas): dica de rolagem e convite */}
+            <div className="pj-bar label">
+              <span className="pj-hint"><span>Scroll para explorar</span><i aria-hidden /></span>
+              <a href={QUOTE_LINK} target="_blank" rel="noreferrer" className="ulink">Quero algo assim →</a>
             </div>
           </div>
         </div>
