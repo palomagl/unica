@@ -7,13 +7,17 @@ import { subscribe } from '../fx'
 export function Header() {
   const [tone, setTone] = useState<'dark' | 'light'>('dark')
   const [past, setPast] = useState(false)
+  const [solid, setSolid] = useState(false)
 
   useEffect(
     () =>
       subscribe(() => {
-        const under = document.elementFromPoint(innerWidth / 2, 34)?.closest<HTMLElement>('[data-tone]')
+        const hit = document.elementFromPoint(innerWidth / 2, 34)
+        const under = hit?.closest<HTMLElement>('[data-tone]')
         setTone(under?.dataset.tone === 'light' ? 'light' : 'dark')
-        setPast(scrollY > innerHeight * 0.55)
+        setPast(scrollY > innerHeight * 0.5)
+        const hero = document.getElementById('top')
+        setSolid(!!hero && hero.getBoundingClientRect().bottom < 80 && !hit?.closest('#projetos'))
       }),
     [],
   )
@@ -23,7 +27,7 @@ export function Header() {
     <header
       className={`pointer-events-none fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
         light ? 'text-ink' : 'text-paper'
-      } ${past ? (light ? 'bg-paper' : 'bg-ink') : ''}`}
+      } ${solid ? (light ? 'bg-paper' : 'bg-ink') : ''}`}
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-4 md:px-10 md:py-5">
         <a
@@ -36,7 +40,7 @@ export function Header() {
         <nav className="label pointer-events-auto flex items-center gap-6 md:gap-9">
           <a href="#servicos" className="ulink hidden sm:inline">Serviços</a>
           <a href="#projetos" className="ulink hidden sm:inline">Projetos</a>
-          <a href="#sobre" className="ulink hidden md:inline">Sobre</a>
+          <a href="#ideia" className="ulink hidden md:inline">Sua ideia</a>
           <a
             href={QUOTE_LINK}
             className={`border px-3.5 py-2 transition-colors duration-300 hover:border-signal hover:bg-signal hover:text-ink ${light ? 'border-ink/40' : 'border-paper/40'}`}
