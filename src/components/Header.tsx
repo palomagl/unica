@@ -23,7 +23,7 @@ export function Header() {
     <header
       className={`pointer-events-none fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
         light ? 'text-ink' : 'text-paper'
-      } ${past ? (light ? 'max-md:bg-paper' : 'max-md:bg-ink') : ''}`}
+      } ${past ? (light ? 'bg-paper' : 'bg-ink') : ''}`}
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-4 md:px-10 md:py-5">
         <a
