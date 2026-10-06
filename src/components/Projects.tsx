@@ -12,7 +12,7 @@ const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n))
 const pad = (n: number) => String(n).padStart(2, '0')
 
 /** Uma linha da lista: número, nome, descrição, categoria · ano e seta. As linhas se desenham ao entrar. */
-function Row({ i, active, onActivate, onRelease }: { i: number; active: boolean; onActivate: () => void; onRelease: () => void }) {
+function Row({ i, active, pos, onActivate, onRelease }: { i: number; active: boolean; pos: number; onActivate: () => void; onRelease: () => void }) {
   const p = PROJECTS[i]
   const ref = useReveal<HTMLLIElement>()
 
@@ -24,7 +24,7 @@ function Row({ i, active, onActivate, onRelease }: { i: number; active: boolean;
   }
 
   return (
-    <li ref={ref} className="pj-row" data-active={active} style={{ ['--d' as string]: `${i * 120}ms` }}>
+    <li ref={ref} className="pj-row" data-active={active} data-pos={pos} style={{ ['--d' as string]: `${i * 120}ms` }}>
       <span className="pj-rule" aria-hidden />
       <a
         href={p.url}
@@ -60,6 +60,7 @@ function Row({ i, active, onActivate, onRelease }: { i: number; active: boolean;
  */
 export function Projects() {
   const root = useRef<HTMLDivElement>(null)
+  const sideRef = useReveal<HTMLDivElement>()
   const [auto, setAuto] = useState(0) // definido pela rolagem
   const [manual, setManual] = useState<number | null>(null) // hover / toque (vale até a rolagem mudar de projeto)
   const [view, setView] = useState({ on: 0, off: -1 }) // projeto visível e o que está saindo
@@ -79,7 +80,6 @@ export function Projects() {
       const vh = stage.offsetHeight
       if (r.bottom < -50 || r.top > vh + 50) return
       const p = clamp(-r.top / Math.max(1, el.offsetHeight - vh))
-      el.style.setProperty('--p', p.toFixed(3))
       el.style.setProperty('--sy', ((p - 0.5) * -14).toFixed(1))
       const idx = p < 0.34 ? 0 : p < 0.67 ? 1 : 2
       setAuto((prev) => {
@@ -102,23 +102,11 @@ export function Projects() {
   }
 
   const p = PROJECTS[active]
-  const th = p.theme
-
-  useEffect(() => {
-    const t = setTimeout(() => window.dispatchEvent(new Event('scroll')), 60) // o menu relê o tom da seção
-    return () => clearTimeout(t)
-  }, [th.tone])
 
   return (
-    <section id="projetos" data-tone={th.tone} className="bg-paper-2">
-      <div ref={root} className="pj" style={{ ['--pj-bg' as string]: th.bg, ['--pj-fg' as string]: th.fg, ['--pj-acc' as string]: th.acc }}>
+    <section id="projetos" data-tone="light" className="bg-paper-2">
+      <div ref={root} className="pj">
         <div className="pj-stage">
-          {/* Indicador lateral (desktop) */}
-          <div className="pj-rail" aria-hidden>
-            <span className="pj-rail-line"><span /></span>
-            <span className="pj-rail-text">02 Projetos</span>
-          </div>
-
           <div className="mx-auto w-full max-w-[1400px] px-5 md:px-10">
             <Decode text="02 / Projetos" as="p" className="label mb-3 text-ash md:mb-4" />
             <Words
@@ -129,14 +117,14 @@ export function Projects() {
             <div className="pj-grid">
               <ul className="pj-list">
                 {PROJECTS.map((_, i) => (
-                  <Row key={i} i={i} active={active === i} onActivate={() => setManual(i)} onRelease={() => setManual(null)} />
+                  <Row key={i} i={i} active={active === i} pos={Math.max(-1, Math.min(2, i - active))} onActivate={() => setManual(i)} onRelease={() => setManual(null)} />
                 ))}
                 <li className="pj-end" aria-hidden><span className="pj-rule" /></li>
               </ul>
 
-              <div className="pj-side">
+              <div ref={sideRef} className="pj-side">
                 <div className="pj-count label" aria-hidden>
-                  <span>{pad(active + 1)} / {pad(N)}</span>
+                  <span className="pj-counter"><span className="mask-box"><span key={active} className="mask-in">{pad(active + 1)}</span></span> / {pad(N)}</span>
                   <span className="pj-ticks">
                     {PROJECTS.map((_, i) => (
                       <button key={i} type="button" tabIndex={-1} className={i === active ? 'is-on' : ''} onClick={() => setManual(i)}>{pad(i + 1)}</button>
