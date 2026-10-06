@@ -1,13 +1,13 @@
-import { ABOUT_PHOTO, IDEA_EXAMPLES, IDEA_LINK, whatsappLink } from '../content'
+import { IDEA_EXAMPLES, IDEA_LINK, whatsappLink } from '../content'
 import { Btn } from './Btn'
-import { ImageSlot } from './ImageSlot'
 import { Reveal } from './Reveal'
 import { Words } from './Words'
+import { Decode } from './Decode'
 
-/** Diferencial + confiança num só momento: "você não precisa saber" e "por trás da ÚNICA". */
+/** Diferencial: "você não precisa saber exatamente o que precisa" + espaço para depoimento real. */
 export function Confidence() {
   return (
-    <section id="sobre" data-tone="light" className="bg-paper-2">
+    <section id="ideia" data-tone="light" className="bg-paper">
       <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-40">
         <Words
           text="Você não precisa saber | exatamente *o que precisa.*"
@@ -17,7 +17,7 @@ export function Confidence() {
         <div className="mt-10 grid gap-10 md:mt-20 md:grid-cols-12">
           <Reveal className="md:col-span-5">
             <p className="max-w-md text-lg leading-relaxed text-ink/80 md:text-xl">
-              Você me conta a ideia, a necessidade ou o problema. Eu encontro a melhor forma de transformar isso em algo digital.
+              Você conta a ideia, a necessidade ou o problema. A ÚNICA encontra a melhor forma de transformar isso em algo digital.
             </p>
             <div className="mt-8"><Btn href={IDEA_LINK} variant="ink">Contar minha ideia</Btn></div>
           </Reveal>
@@ -42,28 +42,17 @@ export function Confidence() {
           </Reveal>
         </div>
 
-        {/* Por trás da ÚNICA */}
-        <div className="mt-20 grid grid-cols-[34%_1fr] items-center gap-5 border-t border-ink pt-10 md:mt-36 md:grid-cols-12 md:gap-10 md:pt-16">
-          <div className="md:col-span-3">
-            <ImageSlot src={ABOUT_PHOTO} alt="Paloma, desenvolvedora por trás da ÚNICA" label="Paloma" ratio="aspect-[4/5]" hint="foto profissional" />
-          </div>
-
-          <Reveal className="md:col-span-5 md:col-start-5">
-            <p className="label mb-2 text-ash md:mb-4">Por trás da ÚNICA</p>
-            <p className="font-display text-[1.65rem] leading-[1.15] md:text-5xl">
-              Sou Paloma, desenvolvedora, e gosto de transformar ideias em coisas que realmente podem ser usadas.
-            </p>
-          </Reveal>
-
-          {/* TODO: depoimentos reais. Nada aqui é inventado. */}
-          <Reveal className="col-span-2 mt-4 md:col-span-3 md:col-start-10 md:mt-0">
-            <div className="border border-dashed border-ink/35 p-4">
-              <p className="label text-signal">Espaço p/ depoimento real</p>
-              <p className="mt-2 font-display text-xl leading-snug text-ink/35">“Substituir por um depoimento de cliente.”</p>
+        {/* TODO: depoimentos reais de clientes. Nada aqui é inventado. */}
+        <Reveal className="mt-16 border-t border-ink pt-10 md:mt-28 md:pt-14">
+          <div className="grid items-start gap-6 md:grid-cols-12">
+            <Decode text="03 / Quem já criou com a ÚNICA" as="p" className="label text-ash md:col-span-4" />
+            <div className="border border-dashed border-ink/35 p-5 md:col-span-6 md:col-start-6">
+              <p className="label text-signal">Espaço para depoimento real</p>
+              <p className="mt-2 font-display text-2xl leading-snug text-ink/35 md:text-3xl">“Substituir por um depoimento de cliente.”</p>
               <p className="label mt-3 text-ink/35">Nome · Empresa</p>
             </div>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   )
