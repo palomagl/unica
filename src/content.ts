@@ -84,25 +84,13 @@ export const SERVICES: Service[] = [
  * para não parecer um print. A bancada (foto de travertino) e a luz são as mesmas nos três; a composição muda.
  * Posições e larguras em "cqw" (1cqw = 1% da largura da moldura). Moldura 3:2 = altura de 66,7cqw.
  */
-export type Device = {
-  src: string
-  x: number
-  y: number
-  w: number
-  z?: number
-  k?: number // profundidade: quanto o aparelho se move no parallax (maior = mais à frente)
-  rx?: number // inclinação (graus) — o aparelho "deitado" na bancada, visto de cima em perspectiva
-  ry?: number
-  rz?: number // giro no plano
-}
-
 export type Project = {
   name: string
   kind: string
+  year: string
   desc: string
   url: string
-  year: string
-  devices: Device[] // composição de aparelhos da capa (16:10)
+  photo: string // capa: fotografia editorial do produto em uso (public/projects)
 }
 
 export const PROJECTS: Project[] = [
@@ -112,11 +100,7 @@ export const PROJECTS: Project[] = [
     year: '2026',
     desc: 'Aplicativo digital de apoio à doação de sangue.',
     url: 'https://doe-mais-rs.vercel.app/',
-    devices: [
-      { src: '/projects/doe-login.webp', x: 6, y: 9, w: 24, rx: 30, rz: 16, k: 0.8 },
-      { src: '/projects/doe-locais.webp', x: 62, y: 10, w: 24, rx: 28, rz: 9, k: 1 },
-      { src: '/projects/doe-home.webp', x: 33, y: 3, w: 27, z: 2, rx: 26, rz: 12, k: 1.6 },
-    ],
+    photo: '/projects/doe.webp',
   },
   {
     name: 'Bruto',
@@ -124,21 +108,15 @@ export const PROJECTS: Project[] = [
     year: '2026',
     desc: 'Experiência digital para uma hamburgueria.',
     url: 'https://borapedir-delivery.vercel.app/bruto',
-    devices: [
-      { src: '/projects/bruto-laptop.webp', x: -3, y: 6, w: 72, rx: 8, ry: -20, rz: -2, k: 0.9 },
-      { src: '/projects/bruto-phone.webp', x: 66, y: 12, w: 25, z: 2, rx: 30, rz: 18, k: 1.7 },
-    ],
+    photo: '/projects/bruto.webp',
   },
   {
-    name: 'Marmoraria',
-    kind: 'Web App',
+    name: 'Vértice Mármores',
+    kind: 'Sistema',
     year: '2026',
-    desc: 'Presença digital para uma empresa de marmoraria.',
+    desc: 'Sistema de projeto e orçamento para marmoraria.',
     url: 'https://vertice-marmores.vercel.app/',
-    devices: [
-      { src: '/projects/marm-laptop.webp', x: 9, y: 7, w: 80, rx: 8, ry: -20, rz: -2, k: 1 },
-      { src: '/projects/marm-phone.webp', x: 72, y: 24, w: 19, z: 2, rx: 30, rz: 20, k: 1.7 },
-    ],
+    photo: '/projects/vertice.webp',
   },
 ]
 
