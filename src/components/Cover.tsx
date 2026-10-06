@@ -31,12 +31,35 @@ function DeviceView({ d, eager }: { d: Device; eager?: boolean }) {
   )
 }
 
-/** Capa do projeto: aparelhos reais com as telas do projeto, sobre uma atmosfera escura da própria marca. */
-export function Cover({ p, eager, className = '', style }: { p: Project; eager?: boolean; className?: string; style?: CSSProperties }) {
+/**
+ * Composição de aparelhos com as telas reais do projeto.
+ * `bare`: sem fundo próprio (a cena já tem atmosfera). `tall`: versão vertical 4:5 para o celular.
+ */
+export function Cover({
+  p,
+  eager,
+  bare,
+  tall,
+  className = '',
+  style,
+}: {
+  p: Project
+  eager?: boolean
+  bare?: boolean
+  tall?: boolean
+  className?: string
+  style?: CSSProperties
+}) {
+  const devices = tall ? p.devicesTall : p.devices
   return (
-    <div className={`cover ${className}`} style={style} role="img" aria-label={`Projeto ${p.name}`}>
-      <img className="cover-bg" src={p.bg} alt="" aria-hidden decoding="async" draggable={false} />
-      {p.devices.map((d, i) => (
+    <div
+      className={`cover ${bare ? 'cover-bare' : ''} ${tall ? 'cover-tall' : ''} ${className}`}
+      style={style}
+      role="img"
+      aria-label={`Projeto ${p.name}`}
+    >
+      {!bare && <img className="cover-bg" src={p.bg} alt="" aria-hidden decoding="async" draggable={false} />}
+      {devices.map((d, i) => (
         <DeviceView key={i} d={d} eager={eager} />
       ))}
     </div>

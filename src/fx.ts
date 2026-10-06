@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 
 /** Permite passar custom properties no style sem brigar com o TS. */
 export const cssVars = (v: Record<string, string | number>) => v as CSSProperties
@@ -84,4 +84,17 @@ export function useParallax<T extends HTMLElement, U extends HTMLElement>(speed:
     })
   }, [speed])
   return { outer, inner }
+}
+
+/** Segue uma media query (ex.: celular) e reage a mudanças de tamanho/rotação. */
+export function useMediaQuery(query: string) {
+  const [match, setMatch] = useState(() => typeof matchMedia !== 'undefined' && matchMedia(query).matches)
+  useEffect(() => {
+    const mq = matchMedia(query)
+    const on = () => setMatch(mq.matches)
+    on()
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [query])
+  return match
 }

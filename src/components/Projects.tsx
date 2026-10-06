@@ -1,165 +1,126 @@
-import { useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useEffect, useRef } from 'react'
 import { BALY_URL, PROJECTS, QUOTE_LINK, projectLink, type Project } from '../content'
 import { Btn } from './Btn'
-import { ClipBox } from './ClipBox'
-import { CtaStrip } from './CtaStrip'
 import { Cover } from './Cover'
-import { Reveal } from './Reveal'
-import { Words } from './Words'
+import { CtaStrip } from './CtaStrip'
+import { prefersReducedMotion, subscribe, useMediaQuery } from '../fx'
 
 const N = PROJECTS.length
-const STEP = 85 // vh de rolagem por projeto no palco (desktop): curto o bastante para passar rápido
+const clamp = (n: number, a = 0, b = 1) => Math.min(b, Math.max(a, n))
+const ease = (t: number) => t * t * (3 - 2 * t)
 
-function Caption({ p, i }: { p: Project; i: number }) {
+// Logo (920×370) e o ponto dentro das letras (perna do "A") para onde o zoom "entra".
+const LOGO = { w: 920, h: 370 }
+const ANCHOR = { x: 785, y: 229, r: 26.2 } // r = raio do maior círculo cabendo na letra
+
+/**
+ * Uma cena de tela cheia por projeto. A página rola normalmente: cada cena fica "presa" por um trecho
+ * e o aparelho sobe de baixo. A primeira abre com tela preta e o ÚNICA gigante, que se expande
+ * (zoom para dentro da letra) e revela o projeto.
+ */
+function Scene({ p, i }: { p: Project; i: number }) {
+  const root = useRef<HTMLDivElement>(null)
+  const knock = useRef<HTMLDivElement>(null)
+  const first = i === 0
+  const mobile = useMediaQuery('(max-width: 767px)')
+
+  useEffect(() => {
+    const el = root.current
+    const stage = el?.firstElementChild as HTMLElement | null
+    if (!el || !stage) return
+    const kn = knock.current
+    if (prefersReducedMotion()) {
+      el.style.setProperty('--a', '1')
+      el.style.setProperty('--t', '1')
+      el.style.setProperty('--ko', '0')
+      if (kn) kn.style.display = 'none'
+      return
+    }
+    return subscribe(() => {
+      const r = el.getBoundingClientRect()
+      const vh = stage.offsetHeight
+      const vw = innerWidth
+      if (r.bottom < -50 || r.top > vh + 50) return
+      const pin = Math.max(1, el.offsetHeight - vh)
+      const entering = clamp((vh - r.top) / vh)
+      const prog = clamp(-r.top / pin)
+      let a = entering
+      let t = clamp((entering - 0.35) / 0.5)
+
+      if (first) {
+        const k = clamp(prog / 0.55) // fase de expansão do ÚNICA
+        const e = ease(k)
+        a = e
+        t = clamp((k - 0.6) / 0.4)
+        el.style.setProperty('--ko', (1 - clamp(k * 2.4)).toFixed(3))
+        if (kn) {
+          if (e >= 1) {
+            kn.style.visibility = 'hidden'
+          } else {
+            kn.style.visibility = 'visible'
+            const w0 = Math.min(vw * 0.86, 1100)
+            const wEnd = (Math.hypot(vw, vh) * 0.53 * LOGO.w) / ANCHOR.r // largura em que a letra cobre a tela
+            const w = w0 * Math.pow(wEnd / w0, e) // zoom exponencial = sensação constante
+            const s = w / LOGO.w
+            const ax = LOGO.w / 2 + (ANCHOR.x - LOGO.w / 2) * e // o foco migra do centro do logo para dentro da letra
+            const ay = LOGO.h / 2 + (ANCHOR.y - LOGO.h / 2) * e
+            kn.style.setProperty('--mw', `${w.toFixed(1)}px`)
+            kn.style.setProperty('--ml', `${(vw / 2 - ax * s).toFixed(1)}px`)
+            kn.style.setProperty('--mt', `${(vh / 2 - ay * s).toFixed(1)}px`)
+          }
+        }
+      }
+      el.style.setProperty('--a', a.toFixed(3))
+      el.style.setProperty('--t', t.toFixed(3))
+      el.style.setProperty('--p', prog.toFixed(3))
+    })
+  }, [first])
+
   return (
-    <div>
-      <p className="label text-ash">0{i + 1} / 0{N} — {p.kind}</p>
-      <h3 className="mt-4 font-display text-[clamp(3rem,5.4vw,5.6rem)] leading-[0.92]">{p.name}</h3>
-      <p className="mt-5 max-w-xs leading-relaxed text-paper/70">{p.desc}</p>
-      <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
-        <Btn href={p.url} variant="signal-on-dark">Ver projeto</Btn>
-        <a href={projectLink(p)} target="_blank" rel="noreferrer" className="ulink text-sm font-medium">Quero algo assim →</a>
+    <div ref={root} className="sc" style={{ height: first ? '240svh' : '150svh' }}>
+      <div className="sc-stage" style={{ background: p.tone }}>
+        <img className="sc-bg" src={p.bg} alt="" aria-hidden decoding="async" draggable={false} />
+
+        <div className="sc-body">
+          <div className="sc-text">
+            <p className="label text-ash">0{i + 1} / 0{N} — {p.kind}</p>
+            <h3 className="sc-name">{p.name}</h3>
+            <p className="sc-desc">{p.desc}</p>
+            <div className="sc-cta">
+              <Btn href={p.url} variant="signal-on-dark">Ver projeto</Btn>
+              <a href={projectLink(p)} target="_blank" rel="noreferrer" className="ulink text-sm font-medium">Quero algo assim →</a>
+            </div>
+          </div>
+
+          <a href={p.url} target="_blank" rel="noreferrer" aria-label={`Abrir ${p.name}`} data-cursor="Ver projeto" className="sc-dev">
+            <Cover p={p} bare tall={mobile} eager={first} className="sc-cover" />
+          </a>
+        </div>
+
+        {first && (
+          <>
+            <div ref={knock} className="knock" aria-hidden />
+            <div className="knock-text">
+              <p className="label text-ash">Projetos</p>
+              <p className="font-display text-[clamp(1.7rem,3.4vw,3rem)] leading-tight">
+                Algumas coisas que já ganharam <em className="text-signal">forma.</em>
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
 }
 
-/**
- * Projetos como prova de qualidade (3, mostrando versatilidade: aplicativo, alimentação, negócio visual).
- * Desktop: palco sticky — a página rola normalmente; a cada "cena" a imagem troca por máscara,
- * o texto acompanha e o fundo muda de tom, como cada sabor da landing da Baly.
- * Mobile: sequência compacta, uma imagem grande por projeto.
- */
 export function Projects() {
-  const [active, setActive] = useState(0)
-  const [warm, setWarm] = useState(false) // pré-carrega as capas do palco (só desktop)
-  const marks = useRef<(HTMLDivElement | null)[]>([])
-
-  useEffect(() => {
-    // Só no desktop (no celular o palco fica oculto e não vale baixar as imagens dele).
-    const t = setTimeout(() => {
-      if (matchMedia('(min-width: 768px)').matches) setWarm(true)
-    }, 1500)
-    return () => clearTimeout(t)
-  }, [])
-
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(Number((e.target as HTMLElement).dataset.i))),
-      { rootMargin: '-50% 0px -50% 0px' },
-    )
-    marks.current.forEach((m) => m && io.observe(m))
-    return () => io.disconnect()
-  }, [])
-
-  // Movimento de mouse bem sutil sobre a imagem.
-  const onMove = (e: PointerEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect()
-    e.currentTarget.style.setProperty('--mx', (((e.clientX - r.left) / r.width - 0.5) * 2).toFixed(3))
-    e.currentTarget.style.setProperty('--my', (((e.clientY - r.top) / r.height - 0.5) * 2).toFixed(3))
-  }
-
   return (
     <section id="projetos" data-tone="dark" className="bg-ink text-paper">
-      <div className="mx-auto max-w-[1400px] px-5 pb-10 pt-20 md:px-10 md:pb-20 md:pt-40">
-        <p className="label mb-4 text-ash">Projetos</p>
-        <Words text="Algumas coisas | que já *ganharam forma.*" className="font-display text-[clamp(2.8rem,8.5vw,8.5rem)] leading-[0.93]" />
-      </div>
-
-      {/* Desktop: palco sticky */}
-      <div className="relative hidden md:block" style={{ height: `${N * STEP + 100}vh` }}>
-        <div aria-hidden>
-          {PROJECTS.map((_, i) => (
-            <div
-              key={i}
-              data-i={i}
-              ref={(el) => { marks.current[i] = el }}
-              className="absolute inset-x-0"
-              style={{ top: `${50 + i * STEP}vh`, height: `${STEP}vh` }}
-            />
-          ))}
-        </div>
-
-        <div
-          onPointerMove={onMove}
-          className="sticky top-0 h-screen overflow-hidden transition-colors duration-1000"
-          style={{ background: PROJECTS[active].tone }}
-        >
-          <div className="mx-auto grid h-full max-w-[1400px] grid-cols-12 items-center gap-8 px-10">
-            <div className="col-span-5">
-              <div className="grid">
-                {PROJECTS.map((p, i) => (
-                  <div
-                    key={p.name}
-                    inert={active !== i}
-                    className={`col-start-1 row-start-1 transition-[opacity,transform] duration-700 ease-out ${
-                      active === i ? 'translate-y-0 opacity-100 delay-300' : 'pointer-events-none -translate-y-3 opacity-0'
-                    }`}
-                  >
-                    <Caption p={p} i={i} />
-                  </div>
-                ))}
-              </div>
-              <div className="mt-12 flex gap-2" aria-hidden>
-                {PROJECTS.map((_, i) => (
-                  <span key={i} className="relative h-px w-14 bg-paper/20">
-                    <span className={`absolute inset-0 origin-left bg-paper transition-transform duration-700 ${active === i ? 'scale-x-100' : 'scale-x-0'}`} />
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative col-span-7 h-[70vh]">
-              {PROJECTS.map((p, i) => (
-                <div
-                  key={p.name}
-                  inert={active !== i}
-                  className={`absolute inset-0 grid place-items-center transition-[clip-path,opacity] duration-[1100ms] ease-[cubic-bezier(0.7,0,0.2,1)] ${
-                    active === i ? 'opacity-100 [clip-path:inset(0)]' : 'opacity-0 [clip-path:inset(0_0_100%_0)]'
-                  }`}
-                >
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    data-cursor="Ver projeto"
-                    aria-label={`Abrir ${p.name}`}
-                    className="flex w-full justify-center transition-transform duration-300 ease-out"
-                    style={{ transform: 'translate3d(calc(var(--mx, 0) * -14px), calc(var(--my, 0) * -10px), 0)' }}
-                  >
-                    <Cover p={p} eager={i === 0 || warm} style={{ width: 'min(100%, 105vh)' }} />
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile: uma imagem grande por projeto, compacto */}
-      <div className="md:hidden">
-        {PROJECTS.map((p, i) => (
-          <article key={p.name} className="border-t border-paper/15 px-5 py-8">
-            <ClipBox>
-              <a href={p.url} target="_blank" rel="noreferrer" aria-label={`Abrir ${p.name}`} className="block">
-                <Cover p={p} eager={i === 0} className="w-full" />
-              </a>
-            </ClipBox>
-            <Reveal className="mt-5 flex items-end justify-between gap-4">
-              <div>
-                <p className="label text-ash">0{i + 1} / 0{N} — {p.kind}</p>
-                <h3 className="mt-2 font-display text-[2.6rem] leading-[0.95]">{p.name}</h3>
-                <p className="mt-2 max-w-[15rem] text-sm leading-relaxed text-paper/70">{p.desc}</p>
-              </div>
-              <a href={p.url} target="_blank" rel="noreferrer" className="btn btn-signal-on-dark shrink-0 !px-4 !py-3">
-                <span>Ver</span><span className="btn-arrow" aria-hidden>→</span>
-              </a>
-            </Reveal>
-          </article>
-        ))}
-      </div>
-
-      <div className="mx-auto max-w-[1400px] px-5 pb-20 md:px-10 md:pb-32">
+      <h2 className="sr-only">Projetos</h2>
+      {PROJECTS.map((p, i) => (
+        <Scene key={p.name} p={p} i={i} />
+      ))}
+      <div className="mx-auto max-w-[1400px] px-5 pb-20 pt-6 md:px-10 md:pb-32">
         <CtaStrip dark lead="Quer algo assim para o seu negócio?" label="Quero algo assim" href={QUOTE_LINK} />
         <p className="label mt-2 text-ash">
           Gosta de movimento?{' '}
