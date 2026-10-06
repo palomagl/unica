@@ -80,9 +80,9 @@ export const SERVICES: Service[] = [
 ]
 
 /**
- * Capa de projeto = mockups prontos (iPhone/MacBook) recortados dentro de uma moldura clara e única.
- * Posições e larguras em "cqw" (1cqw = 1% da largura da moldura). Moldura 5:4 = altura de 80cqw.
- * Os aparelhos "nascem" da borda (recorte parcial); cada projeto tem sua composição, a moldura é a mesma.
+ * Cena de projeto = mockups reais (iPhone/MacBook) apoiados numa bancada de pedra, em perspectiva e com sombra projetada,
+ * para não parecer um print. A bancada (foto de travertino) e a luz são as mesmas nos três; a composição muda.
+ * Posições e larguras em "cqw" (1cqw = 1% da largura da moldura). Moldura 3:2 = altura de 66,7cqw.
  */
 export type Device = {
   src: string
@@ -91,6 +91,9 @@ export type Device = {
   w: number
   z?: number
   k?: number // profundidade: quanto o aparelho se move no parallax (maior = mais à frente)
+  rx?: number // inclinação (graus) — o aparelho "deitado" na bancada, visto de cima em perspectiva
+  ry?: number
+  rz?: number // giro no plano
 }
 
 export type Project = {
@@ -110,8 +113,9 @@ export const PROJECTS: Project[] = [
     desc: 'Aplicativo digital de apoio à doação de sangue.',
     url: 'https://doe-mais-rs.vercel.app/',
     devices: [
-      { src: '/projects/doe-locais.webp', x: 11, y: 27, w: 33, k: 0.8 },
-      { src: '/projects/doe-home.webp', x: 41, y: 9, w: 40, z: 2, k: 1.6 },
+      { src: '/projects/doe-login.webp', x: 6, y: 9, w: 24, rx: 30, rz: 16, k: 0.8 },
+      { src: '/projects/doe-locais.webp', x: 62, y: 10, w: 24, rx: 28, rz: 9, k: 1 },
+      { src: '/projects/doe-home.webp', x: 33, y: 3, w: 27, z: 2, rx: 26, rz: 12, k: 1.6 },
     ],
   },
   {
@@ -121,8 +125,8 @@ export const PROJECTS: Project[] = [
     desc: 'Experiência digital para uma hamburgueria.',
     url: 'https://borapedir-delivery.vercel.app/bruto',
     devices: [
-      { src: '/projects/bruto-laptop.webp', x: 20, y: 9, w: 96, k: 0.8 },
-      { src: '/projects/bruto-phone.webp', x: 7, y: 44, w: 27, z: 2, k: 1.7 },
+      { src: '/projects/bruto-laptop.webp', x: -3, y: 6, w: 72, rx: 8, ry: -20, rz: -2, k: 0.9 },
+      { src: '/projects/bruto-phone.webp', x: 66, y: 12, w: 25, z: 2, rx: 30, rz: 18, k: 1.7 },
     ],
   },
   {
@@ -132,7 +136,8 @@ export const PROJECTS: Project[] = [
     desc: 'Presença digital para uma empresa de marmoraria.',
     url: 'https://vertice-marmores.vercel.app/',
     devices: [
-      { src: '/projects/marm-laptop.webp', x: -12, y: 20, w: 124, k: 1 },
+      { src: '/projects/marm-laptop.webp', x: 9, y: 7, w: 80, rx: 8, ry: -20, rz: -2, k: 1 },
+      { src: '/projects/marm-phone.webp', x: 72, y: 24, w: 19, z: 2, rx: 30, rz: 20, k: 1.7 },
     ],
   },
 ]

@@ -125,11 +125,22 @@ section[id] { scroll-margin-top: 0; }
 .noscript-title { font-family: var(--font-display); font-size: 4rem; line-height: 1; }
 .noscript a { color: var(--color-signal); text-decoration: underline; }
 
-/* ───────── Capas de projeto: mockups recortados dentro de uma moldura única ───────── */
-.cover { position: relative; overflow: hidden; aspect-ratio: 5 / 4; container-type: inline-size; }
-.mock { position: absolute; display: block; height: auto; max-width: none; user-select: none;
-  filter: drop-shadow(0 1cqw 1.6cqw rgba(11, 11, 11, 0.2));
+/* ───────── Cena de projeto: aparelhos em perspectiva sobre uma bancada de pedra ───────── */
+.cover { position: relative; overflow: hidden; aspect-ratio: 3 / 2; container-type: inline-size; background: #d8d1c3 url(/projects/surface.jpg) 40% 30% / 150% auto; }
+.cover::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 9;
+  background: linear-gradient(118deg, rgba(255, 252, 245, 0.34) 0%, rgba(255, 252, 245, 0) 46%, rgba(40, 28, 14, 0.14) 100%); }
+.mock-wrap { position: absolute;
+  filter: drop-shadow(0.7cqw 1.3cqw 0.9cqw rgba(48, 34, 18, 0.34)) drop-shadow(1.4cqw 3cqw 3cqw rgba(48, 34, 18, 0.2));
   transform: translate3d(calc(var(--mx, 0) * var(--k, 1) * -5px), calc((var(--my, 0) * -3px + var(--sy, 0) * 1px) * var(--k, 1)), 0); transition: transform 0.7s var(--ease-out-expo); will-change: transform; }
+.mock { display: block; width: 100%; height: auto; max-width: none; user-select: none; transform-origin: 50% 60%; }
+
+/* Abertura: tela preta com o ÚNICA vazado. As letras (máscara) crescem e se dissolvem em preto. */
+.knock { position: absolute; inset: 0; z-index: 30; background: #0b0b0b;
+  -webkit-mask-image: url(/unica-logo-white.png), linear-gradient(#000, #000); mask-image: url(/unica-logo-white.png), linear-gradient(#000, #000);
+  -webkit-mask-repeat: no-repeat, no-repeat; mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-size: var(--mw, 86vw) auto, 100% 100%; mask-size: var(--mw, 86vw) auto, 100% 100%;
+  -webkit-mask-position: var(--ml, 7vw) var(--mt, 30vh), 0 0; mask-position: var(--ml, 7vw) var(--mt, 30vh), 0 0;
+  -webkit-mask-composite: xor; mask-composite: exclude; }
 
 /* ───────── Entrada (hero): ÚNICA gigante que se expande até revelar o vídeo ───────── */
 .hx { position: relative; height: 240svh; }
@@ -161,7 +172,7 @@ section[id] { scroll-margin-top: 0; }
 .pj-stage { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 4.2rem; overflow: hidden; }
 .pj-grid { display: grid; gap: 1.1rem; margin-top: 1.4rem; }
 .pj-list { list-style: none; margin: 0; padding: 0; }
-.pj-side { display: flex; flex-direction: column; gap: 0.7rem; width: min(100%, calc(44svh * 1.25)); justify-self: end; }
+.pj-side { display: flex; flex-direction: column; gap: 0.7rem; width: min(100%, calc(44svh * 1.5)); justify-self: end; }
 
 /* Entrada em camadas, cada uma com seu tempo: título (Words) → linhas (desenham) → texto sobe → moldura (máscara) → aparelhos. */
 .pj-row { position: relative; }
@@ -201,7 +212,7 @@ section[id] { scroll-margin-top: 0; }
 .pj-ticks button.is-on { color: var(--color-signal); }
 
 /* A moldura é a mesma para os três: papel um tom mais escuro, fio fino, sem sombra própria. */
-.pv { position: relative; display: block; aspect-ratio: 5 / 4; width: 100%; overflow: hidden;
+.pv { position: relative; display: block; aspect-ratio: 3 / 2; width: 100%; overflow: hidden;
   background: color-mix(in srgb, var(--color-ink) 6%, var(--color-paper-2)); box-shadow: inset 0 0 0 1px rgb(11 11 11 / 0.16); }
 .js .pj-side:not(.in) .pv { clip-path: inset(0 0 100% 0); }
 .js .pj-side .pv { transition: clip-path 1.4s cubic-bezier(0.7, 0, 0.2, 1) 0.9s; }
@@ -215,13 +226,23 @@ section[id] { scroll-margin-top: 0; }
 .pv .cover { width: 100%; height: 100%; aspect-ratio: auto; }
 .pj-open { align-self: flex-start; padding: 0.35rem 0; }
 
+/* Celular: um projeto por vez (como numa vitrine), com a foto embaixo e progresso no rodapé. */
+.pj-foot { display: none; }
 @media (max-width: 767px) {
-  .pj-row:not([data-active="true"]) .pj-meta { grid-template-rows: 0fr; }
-  .pj-row[data-active="true"] .pj-meta { padding-top: 0.3rem; }
-  .pj-link { padding-top: 0.8rem; padding-bottom: 0.85rem; align-items: center; }
+  .pj-list { display: grid; }
+  .pj-row { grid-area: 1 / 1; opacity: 0; transform: translate3d(0, 10px, 0); pointer-events: none; transition: opacity 0.7s ease, transform 0.9s var(--ease-out-expo); }
+  .pj-row[data-active="true"] { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0.18s; }
+  .pj-end, .pj-count, .pj-open { display: none; }
+  .pj-link { padding-top: 0.9rem; padding-bottom: 1rem; align-items: center; }
   .pj-arrow { grid-row: 1; }
-  .pj-stage { padding-top: 4.4rem; }
-  .pj-side { width: min(100%, calc(30svh * 1.25)); justify-self: start; }
+  .pj-meta-in { padding-top: 0.35rem; }
+  .pj-stage { padding-top: 4.6rem; }
+  .pj-stage .words { font-size: clamp(2.5rem, 11.5vw, 3.4rem) !important; line-height: 0.98 !important; }
+  .pj-grid { margin-top: 1.1rem; gap: 0.9rem; }
+  .pj-side { width: 100%; justify-self: stretch; }
+  .pj-foot { display: flex; align-items: center; gap: 0.9rem; margin-top: 1rem; color: var(--color-ash); }
+  .pj-prog { flex: 1; height: 1px; background: rgb(11 11 11 / 0.2); position: relative; }
+  .pj-prog span { position: absolute; inset: 0; background: var(--color-signal); transform-origin: left; transition: transform 0.9s var(--ease-out-expo); }
 }
 @media (min-width: 768px) {
   .pj { height: 240svh; }
@@ -241,8 +262,9 @@ section[id] { scroll-margin-top: 0; }
   .pj-grid { margin-top: 0.9rem; gap: 0.7rem; }
   .pj-link { padding-top: 0.55rem; padding-bottom: 0.6rem; }
   .pj-name { font-size: clamp(1.5rem, 5.2vw, 2.2rem); }
-  .pj-side { width: min(100%, calc(26svh * 1.25)); }
+  .pj-side { width: min(100%, calc(32svh * 1.5)); }
   .pj-stage .words { font-size: clamp(1.7rem, 5vw, 3rem) !important; }
+  .pj-foot { margin-top: 0.6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -250,7 +272,7 @@ section[id] { scroll-margin-top: 0; }
   .pj-stage { position: relative; height: auto; padding: 5rem 0; }
   .pv-item.is-on, .pv-item.is-off { animation: none; }
   .pv-item.is-off { opacity: 0; }
-  .mock { transition: none; transform: none; }
+  .mock-wrap { transition: none; transform: none; }
   .js .pj-side:not(.in) .pv, .js .pj-side .pv { clip-path: none; transition: none; }
   .js .pj-row .pj-rule, .js .pj-row .pj-in, .js .pj-end .pj-rule { transition: none; transform: none; opacity: 1; }
 }

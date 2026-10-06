@@ -142,8 +142,18 @@ export function Projects() {
                   </div>
                 </a>
 
-                <a href={p.url} target="_blank" rel="noreferrer" className="pj-open ulink label">Ver {p.name} →</a>
               </div>
+            </div>
+
+            {/* Celular: contador, progresso e atalhos (o desktop usa o contador acima da moldura) */}
+            <div className="pj-foot label" aria-hidden>
+              <span>{pad(active + 1)} / {pad(N)}</span>
+              <span className="pj-prog"><span style={{ transform: `scaleX(${(active + 1) / N})` }} /></span>
+              <span className="pj-ticks">
+                {PROJECTS.map((_, i) => (
+                  <button key={i} type="button" tabIndex={-1} className={i === active ? 'is-on' : ''} onClick={() => setManual(i)}>{pad(i + 1)}</button>
+                ))}
+              </span>
             </div>
           </div>
         </div>
