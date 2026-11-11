@@ -31,28 +31,34 @@ const palettes = [
 
 const projects = [
   {
-    name: 'Bruto',
-    kind: 'Site e experiência de pedidos',
-    outcome: 'Uma apresentação marcante para a hamburgueria, com foco em facilitar o caminho do cliente até o pedido.',
-    visual: 'bruto',
-    url: 'https://borapedir-delivery.vercel.app/bruto',
+    name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
+    outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
+    visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
-    name: 'Karoane',
-    kind: 'Loja virtual',
-    outcome: 'Um espaço para apresentar produtos e criar uma experiência de compra mais prática e organizada.',
-    visual: 'karoane',
-    url: 'https://karoane.vercel.app/',
+    name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
+    outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
+    visual: 'karoane', url: 'https://karoane.vercel.app/',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
-    name: 'Vértice Mármores',
-    kind: 'Sistema e experiência digital',
-    outcome: 'Uma solução pensada para valorizar o trabalho da marmoraria e organizar etapas do atendimento.',
-    visual: 'vertice',
-    url: 'https://vertice-marmores.vercel.app/',
+    name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
+    outcome: 'Uma solução para apresentar o trabalho da marmoraria e apoiar etapas do atendimento e orçamento.',
+    visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
+  },
+  {
+    name: 'Doação de sangue', brand: 'DOE+ RS', kind: 'Aplicação de impacto social',
+    outcome: 'Uma experiência digital para apoiar e incentivar a doação de sangue no Rio Grande do Sul.',
+    visual: 'doe', url: 'https://doe-mais-rs.vercel.app/',
+    bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
+  },
+  {
+    name: 'Organização pessoal', brand: 'Minha Rotina', kind: 'Aplicativo de rotina',
+    outcome: 'Organização prática de atividades e hábitos no dia a dia, direto pelo celular.',
+    visual: 'rotina', url: '',
+    bg: 'linear-gradient(135deg,#8cc9b4,#305e58)',
   },
 ]
 
@@ -79,12 +85,26 @@ function ProjectArtwork({ visual, phone = false }: { visual: string; phone?: boo
     <div className="u-art-chip">EXPLORAR ↗</div>
     <div className="u-art-caption">PROPOSTA VISUAL · LOJA ONLINE</div>
   </div>
+  if (visual === 'doe') return <div className={`u-art u-art-doe ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>DOE<span>+</span> RS</b><span>DOAÇÃO DE SANGUE</span></div>
+    <div className="u-doe-symbol" aria-hidden="true">+</div>
+    <div className="u-art-title">UM GESTO.<br /><em>MUITAS VIDAS.</em></div>
+    <div className="u-art-chip">SAIBA MAIS ↗</div>
+    <div className="u-art-caption">CONCEITO VISUAL · IMPACTO SOCIAL</div>
+  </div>
+  if (visual === 'rotina') return <div className={`u-art u-art-rotina ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>minha rotina<span>.</span></b><span>MEU DIA</span></div>
+    <div className="u-rotina-lines" aria-hidden="true"><i/><i/><i/></div>
+    <div className="u-art-title">SEU DIA.<br /><em>SEU RITMO.</em></div>
+    <div className="u-art-chip">ORGANIZE-SE ↗</div>
+    <div className="u-art-caption">CONCEITO VISUAL · ORGANIZAÇÃO PESSOAL</div>
+  </div>
   return <div className={`u-art u-art-vertice ${phone ? 'u-art-phone' : ''}`}>
     <div className="u-art-nav"><b>VÉRTICE<span> / </span></b><span>MÁRMORES</span></div>
     <div className="u-vertice-shape"><span/><span/><span/></div>
     <div className="u-art-title">MATÉRIA.<br /><em>FORMA.</em></div>
     <div className="u-art-chip">CONHEÇA ↗</div>
-    <div className="u-art-caption">PROPOSTA VISUAL · MARMORARIA</div>
+    <div className="u-art-caption">CONCEITO VISUAL · MARMORARIA</div>
   </div>
 }
 
@@ -124,10 +144,12 @@ export default function App() {
             <a href="#cores">Diferenciais</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
           </nav>
           <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento ↗</a>
-          <button className="u-hamburger" type="button" aria-label="Abrir menu" aria-expanded={openMenu} onClick={() => setOpenMenu(v => !v)}>☰</button>
-          {openMenu && <nav className="u-mobile-nav" aria-label="Menu mobile">
-            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#cores'],['Sobre','#sobre'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}</a>)}
-            <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento ↗</a>
+          <button className="u-hamburger" type="button" aria-label={openMenu ? 'Fechar menu' : 'Abrir menu'} aria-controls="u-mobile-menu" aria-expanded={openMenu} onClick={() => setOpenMenu(v => !v)}>
+            <span className={`u-ham-lines ${openMenu ? 'open' : ''}`}><i/><i/><i/></span>
+          </button>
+          {openMenu && <nav id="u-mobile-menu" className="u-mobile-nav" aria-label="Menu mobile">
+            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#cores'],['Sobre','#sobre'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true">↗</span></a>)}
+            <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Pedir orçamento <span aria-hidden="true">↗</span></a>
           </nav>}
         </header>
         <div className="u-hero u-wrap">
@@ -205,13 +227,13 @@ export default function App() {
             </div>
             <div className="u-project-copy">
               <span className="u-kicker">{p.kind}</span>
-              <h3>{p.name}</h3>
-              <p>{p.outcome}</p><p className="u-concept-note">Visual ilustrativo. Veja o projeto real no link abaixo.</p>
-              <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto ↗</a>
+              <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
+              <p>{p.outcome}</p><p className="u-concept-note">Ilustração conceitual — conheça o projeto para ver como funciona.</p>
+              {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto ↗</a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim ↗</a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
                 <button className="u-control" type="button" aria-label="Próximo projeto" onClick={()=>changeProject(1)}>→</button>
-                <span style={{alignSelf:'center',marginLeft:10,fontSize:13}}>{String(project+1).padStart(2,'0')} / 03</span>
+                <span style={{alignSelf:'center',marginLeft:10,fontSize:13}}>{String(project+1).padStart(2,'0')} / {String(projects.length).padStart(2,'0')}</span>
               </div>
             </div>
           </div>
@@ -231,7 +253,7 @@ export default function App() {
       </section>
 
       <section id="contato" className="u-final">
-        <div className="u-wrap u-reveal"><h2>Vamos transformar sua ideia em resultado?</h2><a className="u-pill" style={{background:'#24170f',color:'#fff'}} href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento ↗</a></div>
+        <div className="u-wrap u-reveal"><h2>Vamos transformar sua ideia em resultado?</h2><a className="u-pill u-pill-final" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento ↗</a></div>
       </section>
       <footer className="u-footer"><div className="u-wrap"><strong>ÚNICA® — ESTÚDIO DIGITAL</strong><span>Design com personalidade. Soluções com propósito.</span><a href="#inicio">Voltar ao topo ↑</a></div></footer>
     </div>
