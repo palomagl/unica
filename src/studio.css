@@ -48,8 +48,8 @@ body{margin:0}
 .u-scroll span{font-size:23px;border:1px solid #44372b6a;border-radius:30px;padding:2px 10px}
 .u-section{padding:115px 0}
 .u-kicker{border:1px solid currentColor;border-radius:30px;display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 13px;margin-bottom:24px}
-.u-h2{font-size:clamp(42px,5vw,83px);line-height:.95;letter-spacing:-.07em;font-weight:900;margin:0}
-.u-h2 mark,.u-section mark{background:var(--u-accent);color:var(--u-ink);padding:0 .12em;border-radius:12px}
+.u-h2{font-size:clamp(40px,4.3vw,70px);line-height:.95;letter-spacing:-.07em;font-weight:900;margin:0}
+.u-h2 mark,.u-section mark{background:var(--u-accent);color:var(--u-ink);padding:0 .1em .015em;border-radius:12px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .u-intro{display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center}
 .u-lead{font-size:clamp(18px,2vw,24px);max-width:470px;line-height:1.35}
 .u-list-solutions{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:65px}
@@ -68,7 +68,7 @@ body{margin:0}
 .u-demo:after{content:'';position:absolute;width:70%;aspect-ratio:1;right:-22%;bottom:-60%;background:var(--u-paper);border-radius:42% 58% 66% 34%;transform:rotate(-20deg);transition:background .7s}
 .u-demo-head{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;position:relative;z-index:2}
 .u-demo-head i{width:55px;height:12px;background:var(--u-accent);border-radius:20px}
-.u-demo h3{font-size:clamp(38px,4vw,67px);line-height:.93;letter-spacing:-.065em;font-weight:900;margin:0;max-width:340px;position:relative;z-index:2}
+.u-demo h3{font-size:clamp(36px,3.4vw,58px);line-height:.93;letter-spacing:-.065em;font-weight:900;margin:0;max-width:340px;position:relative;z-index:2}
 .u-demo mark{background:var(--u-accent);color:#101010;border-radius:11px}
 .u-demo-foot{font-size:13px;position:relative;z-index:2}
 .u-portfolio-top{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:45px}
@@ -152,3 +152,69 @@ body{margin:0}
  .u-footer .u-wrap{flex-direction:column;align-items:flex-start}
 }
 @media(prefers-reduced-motion:reduce){.u-site *{animation:none!important;transition:none!important;scroll-behavior:auto!important}.u-reveal{opacity:1;transform:none}}
+
+/* Identidade gráfica ÚNICA — símbolo vetorial e lettering */
+.u-new-logo{display:inline-flex;align-items:center;gap:8px;position:relative;font-size:clamp(28px,3vw,46px);font-style:italic;font-weight:900;letter-spacing:-.09em;line-height:1}
+.u-new-logo svg{height:.86em;width:.86em;flex:none}
+.u-new-logo sup{font:700 10px 'Hanken Grotesk',sans-serif;letter-spacing:0;align-self:flex-start;margin-top:-.1em}
+.u-brand:hover .u-new-logo svg{transform:rotate(-8deg);transition:transform .4s}
+.u-colors-layout>div:first-child{min-width:0}
+.u-colors-layout h2{max-width:570px;overflow-wrap:normal}
+.u-colors-layout h2 mark{display:inline;-webkit-box-decoration-break:clone;box-decoration-break:clone;line-height:1.2}
+.u-color-section .u-lead{max-width:480px;line-height:1.5;font-size:clamp(17px,1.5vw,21px)}
+.u-demo{isolation:isolate}
+.u-demo h3{max-width:440px;overflow-wrap:normal}
+.u-demo h3 mark{-webkit-box-decoration-break:clone;box-decoration-break:clone;line-height:1.2}
+.u-concept-note{font-size:12px!important;opacity:.65;margin-top:8px!important}
+
+/* Project showcase: novos visuais editoriais desenhados em CSS.
+   Não reaproveita fotografias, prints ou mockups do projeto anterior. */
+.u-project-visual{background:linear-gradient(135deg,#99694d,#593f35)}
+.u-desktop-frame{background:#f0e6d8}
+.u-phone-frame{background:#f0e6d8}
+.u-art{width:100%;height:100%;position:relative;overflow:hidden;padding:6%;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}
+.u-art-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;position:relative;z-index:2;font-size:clamp(7px,.85vw,13px);font-weight:800;letter-spacing:.06em}
+.u-art-nav b{font-weight:900;font-size:1.15em;letter-spacing:-.05em}
+.u-art-title{font-size:clamp(19px,3.3vw,66px);letter-spacing:-.085em;font-weight:900;line-height:.86;position:relative;z-index:2}
+.u-art-title em{font-style:italic}
+.u-art-chip{background:var(--u-accent);color:#17110e;border-radius:50px;padding:8px 14px;width:max-content;max-width:90%;font-weight:900;font-size:clamp(8px,.85vw,13px);position:relative;z-index:2}
+.u-art-caption{position:absolute;right:5%;bottom:8%;font-size:8px;opacity:.7;letter-spacing:.07em;z-index:3;writing-mode:vertical-rl}
+.u-art-bruto{background:#20150f;color:#fdf1d9}
+.u-art-bruto .u-art-nav b span{color:#ffac32}
+.u-bruto-circle{position:absolute;width:52%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 25%,#f5b45d,#aa4f18 60%,#56250f);right:-10%;top:15%;box-shadow:inset -30px -20px 38px #3c180d;filter:drop-shadow(0 6px 18px #0007);opacity:.92}
+.u-bruto-circle:before{content:'';position:absolute;inset:28%;border:12px solid #ffda89;border-left-color:#5c280d;border-radius:50%;transform:rotate(32deg)}
+.u-art-karoane{background:#ffe8ec;color:#4e182a}
+.u-karoane-shape{position:absolute;width:56%;height:88%;right:0;top:10%;display:flex;gap:8%;transform:rotate(-15deg)}
+.u-karoane-shape i{background:#fba0ad;border-radius:48% 48% 9% 9%;width:26%;height:87%;box-shadow:inset -7px -8px 15px #dc688b4a}
+.u-karoane-shape i:nth-child(2){background:#ee6488;height:67%;margin-top:18%}
+.u-karoane-shape i:nth-child(3){background:#ffc768;height:46%;margin-top:38%}
+.u-art-karoane .u-art-chip{background:#4e182a;color:white}
+.u-art-vertice{background:linear-gradient(140deg,#171a18,#3c4643);color:#f3eee3}
+.u-vertice-shape{position:absolute;width:60%;height:85%;right:2%;bottom:0;display:flex;gap:2%;align-items:end;transform:skewY(-10deg)}
+.u-vertice-shape span{height:62%;width:31%;background:linear-gradient(130deg,#d3cbbd,#777d76);box-shadow:inset -20px 0 25px #262c2880;clip-path:polygon(15% 0,100% 0,85% 100%,0 100%)}
+.u-vertice-shape span:nth-child(2){height:88%;background:linear-gradient(130deg,#c5c0b4,#5e6963)}
+.u-vertice-shape span:nth-child(3){height:75%;background:linear-gradient(130deg,#a8a69d,#323d36)}
+.u-art-phone{padding:12% 9%}
+.u-art-phone .u-art-title{font-size:clamp(13px,1.5vw,25px);line-height:.94}
+.u-art-phone .u-art-chip{font-size:7px;padding:4px 6px}
+.u-art-phone .u-art-nav{font-size:6px}
+.u-art-phone .u-art-caption{display:none}
+.u-art-phone .u-bruto-circle{width:115%;right:-58%;top:20%}
+.u-art-phone .u-karoane-shape{width:125%;right:-60%}
+.u-art-phone .u-vertice-shape{width:105%;right:-45%}
+@media(max-width:850px){
+ .u-new-logo{font-size:32px}
+ .u-colors-layout h2{font-size:clamp(40px,8.5vw,64px)}
+ .u-demo h3{font-size:clamp(34px,7vw,58px)}
+ .u-art-title{font-size:clamp(31px,6vw,62px)}
+ .u-art-phone .u-art-title{font-size:clamp(13px,3vw,21px)}
+}
+@media(max-width:480px){
+ .u-new-logo{font-size:30px}
+ .u-colors-layout h2{font-size:clamp(37px,11.5vw,54px)}
+ .u-color-section .u-lead{font-size:17px}
+ .u-demo{min-height:300px;padding:24px}
+ .u-demo h3{font-size:clamp(36px,10vw,48px)}
+ .u-art-title{font-size:clamp(23px,6vw,37px)}
+ .u-art-phone .u-art-title{font-size:clamp(11px,3.1vw,17px)}
+}
