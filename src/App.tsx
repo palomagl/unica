@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from 'react'
 import { QUOTE_LINK } from './content'
 import './studio.css'
 
@@ -112,6 +112,7 @@ export default function App() {
   const [palette, setPalette] = useState(0)
   const [project, setProject] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
+  const touchStart = useRef<number | null>(null)
   const selected = palettes[palette]
   const p = projects[project]
   const variables = {
@@ -130,6 +131,20 @@ export default function App() {
   }, [])
 
   const changeProject = (step: number) => setProject((v) => (v + step + projects.length) % projects.length)
+  const swipeStart = (event: TouchEvent<HTMLElement>) => { touchStart.current = event.touches[0]?.clientX ?? null }
+  const swipeEnd = (event: TouchEvent<HTMLElement>) => {
+    if (touchStart.current === null) return
+    const diff = (event.changedTouches[0]?.clientX ?? touchStart.current) - touchStart.current
+    touchStart.current = null
+    if (Math.abs(diff) >= 55) changeProject(diff < 0 ? 1 : -1)
+  }
+
+  useEffect(() => {
+    if (!openMenu) return
+    const onEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpenMenu(false) }
+    document.addEventListener('keydown', onEscape)
+    return () => document.removeEventListener('keydown', onEscape)
+  }, [openMenu])
 
   return (
     <div className="u-site" style={variables}>
@@ -199,7 +214,7 @@ export default function App() {
             <h2 className="u-h2">A cor certa faz sua marca <mark>ser lembrada.</mark></h2>
             <p className="u-lead">Cada detalhe transmite uma sensação. Experimente as cores e veja os destaques ganharem outra personalidade.</p>
             <div className="u-swatch-list" role="group" aria-label="Escolher cor dos detalhes">
-              {palettes.map((c,i) => <button key={c.id} className="u-swatch" type="button" aria-label={c.name} aria-pressed={palette === i} style={{ background: c.accent }} onClick={() => setPalette(i)} title={c.name}/>)}
+              {palettes.map((c,i) => <button key={c.id} className="u-swatch" type="button" aria-label={`Usar detalhes em ${c.name.toLowerCase()}`} aria-pressed={palette === i} style={{ background: c.accent }} onClick={() => setPalette(i)} title={c.name}/>)}
             </div>
             <p style={{ fontSize: 13, fontWeight: 800, marginTop: 20 }}>{selected.name} — cor de destaque ativa</p>
           </div>
@@ -217,15 +232,15 @@ export default function App() {
             <div><span className="u-kicker">PROJETOS EM DESTAQUE</span><h2 className="u-h2">Soluções reais<br />para negócios <mark>reais.</mark></h2></div>
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
-          <div className="u-project-feature u-reveal">
-            <div className="u-project-visual" style={{background:p.bg}}>
+          <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
+            <div className="u-project-visual" style={{background:p.bg}} key={p.visual}>
               <div style={{width:'100%'}}>
                 <div className="u-desktop-frame"><ProjectArtwork visual={p.visual}/></div>
                 <div className="u-stand"/>
               </div>
               <div className="u-phone-frame"><ProjectArtwork visual={p.visual} phone/></div>
             </div>
-            <div className="u-project-copy">
+            <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
               <p>{p.outcome}</p><p className="u-concept-note">Ilustração conceitual — conheça o projeto para ver como funciona.</p>
@@ -238,7 +253,7 @@ export default function App() {
             </div>
           </div>
           <div className="u-small-projects" role="group" aria-label="Selecionar projeto">
-            {projects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} onClick={()=>setProject(i)}>{q.name}</button>)}
+            {projects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver exemplo de ${q.name}: ${q.brand}`} onClick={()=>setProject(i)}>{q.name}</button>)}
           </div>
         </div>
       </section>
