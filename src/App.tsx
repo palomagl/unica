@@ -23,10 +23,10 @@ const services = [
 ]
 
 const palettes = [
-  { id: 'original', name: 'Marrom + lima', accent: '#d2ff22', bg: '#916047', deep: '#673a27', paper: '#f8f0e5', ink: '#28160f' },
-  { id: 'lilas', name: 'Roxo + lima', accent: '#d2ff22', bg: '#310b38', deep: '#240528', paper: '#f9f2ee', ink: '#281327' },
-  { id: 'coral', name: 'Grafite + coral', accent: '#ff8267', bg: '#343333', deep: '#242323', paper: '#f5f0e7', ink: '#252221' },
-  { id: 'turquesa', name: 'Oliva + turquesa', accent: '#82ead8', bg: '#3f5846', deep: '#273b30', paper: '#f3f1e8', ink: '#1b2921' },
+  { id: 'lima', name: 'Lima elétrico', accent: '#C8FA20' },
+  { id: 'lilas', name: 'Lilás', accent: '#C6A3FF' },
+  { id: 'coral', name: 'Coral', accent: '#FF826D' },
+  { id: 'turquesa', name: 'Turquesa', accent: '#79E6D6' },
 ]
 
 const projects = [
@@ -34,7 +34,7 @@ const projects = [
     name: 'Bruto',
     kind: 'Site e experiência de pedidos',
     outcome: 'Uma apresentação marcante para a hamburgueria, com foco em facilitar o caminho do cliente até o pedido.',
-    image: '/projects/bruto.webp',
+    visual: 'bruto',
     url: 'https://borapedir-delivery.vercel.app/bruto',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
@@ -42,7 +42,7 @@ const projects = [
     name: 'Karoane',
     kind: 'Loja virtual',
     outcome: 'Um espaço para apresentar produtos e criar uma experiência de compra mais prática e organizada.',
-    image: '',
+    visual: 'karoane',
     url: 'https://karoane.vercel.app/',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
@@ -50,15 +50,42 @@ const projects = [
     name: 'Vértice Mármores',
     kind: 'Sistema e experiência digital',
     outcome: 'Uma solução pensada para valorizar o trabalho da marmoraria e organizar etapas do atendimento.',
-    image: '/projects/vertice.webp',
+    visual: 'vertice',
     url: 'https://vertice-marmores.vercel.app/',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
 ]
 
-function ProjectScreen({ image, name }: { image: string; name: string }) {
-  if (image) return <img src={image} alt={'Prévia do projeto ' + name} loading="lazy" />
-  return <div className="u-preview-fallback"><strong>Karoane</strong><small>Loja virtual • prévia real a inserir</small></div>
+function NewLogo() {
+  return <span className="u-new-logo"><svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+    <path d="M9 10v16c0 9 5 14 13 14s13-5 13-14V10" stroke="currentColor" strokeWidth="9" strokeLinecap="square" />
+    <path d="m24 1 10 0-9 9H15z" fill="var(--u-accent)" />
+  </svg><span>ÚNICA</span><sup>®</sup></span>
+}
+
+/** Conceitos gráficos autorais: nenhuma foto, screenshot ou mockup do site antigo. */
+function ProjectArtwork({ visual, phone = false }: { visual: string; phone?: boolean }) {
+  if (visual === 'bruto') return <div className={`u-art u-art-bruto ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>BRUTO<span>.</span></b><span>MENU&nbsp;&nbsp; PEDIDOS</span></div>
+    <div className="u-bruto-circle" />
+    <div className="u-art-title">FOME DE<br /><em>BRUTO.</em></div>
+    <div className="u-art-chip">PEÇA O SEU ↗</div>
+    <div className="u-art-caption">PROPOSTA VISUAL · HAMBURGUERIA</div>
+  </div>
+  if (visual === 'karoane') return <div className={`u-art u-art-karoane ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>karoane.</b><span>COLEÇÃO&nbsp; ↗</span></div>
+    <div className="u-karoane-shape"><i/><i/><i/></div>
+    <div className="u-art-title">CORES PARA<br /><em>CRIAR.</em></div>
+    <div className="u-art-chip">EXPLORAR ↗</div>
+    <div className="u-art-caption">PROPOSTA VISUAL · LOJA ONLINE</div>
+  </div>
+  return <div className={`u-art u-art-vertice ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>VÉRTICE<span> / </span></b><span>MÁRMORES</span></div>
+    <div className="u-vertice-shape"><span/><span/><span/></div>
+    <div className="u-art-title">MATÉRIA.<br /><em>FORMA.</em></div>
+    <div className="u-art-chip">CONHEÇA ↗</div>
+    <div className="u-art-caption">PROPOSTA VISUAL · MARMORARIA</div>
+  </div>
 }
 
 export default function App() {
@@ -68,11 +95,7 @@ export default function App() {
   const selected = palettes[palette]
   const p = projects[project]
   const variables = {
-    '--u-bg': selected.bg,
-    '--u-bg-deep': selected.deep,
     '--u-accent': selected.accent,
-    '--u-paper': selected.paper,
-    '--u-ink': selected.ink,
   } as CSSProperties
 
   useEffect(() => {
@@ -93,7 +116,7 @@ export default function App() {
       <section className="u-top" id="inicio">
         <header className="u-nav u-wrap">
           <a className="u-brand" href="#inicio" aria-label="ÚNICA — voltar ao início">
-            <strong>ÚNICA<sup style={{ fontSize: 11, verticalAlign: 'top' }}>®</sup></strong>
+            <NewLogo />
             <span>ESTÚDIO<br />DIGITAL</span>
           </a>
           <nav className="u-menu" aria-label="Navegação principal">
@@ -152,16 +175,16 @@ export default function App() {
           <div className="u-reveal">
             <span className="u-kicker">IDENTIDADE & DIFERENCIAÇÃO</span>
             <h2 className="u-h2">A cor certa faz sua marca <mark>ser lembrada.</mark></h2>
-            <p className="u-lead">A gente pensa em cores, contraste e personalidade para destacar seu negócio. Experimente: escolha uma paleta e veja o site inteiro mudar.</p>
-            <div className="u-swatch-list" role="group" aria-label="Escolher paleta do site">
+            <p className="u-lead">Cada detalhe transmite uma sensação. Experimente as cores e veja os destaques ganharem outra personalidade.</p>
+            <div className="u-swatch-list" role="group" aria-label="Escolher cor dos detalhes">
               {palettes.map((c,i) => <button key={c.id} className="u-swatch" type="button" aria-label={c.name} aria-pressed={palette === i} style={{ background: c.accent }} onClick={() => setPalette(i)} title={c.name}/>)}
             </div>
-            <p style={{ fontSize: 13, fontWeight: 800, marginTop: 20 }}>{selected.name} — identidade ativa</p>
+            <p style={{ fontSize: 13, fontWeight: 800, marginTop: 20 }}>{selected.name} — cor de destaque ativa</p>
           </div>
           <div className="u-demo u-reveal" aria-label="Demonstração visual da paleta selecionada">
             <div className="u-demo-head"><span>UMA MARCA, MUITAS POSSIBILIDADES</span><i /></div>
             <h3>Sua ideia merece <mark>se destacar.</mark></h3>
-            <div className="u-demo-foot">Uma escolha visual muda a percepção.</div>
+            <div className="u-demo-foot">Cores diferentes. Mesma identidade.</div>
           </div>
         </div>
       </section>
@@ -175,15 +198,15 @@ export default function App() {
           <div className="u-project-feature u-reveal">
             <div className="u-project-visual" style={{background:p.bg}}>
               <div style={{width:'100%'}}>
-                <div className="u-desktop-frame"><ProjectScreen image={p.image} name={p.name}/></div>
+                <div className="u-desktop-frame"><ProjectArtwork visual={p.visual}/></div>
                 <div className="u-stand"/>
               </div>
-              <div className="u-phone-frame"><ProjectScreen image={p.image} name={p.name}/></div>
+              <div className="u-phone-frame"><ProjectArtwork visual={p.visual} phone/></div>
             </div>
             <div className="u-project-copy">
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3>
-              <p>{p.outcome}</p>
+              <p>{p.outcome}</p><p className="u-concept-note">Visual ilustrativo. Veja o projeto real no link abaixo.</p>
               <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto ↗</a>
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
