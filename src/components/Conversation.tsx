@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { QUOTE_LINK } from '../content'
+import { ArrowUpRight, ReplayIcon } from './InterfaceIcons'
 import './conversation.css'
 
 const SCRIPT = [
@@ -134,7 +135,7 @@ export function Conversation() {
         <h2 className="u-h2">Você traz o desafio.<br />A gente pensa a <mark>solução.</mark></h2>
         <p>Não precisa chegar com tudo definido. A gente entende o que o seu negócio precisa e encontra o melhor caminho digital para ele.</p>
         <div className="u-talk-points" aria-label="Nosso jeito de trabalhar"><span>01 — Entender</span><span>02 — Planejar</span><span>03 — Criar</span></div>
-        <a className="u-pill u-talk-desktop-cta" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Me conta sua ideia ↗</a>
+        <a className="u-pill u-talk-desktop-cta" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Me conta sua ideia <ArrowUpRight /></a>
       </div>
       <div className="u-talk-stage">
         <div className="u-talk-halo" aria-hidden="true" />
@@ -155,22 +156,22 @@ export function Conversation() {
                 </div>)}
                 {typing && <div className="u-typing" aria-label="ÚNICA está digitando"><i/><i/><i/></div>}
                 {step === SCRIPT.length && <a className="u-chat-result" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
-                  <span className="u-chat-link-icon">↗</span>
+                  <span className="u-chat-link-icon"><ArrowUpRight /></span>
                   <span><strong>Vamos conversar?</strong><small>Me conta seu desafio e vamos encontrar uma solução.</small></span>
                 </a>}
               </div>
-              <div className="u-chat-composer" aria-hidden="true"><span>＋</span><div>Mensagem</div><span>◉</span></div>
+              <div className="u-chat-composer" aria-hidden="true"><span><span className="u-plus-icon">+</span></span><div>Mensagem</div><span><span className="u-mic-icon" /></span></div>
               <div className="u-home-indicator" aria-hidden="true" />
             </div>
           </div>
         </div>
         <div className="u-talk-controls">
-          <button type="button" onClick={replay} aria-label="Reproduzir novamente as mensagens">↻ <span>Rever conversa</span></button>
+          <button type="button" onClick={replay} aria-label="Reproduzir novamente as mensagens"><ReplayIcon /> <span>Rever conversa</span></button>
           <button type="button" onClick={toggleSound} aria-pressed={sound} aria-label={sound ? 'Desativar som da simulação' : 'Ativar som da simulação'}>{sound ? '♪' : '♩'} <span>{sound ? 'Som ligado' : 'Ativar som'}</span></button>
         </div>
         <p className="u-talk-note">Simulação ilustrativa · som opcional</p>
       </div>
-      <a className="u-pill u-talk-mobile-cta" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Me conta sua ideia ↗</a>
+      <a className="u-pill u-talk-mobile-cta" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Me conta sua ideia <ArrowUpRight /></a>
     </div>
   </section>
 }
