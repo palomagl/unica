@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from 'react'
 import { QUOTE_LINK } from './content'
 import { Conversation } from './components/Conversation'
+import { ArrowUpRight } from './components/InterfaceIcons'
 import './studio.css'
 
 type IconName = 'laptop' | 'cart' | 'grid' | 'phone'
@@ -76,35 +77,35 @@ function ProjectArtwork({ visual, phone = false }: { visual: string; phone?: boo
     <div className="u-art-nav"><b>BRUTO<span>.</span></b><span>MENU&nbsp;&nbsp; PEDIDOS</span></div>
     <div className="u-bruto-circle" />
     <div className="u-art-title">FOME DE<br /><em>BRUTO.</em></div>
-    <div className="u-art-chip">PEÇA O SEU ↗</div>
+    <div className="u-art-chip">PEÇA O SEU <ArrowUpRight /></div>
     <div className="u-art-caption">PROPOSTA VISUAL · HAMBURGUERIA</div>
   </div>
   if (visual === 'karoane') return <div className={`u-art u-art-karoane ${phone ? 'u-art-phone' : ''}`}>
-    <div className="u-art-nav"><b>karoane.</b><span>COLEÇÃO&nbsp; ↗</span></div>
+    <div className="u-art-nav"><b>karoane.</b><span>COLEÇÃO&nbsp; <ArrowUpRight /></span></div>
     <div className="u-karoane-shape"><i/><i/><i/></div>
     <div className="u-art-title">CORES PARA<br /><em>CRIAR.</em></div>
-    <div className="u-art-chip">EXPLORAR ↗</div>
+    <div className="u-art-chip">EXPLORAR <ArrowUpRight /></div>
     <div className="u-art-caption">PROPOSTA VISUAL · LOJA ONLINE</div>
   </div>
   if (visual === 'doe') return <div className={`u-art u-art-doe ${phone ? 'u-art-phone' : ''}`}>
     <div className="u-art-nav"><b>DOE<span>+</span> RS</b><span>DOAÇÃO DE SANGUE</span></div>
     <div className="u-doe-symbol" aria-hidden="true">+</div>
     <div className="u-art-title">UM GESTO.<br /><em>MUITAS VIDAS.</em></div>
-    <div className="u-art-chip">SAIBA MAIS ↗</div>
+    <div className="u-art-chip">SAIBA MAIS <ArrowUpRight /></div>
     <div className="u-art-caption">CONCEITO VISUAL · IMPACTO SOCIAL</div>
   </div>
   if (visual === 'rotina') return <div className={`u-art u-art-rotina ${phone ? 'u-art-phone' : ''}`}>
     <div className="u-art-nav"><b>minha rotina<span>.</span></b><span>MEU DIA</span></div>
     <div className="u-rotina-lines" aria-hidden="true"><i/><i/><i/></div>
     <div className="u-art-title">SEU DIA.<br /><em>SEU RITMO.</em></div>
-    <div className="u-art-chip">ORGANIZE-SE ↗</div>
+    <div className="u-art-chip">ORGANIZE-SE <ArrowUpRight /></div>
     <div className="u-art-caption">CONCEITO VISUAL · ORGANIZAÇÃO PESSOAL</div>
   </div>
   return <div className={`u-art u-art-vertice ${phone ? 'u-art-phone' : ''}`}>
     <div className="u-art-nav"><b>VÉRTICE<span> / </span></b><span>MÁRMORES</span></div>
     <div className="u-vertice-shape"><span/><span/><span/></div>
     <div className="u-art-title">MATÉRIA.<br /><em>FORMA.</em></div>
-    <div className="u-art-chip">CONHEÇA ↗</div>
+    <div className="u-art-chip">CONHEÇA <ArrowUpRight /></div>
     <div className="u-art-caption">CONCEITO VISUAL · MARMORARIA</div>
   </div>
 }
@@ -159,13 +160,13 @@ export default function App() {
             <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
             <a href="#cores">Diferenciais</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
           </nav>
-          <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento ↗</a>
+          <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento <ArrowUpRight /></a>
           <button className="u-hamburger" type="button" aria-label={openMenu ? 'Fechar menu' : 'Abrir menu'} aria-controls="u-mobile-menu" aria-expanded={openMenu} onClick={() => setOpenMenu(v => !v)}>
             <span className={`u-ham-lines ${openMenu ? 'open' : ''}`}><i/><i/><i/></span>
           </button>
           {openMenu && <nav id="u-mobile-menu" className="u-mobile-nav" aria-label="Menu mobile">
-            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#cores'],['Sobre','#sobre'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true">↗</span></a>)}
-            <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Pedir orçamento <span aria-hidden="true">↗</span></a>
+            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#cores'],['Sobre','#sobre'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
+            <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Pedir orçamento <span aria-hidden="true"><ArrowUpRight /></span></a>
           </nav>}
         </header>
         <div className="u-hero u-wrap">
@@ -177,9 +178,9 @@ export default function App() {
             <div className="u-swoosh" aria-hidden="true" />
           </div>
           <div className="u-hero-side">
-            <span className="u-arrow" aria-hidden="true">↗</span>
+            <span className="u-arrow" aria-hidden="true"><ArrowUpRight /></span>
             <p>Planejamento, design e desenvolvimento de soluções digitais para marcas que querem crescer.</p>
-            <a className="u-pill u-pill-light" href="#servicos">Conheça nossos serviços ↗</a>
+            <a className="u-pill u-pill-light" href="#servicos">Conheça nossos serviços <ArrowUpRight /></a>
           </div>
         </div>
         <div className="u-wave" aria-hidden="true"><svg viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 115 C220 0 400 135 660 108 S1010 -5 1145 58 S1290 145 1440 0 L1440 160 L0 160 Z"/></svg></div>
@@ -198,7 +199,7 @@ export default function App() {
         <div className="u-wrap">
           <div className="u-intro u-reveal">
             <div><span className="u-kicker">SOLUÇÕES SOB MEDIDA</span><h2 className="u-h2">O digital que <mark>resolve,</mark><br />vende e conecta.</h2></div>
-            <div><p className="u-lead">Cada negócio tem um desafio diferente. A solução certa precisa ser bonita, fácil de usar e fazer sentido na rotina de quem depende dela.</p><a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre meu projeto ↗</a></div>
+            <div><p className="u-lead">Cada negócio tem um desafio diferente. A solução certa precisa ser bonita, fácil de usar e fazer sentido na rotina de quem depende dela.</p><a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre meu projeto <ArrowUpRight /></a></div>
           </div>
           <div className="u-list-solutions u-reveal">
             {services.map(s => <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-sol" key={s.name}>
@@ -247,7 +248,7 @@ export default function App() {
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
               <p>{p.outcome}</p><p className="u-concept-note">Ilustração conceitual — conheça o projeto para ver como funciona.</p>
-              {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto ↗</a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim ↗</a>}
+              {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
                 <button className="u-control" type="button" aria-label="Próximo projeto" onClick={()=>changeProject(1)}>→</button>
@@ -271,7 +272,7 @@ export default function App() {
       </section>
 
       <section id="contato" className="u-final">
-        <div className="u-wrap u-reveal"><h2>Vamos transformar sua ideia em resultado?</h2><a className="u-pill u-pill-final" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento ↗</a></div>
+        <div className="u-wrap u-reveal"><h2>Vamos transformar sua ideia em resultado?</h2><a className="u-pill u-pill-final" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento <ArrowUpRight /></a></div>
       </section>
       <footer className="u-footer"><div className="u-wrap"><strong>ÚNICA® — ESTÚDIO DIGITAL</strong><span>Design com personalidade. Soluções com propósito.</span><a href="#inicio">Voltar ao topo ↑</a></div></footer>
     </div>
