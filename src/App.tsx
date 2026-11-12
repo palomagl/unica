@@ -62,10 +62,11 @@ const projects = [
     bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
   },
   {
-    name: 'Rotina', brand: 'Minha Rotina', kind: 'Aplicativo de rotina',
-    outcome: 'Organização prática de atividades e hábitos no dia a dia, direto pelo celular.',
+    name: 'Rotina', brand: 'Minha Rotina', kind: 'Plataforma de organização pessoal',
+    outcome: 'Finanças, tarefas e hábitos organizados em uma experiência simples para o dia a dia.',
     visual: 'rotina', url: '',
-    bg: 'linear-gradient(135deg,#8cc9b4,#305e58)',
+    cover: '/screens/rotina-desktop-alpha.svg',
+    bg: 'linear-gradient(135deg,#dff4ee,#accdc5)',
   },
 ]
 
@@ -278,7 +279,7 @@ export default function App() {
                     className="u-device-laptop"
                     src={`/screens/${p.visual}-desktop-alpha.svg`}
                     alt={`Interface original do ${p.brand} no computador`}
-                    width={p.visual === 'bruto' ? 1286 : p.visual === 'karoane' ? 1237 : 1261}
+                    width={p.visual === 'vertice' ? 1261 : 1237}
                     height={774}
                     decoding="async"
                     loading={project === 0 ? 'eager' : 'lazy'}
@@ -288,7 +289,7 @@ export default function App() {
                     src={`/screens/${p.visual}-mobile-alpha.svg`}
                     alt={`Interface original do ${p.brand} no celular`}
                     width={p.visual === 'vertice' ? 419 : 393}
-                    height={p.visual === 'vertice' ? 854 : p.visual === 'bruto' ? 794 : 790}
+                    height={p.visual === 'vertice' ? 854 : 790}
                     decoding="async"
                     loading="lazy"
                   />

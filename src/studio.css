@@ -1013,28 +1013,6 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
 }
 
 
-/* Bruto / prints atuais: dispositivos independentes, imagem fiel e contraste. */
-#projetos .u-devices-bruto {
-  background:radial-gradient(circle at 24% 17%,#c56c4a7a,transparent 46%),linear-gradient(135deg,#9c573c,#693929 61%,#442720) !important;
-}
-@media (min-width:901px) {
-  #projetos .u-devices-bruto .u-device-laptop {
-    width:min(89%,830px);
-    left:3%;
-    bottom:7%;
-  }
-  #projetos .u-devices-bruto .u-device-phone {
-    width:min(24%,225px);
-    right:3%;
-    bottom:5%;
-  }
-}
-@media (max-width:600px) {
-  #projetos .u-devices-bruto .u-device-laptop {width:92%;left:1.5%;bottom:5%}
-  #projetos .u-devices-bruto .u-device-phone {width:24%;right:2.5%;bottom:3%}
-}
-
-
 /* DOE+ RS — projeto exclusivamente mobile. Duas telas reais em
    dispositivos independentes, mantendo o mesmo ritmo do portfólio. */
 #projetos .u-project-visual--doe {
@@ -1155,4 +1133,22 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   #projetos .u-doe-device { transition: none; will-change: auto; }
   #projetos .u-project-feature:hover .u-doe-device--primary { transform: rotate(-3deg); }
   #projetos .u-project-feature:hover .u-doe-device--secondary { transform: rotate(7deg); }
+}
+
+/* ÚNICA / dispositivos: Bruto, Karoane e Minha Rotina compartilham
+   a mesma moldura base e o mesmo posicionamento. */
+#projetos .u-devices-rotina {
+  background:
+    radial-gradient(ellipse at 20% 20%, #ffffffa8, transparent 57%),
+    linear-gradient(135deg, #e2f2ed 0%, #c7e5dd 58%, #9dcbbf 100%) !important;
+}
+#projetos .u-devices-rotina::before {
+  background: radial-gradient(ellipse at 40% 26%, #ffffff65, transparent 64%);
+}
+/* Sem ajuste individual de tamanho para Bruto:
+   os arquivos novos têm exatamente as proporções de Karoane.
+   O hover mantém notebook e celular em camadas separadas. */
+@media (prefers-reduced-motion: reduce) {
+  #projetos .u-devices-rotina .u-device-laptop,
+  #projetos .u-devices-rotina .u-device-phone {will-change:auto;}
 }
