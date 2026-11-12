@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { QUOTE_LINK } from '../content'
 import { ArrowUpRight, ReplayIcon } from './InterfaceIcons'
+import { BrandSymbol } from './BrandSymbol'
 import './conversation.css'
 
 const SCRIPT = [
@@ -145,7 +146,7 @@ export function Conversation() {
               <div className="u-phone-status" aria-hidden="true"><span>9:41</span><span className="u-dynamic-island"/><span>●● ▰</span></div>
               <div className="u-chat-header">
                 <span className="u-chat-back" aria-hidden="true">‹</span>
-                <span className="u-chat-avatar">Ú</span>
+                <span className="u-chat-avatar"><BrandSymbol /></span>
                 <span className="u-chat-identity"><strong>ÚNICA</strong><small>estúdio digital</small></span>
                 <span className="u-chat-header-icon" aria-hidden="true">◦◦◦</span>
               </div>

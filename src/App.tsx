@@ -3,6 +3,8 @@ import { QUOTE_LINK } from './content'
 import { Conversation } from './components/Conversation'
 import { SolutionsShowcase } from './components/SolutionsShowcase'
 import { ArrowUpRight } from './components/InterfaceIcons'
+import { BrandSymbol } from './components/BrandSymbol'
+import { ArchitectureShowcase } from './components/ArchitectureShowcase'
 import './studio.css'
 
 type IconName = 'laptop' | 'cart' | 'grid' | 'phone'
@@ -66,10 +68,7 @@ const projects = [
 ]
 
 function NewLogo() {
-  return <span className="u-new-logo"><svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
-    <path d="M9 10v16c0 9 5 14 13 14s13-5 13-14V10" stroke="currentColor" strokeWidth="9" strokeLinecap="square" />
-    <path d="m24 1 10 0-9 9H15z" fill="var(--u-accent)" />
-  </svg><span>ÚNICA</span><sup>®</sup></span>
+  return <span className="u-new-logo"><BrandSymbol /><span className="u-wordmark">ÚNICA</span></span>
 }
 
 /** Conceitos gráficos autorais: nenhuma foto, screenshot ou mockup do site antigo. */
@@ -116,11 +115,31 @@ export default function App() {
   const [project, setProject] = useState(0)
   const [openMenu, setOpenMenu] = useState(false)
   const touchStart = useRef<number | null>(null)
+  const progressRef = useRef<HTMLDivElement>(null)
   const selected = palettes[palette]
   const p = projects[project]
   const variables = {
     '--u-accent': selected.accent,
   } as CSSProperties
+
+  useEffect(() => {
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const total = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const progress = Math.min(1, Math.max(0, window.scrollY / total))
+      if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
 
   useEffect(() => {
     document.querySelectorAll('.u-reveal').forEach((el) => {
@@ -151,6 +170,7 @@ export default function App() {
 
   return (
     <div className="u-site" style={variables}>
+      <div className="u-scroll-progress" ref={progressRef} aria-hidden="true" />
       <section className="u-top" id="inicio">
         <header className="u-nav u-wrap">
           <a className="u-brand" href="#inicio" aria-label="ÚNICA — voltar ao início">
@@ -207,6 +227,7 @@ export default function App() {
       </section>
 
       <Conversation />
+      <div className="u-kinetic-strip" aria-hidden="true"><div className="u-kinetic-track">{Array.from({length: 4}, (_, i) => <span key={i}>IDEIAS EM MOVIMENTO <i>✳</i> SISTEMAS QUE FUNCIONAM <i>✳</i></span>)}</div></div>
 
       <section id="cores" className="u-color-section">
         <div className="u-wrap u-colors-layout">
@@ -259,19 +280,32 @@ export default function App() {
         </div>
       </section>
 
-      <section id="sobre" className="u-section u-impact">
+      <ArchitectureShowcase />
+
+      <section id="contato" className="u-final u-final-remake">
         <div className="u-wrap">
-          <div className="u-reveal"><span className="u-kicker">MAIS QUE UMA PÁGINA BONITA</span><h2 className="u-h2">Uma ferramenta para o seu negócio <mark>evoluir.</mark></h2></div>
-          <div className="u-reveal"><p>Nosso foco é transformar necessidades reais em experiências digitais que valorizam sua marca e facilitam sua operação.</p>
-            <ul className="u-checks"><li>Presença digital profissional</li><li>Experiência simples para seus clientes</li><li>Mais praticidade na operação</li><li>Soluções pensadas para seu contexto</li></ul>
+          <div className="u-final-head u-reveal"><span>ÚNICA / PRÓXIMO PROJETO</span><span>IDEIAS BOAS MERECEM SAIR DO PAPEL</span></div>
+          <div className="u-final-main">
+            <div className="u-reveal">
+              <h2>Você imagina.<br/><em>A gente constrói.</em></h2>
+              <p>Um problema pra resolver, uma ideia diferente ou um negócio pronto pra evoluir? A conversa começa aqui.</p>
+            </div>
+            <a className="u-final-orb" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" aria-label="Conversar sobre meu projeto pelo WhatsApp">
+              <span>VAMOS CONVERSAR</span>
+              <ArrowUpRight />
+              <small>COMECE AQUI ↗</small>
+            </a>
           </div>
+          <div className="u-final-tail"><span>SEU DESAFIO É O PONTO DE PARTIDA.</span><span>O RESTO, A GENTE DESENVOLVE.</span></div>
         </div>
       </section>
-
-      <section id="contato" className="u-final">
-        <div className="u-wrap u-reveal"><h2>Vamos transformar sua ideia em resultado?</h2><a className="u-pill u-pill-final" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento <ArrowUpRight /></a></div>
-      </section>
-      <footer className="u-footer"><div className="u-wrap"><strong>ÚNICA® — ESTÚDIO DIGITAL</strong><span>Design com personalidade. Soluções com propósito.</span><a href="#inicio">Voltar ao topo ↑</a></div></footer>
+      <footer className="u-footer">
+        <div className="u-wrap">
+          <a href="#inicio" className="u-footer-brand" aria-label="ÚNICA, voltar ao começo"><NewLogo /></a>
+          <span>Sites, sistemas, e-commerces e soluções que fazem sentido.</span>
+          <a href="#inicio">Voltar ao topo ↑</a>
+        </div>
+      </footer>
     </div>
   )
 }
