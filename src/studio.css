@@ -794,3 +794,220 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
     will-change: auto;
   }
 }
+
+
+/* ÚNICA — portfólio consistente: molduras independentes, telas reais
+   sem redesenho, dimensões iguais e navegação horizontal. */
+#projetos .u-project-feature {
+  height: 555px;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr);
+  align-items: stretch;
+  overflow: hidden;
+}
+#projetos .u-project-feature > .u-project-visual {
+  min-height: 0;
+  max-height: none;
+  height: 100%;
+  box-sizing: border-box;
+}
+#projetos .u-project-feature > .u-project-copy {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding: clamp(26px,3vw,53px);
+  justify-content: flex-start;
+}
+#projetos .u-project-copy .u-concept-note { display:none }
+#projetos .u-project-copy .u-kicker { margin:0 0 19px; }
+#projetos .u-project-copy h3 { margin:0 0 16px; }
+#projetos .u-project-copy .u-project-brand { margin:0 0 18px; }
+#projetos .u-project-copy > p:not(.u-project-brand):not(.u-concept-note) {
+  margin:0 0 18px;
+  font-size:clamp(15px,1.35vw,18px);
+  line-height:1.4;
+}
+#projetos .u-project-copy > .u-pill { margin:8px 0 0;flex-shrink:0 }
+#projetos .u-project-controls {
+  margin-top:auto;
+  padding-top:18px;
+  flex-shrink:0;
+  align-self:flex-start;
+}
+/* Separação em imagens independentes: o notebook e o celular se movem
+   de forma diferente, no mesmo padrão dos projetos DOE+ RS e Rotina. */
+#projetos .u-project-visual--devices {
+  display:block;
+  overflow:hidden;
+  position:relative;
+  isolation:isolate;
+  padding:0;
+}
+#projetos .u-device-stage {
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+#projetos .u-project-visual--devices::before {
+  content:'';
+  position:absolute;
+  inset:-20%;
+  background:radial-gradient(ellipse at 37% 28%,#ffffff25,transparent 60%);
+  pointer-events:none;
+}
+#projetos .u-devices-bruto {
+  background:linear-gradient(135deg,#a55c3f,#663729 60%,#43271f) !important;
+}
+#projetos .u-devices-karoane {
+  background:linear-gradient(135deg,#f6c7d3,#eaa7ba 57%,#b98199) !important;
+}
+#projetos .u-devices-vertice {
+  background:linear-gradient(135deg,#f0ece7,#e2dbd3 55%,#c6bdb4) !important;
+}
+#projetos .u-device-laptop,#projetos .u-device-phone {
+  position:absolute;
+  height:auto;
+  max-height:none;
+  display:block;
+  object-fit:contain;
+  transform-origin:center bottom;
+  backface-visibility:hidden;
+  user-select:none;
+  -webkit-user-drag:none;
+  transition:transform .7s cubic-bezier(.16,.85,.2,1),filter .7s;
+}
+#projetos .u-device-laptop {
+  z-index:1;
+  width:92%;
+  left:1%;
+  bottom:9%;
+  filter:drop-shadow(0 20px 22px #21130f27);
+}
+#projetos .u-device-phone {
+  z-index:2;
+  width:24%;
+  right:2.5%;
+  bottom:5.5%;
+  filter:drop-shadow(0 15px 15px #21130f45);
+}
+@media (hover:hover) and (pointer:fine) {
+ #projetos .u-project-feature:hover .u-device-laptop {
+   transform:translate(-9px,-11px) rotate(-1.3deg) scale(1.013);
+   filter:drop-shadow(0 27px 26px #21130f35);
+ }
+ #projetos .u-project-feature:hover .u-device-phone {
+   transform:translate(8px,-20px) rotate(3deg) scale(1.02);
+   filter:drop-shadow(0 23px 20px #21130f54);
+ }
+}
+#projetos .u-small-projects {
+  display:flex;
+  flex-wrap:nowrap;
+  gap:10px;
+  width:max-content;
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  justify-content:flex-start;
+  align-items:stretch;
+  margin:20px auto 0;
+  padding:5px 13px 12px;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:13px;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+#projetos .u-small-projects::-webkit-scrollbar {display:none}
+#projetos .u-small-projects button {
+  display:block;
+  flex:0 0 auto;
+  width:auto;
+  min-width:115px;
+  min-height:44px;
+  padding:10px 16px;
+  white-space:nowrap;
+  overflow-wrap:normal;
+  font-size:12px;
+  font-weight:800;
+  text-align:center;
+  line-height:1.1;
+  border:1px solid #8e725f50;
+  border-radius:100px;
+  scroll-snap-align:center;
+}
+#projetos .u-small-projects button:last-child:nth-child(odd) {
+  grid-column:auto;
+}
+@media (max-width:900px) {
+ #projetos .u-project-feature {
+  height:675px;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:320px minmax(0,1fr);
+ }
+ #projetos .u-project-feature > .u-project-visual {
+  height:320px;
+  min-height:0;
+  max-height:none;
+ }
+ #projetos .u-project-feature > .u-project-copy {
+  height:355px;
+  min-height:0;
+  padding:27px 30px 25px;
+ }
+ #projetos .u-project-copy h3 {font-size:clamp(33px,5vw,46px)}
+ #projetos .u-project-copy .u-kicker {margin-bottom:14px}
+ #projetos .u-project-copy .u-project-brand {margin-bottom:13px}
+ #projetos .u-project-copy > p:not(.u-project-brand):not(.u-concept-note) {
+  margin-bottom:12px;
+  font-size:16px;
+ }
+ #projetos .u-device-laptop {width:72%;left:10%;bottom:4%}
+ #projetos .u-device-phone {width:18%;right:12%;bottom:2%}
+}
+@media (max-width:600px) {
+ #projetos .u-project-feature {
+  height:610px;
+  grid-template-rows:clamp(205px,61vw,265px) minmax(0,1fr);
+  border-radius:21px;
+ }
+ #projetos .u-project-feature > .u-project-visual {
+  height:clamp(205px,61vw,265px);
+  min-height:0;
+  max-height:none;
+ }
+ #projetos .u-project-feature > .u-project-copy {
+  height:100%;
+  min-height:0;
+  padding:22px 20px 21px;
+ }
+ #projetos .u-project-copy .u-kicker {margin-bottom:12px}
+ #projetos .u-project-copy h3 {font-size:clamp(29px,7.5vw,36px);line-height:1.05;margin-bottom:9px}
+ #projetos .u-project-copy .u-project-brand {font-size:11px;margin-bottom:10px}
+ #projetos .u-project-copy > p:not(.u-project-brand):not(.u-concept-note) {
+  font-size:14px;line-height:1.35;margin-bottom:9px;
+ }
+ #projetos .u-project-copy > .u-pill {font-size:13px;padding:11px 16px;margin-top:8px}
+ #projetos .u-project-controls {padding-top:10px}
+ #projetos .u-device-laptop {width:93%;left:1%;bottom:6%}
+ #projetos .u-device-phone {width:24%;right:2.5%;bottom:3%}
+ /* O telefone dos projetos conceituais também fica visível no mobile */
+ #projetos .u-project-visual:not(.u-project-visual--devices) .u-phone-frame {
+  display:block;width:24%;right:4%;bottom:4%;
+ }
+ #projetos .u-small-projects {width:100%;margin-top:14px;padding:4px 11px 12px;gap:8px}
+ #projetos .u-small-projects button {
+  min-height:40px;min-width:105px;padding:10px 12px;font-size:11px;
+ }
+}
+@media (max-width:360px) {
+ #projetos .u-project-feature {height:635px}
+ #projetos .u-project-feature > .u-project-copy {padding:18px 16px}
+}
+@media (prefers-reduced-motion:reduce) {
+ #projetos .u-device-laptop,#projetos .u-device-phone,
+ #projetos .u-project-feature:hover .u-device-laptop,
+ #projetos .u-project-feature:hover .u-device-phone {
+  transition:none;transform:none;
+ }
+}

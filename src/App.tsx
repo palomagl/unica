@@ -50,7 +50,7 @@ const projects = [
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
-    outcome: 'Uma solução para apresentar o trabalho da marmoraria e apoiar etapas do atendimento e orçamento.',
+    outcome: 'Simulação de peças em 3D, personalização de materiais e organização de orçamentos.',
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
     cover: '/cover-vertice.svg',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
@@ -118,11 +118,25 @@ export default function App() {
   const [openMenu, setOpenMenu] = useState(false)
   const touchStart = useRef<number | null>(null)
   const progressRef = useRef<HTMLDivElement>(null)
+  const projectTabsRef = useRef<HTMLDivElement>(null)
   const selected = palettes[palette]
   const p = projects[project]
   const variables = {
     '--u-accent': selected.accent,
   } as CSSProperties
+  useEffect(() => {
+    const rail = projectTabsRef.current
+    const button = rail?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]')
+    if (!rail || !button) return
+    const railBox = rail.getBoundingClientRect()
+    const buttonBox = button.getBoundingClientRect()
+    const target = rail.scrollLeft + buttonBox.left - railBox.left + (buttonBox.width - railBox.width) / 2
+    rail.scrollTo({
+      left: Math.max(0, target),
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    })
+  }, [project])
+
 
   useEffect(() => {
     let raf = 0
@@ -257,39 +271,28 @@ export default function App() {
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
-            <div
-              className={`u-project-visual ${p.cover ? 'u-project-visual--hybrid u-project-visual--motion' : ''}`}
-              style={{background:p.bg}}
-              key={p.visual}
-              onPointerMove={(event) => {
-                if (!p.cover || event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-                const el = event.currentTarget
-                const rect = el.getBoundingClientRect()
-                const x = (event.clientX - rect.left) / rect.width - 0.5
-                const y = (event.clientY - rect.top) / rect.height - 0.5
-                el.style.setProperty('--motion-rotate-y', `${(x * 3.5).toFixed(2)}deg`)
-                el.style.setProperty('--motion-rotate-x', `${(-y * 3.5).toFixed(2)}deg`)
-                el.style.setProperty('--motion-shift-x', `${(-x * 9).toFixed(1)}px`)
-                el.style.setProperty('--motion-shift-y', `${(-y * 8).toFixed(1)}px`)
-              }}
-              onPointerLeave={(event) => {
-                const el = event.currentTarget
-                el.style.setProperty('--motion-rotate-x', '0deg')
-                el.style.setProperty('--motion-rotate-y', '0deg')
-                el.style.setProperty('--motion-shift-x', '0px')
-                el.style.setProperty('--motion-shift-y', '0px')
-              }}
-            >
+            <div className={`u-project-visual ${p.cover ? `u-project-visual--devices u-devices-${p.visual}` : ''}`} style={{background:p.bg}} key={p.visual}>
               {p.cover ? (
-                <img
-                  className="u-project-cover"
-                  src={p.cover}
-                  alt={`Prévia autoral da solução ${p.brand} em computador e celular`}
-                  width={880}
-                  height={p.visual === 'bruto' ? 634 : 625}
-                  loading="lazy"
-                  decoding="async"
-                />
+                <div className="u-device-stage" aria-label={`Telas reais do projeto ${p.brand}, em computador e celular`}>
+                  <img
+                    className="u-device-laptop"
+                    src={`/screens/${p.visual}-desktop-alpha.svg`}
+                    alt={`Interface original do ${p.brand} no computador`}
+                    width={p.visual === 'bruto' ? 1286 : p.visual === 'karoane' ? 1237 : 1261}
+                    height={774}
+                    decoding="async"
+                    loading={project === 0 ? 'eager' : 'lazy'}
+                  />
+                  <img
+                    className="u-device-phone"
+                    src={`/screens/${p.visual}-mobile-alpha.svg`}
+                    alt={`Interface original do ${p.brand} no celular`}
+                    width={p.visual === 'vertice' ? 419 : 393}
+                    height={p.visual === 'vertice' ? 854 : 790}
+                    decoding="async"
+                    loading="lazy"
+                  />
+                </div>
               ) : (
                 <>
                   <div style={{width:'100%'}}>
@@ -303,7 +306,7 @@ export default function App() {
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
-              <p>{p.outcome}</p><p className="u-concept-note">{p.cover ? 'Prévia visual inspirada no projeto.' : 'Ilustração conceitual — conheça o projeto para ver como funciona.'}</p>
+              <p>{p.outcome}</p><p className="u-concept-note">{p.cover ? 'Capturas reais do projeto.' : 'Ilustração conceitual — conheça o projeto para ver como funciona.'}</p>
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
@@ -312,7 +315,7 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="u-small-projects" role="group" aria-label="Selecionar projeto">
+          <div className="u-small-projects" ref={projectTabsRef} role="group" aria-label="Selecionar projeto">
             {projects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver exemplo de ${q.name}: ${q.brand}`} onClick={()=>setProject(i)}>{q.name}</button>)}
           </div>
         </div>
