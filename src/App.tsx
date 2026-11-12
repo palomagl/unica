@@ -38,18 +38,21 @@ const projects = [
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
     outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
+    cover: '/cover-bruto.svg',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
     outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
     visual: 'karoane', url: 'https://karoane.vercel.app/',
+    cover: '/cover-karoane.svg',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
     outcome: 'Uma solução para apresentar o trabalho da marmoraria e apoiar etapas do atendimento e orçamento.',
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
+    cover: '/cover-vertice.svg',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
   {
@@ -254,17 +257,31 @@ export default function App() {
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
-            <div className="u-project-visual" style={{background:p.bg}} key={p.visual}>
-              <div style={{width:'100%'}}>
-                <div className="u-desktop-frame"><ProjectArtwork visual={p.visual}/></div>
-                <div className="u-stand"/>
-              </div>
-              <div className="u-phone-frame"><ProjectArtwork visual={p.visual} phone/></div>
+            <div className={`u-project-visual ${p.cover ? 'u-project-visual--hybrid' : ''}`} style={{background:p.bg}} key={p.visual}>
+              {p.cover ? (
+                <img
+                  className="u-project-cover"
+                  src={p.cover}
+                  alt={`Prévia autoral da solução ${p.brand} em computador e celular`}
+                  width={880}
+                  height={p.visual === 'bruto' ? 634 : 625}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <>
+                  <div style={{width:'100%'}}>
+                    <div className="u-desktop-frame"><ProjectArtwork visual={p.visual}/></div>
+                    <div className="u-stand"/>
+                  </div>
+                  <div className="u-phone-frame"><ProjectArtwork visual={p.visual} phone/></div>
+                </>
+              )}
             </div>
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
-              <p>{p.outcome}</p><p className="u-concept-note">Ilustração conceitual — conheça o projeto para ver como funciona.</p>
+              <p>{p.outcome}</p><p className="u-concept-note">{p.cover ? 'Prévia visual inspirada no projeto.' : 'Ilustração conceitual — conheça o projeto para ver como funciona.'}</p>
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>

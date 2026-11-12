@@ -592,3 +592,83 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   .u-final-orb{width:185px;font-size:13px}
   .u-final-orb svg{height:48px;width:48px}
 }
+
+
+/* Portfólio híbrido ÚNICA — imagens fiéis aos projetos e layouts responsivos.
+   Três capas otimizadas; DOE+ RS e Rotina seguem com as artes originais. */
+.u-project-feature .u-project-visual--hybrid {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: 880 / 625;
+}
+.u-project-visual--hybrid .u-project-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border: 0;
+  transition: transform .8s cubic-bezier(.2,.8,.2,1);
+}
+.u-project-feature:hover .u-project-visual--hybrid .u-project-cover {
+  transform: scale(1.035);
+}
+.u-project-visual--hybrid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px #44271e10;
+  pointer-events: none;
+}
+.u-project-copy .u-concept-note {
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 0 0 18px;
+  color: #907c70;
+}
+.u-project-feature .u-project-visual--hybrid:has(.u-project-cover[src$="bruto.svg"]) {
+  background: #3b2019 !important;
+}
+.u-project-feature .u-project-visual--hybrid:has(.u-project-cover[src$="karoane.svg"]) {
+  background: #eea6bb !important;
+}
+.u-project-feature .u-project-visual--hybrid:has(.u-project-cover[src$="vertice.svg"]) {
+  background: #e5e2dc !important;
+}
+@media (max-width: 850px) {
+  .u-project-feature .u-project-visual--hybrid {
+    aspect-ratio: 880 / 625;
+    min-height: 0;
+    max-height: none;
+  }
+}
+@media (max-width: 600px) {
+  .u-project-feature .u-project-visual--hybrid {
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+    aspect-ratio: 880 / 625;
+  }
+  .u-project-feature .u-project-visual--hybrid .u-project-cover {
+    height: auto;
+    aspect-ratio: 880 / 625;
+    object-fit: cover;
+  }
+  .u-project-feature:hover .u-project-visual--hybrid .u-project-cover {
+    transform: none;
+  }
+  .u-project-copy .u-concept-note {
+    font-size: 11px;
+    margin-bottom: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .u-project-visual--hybrid .u-project-cover {
+    transition: none;
+  }
+}
