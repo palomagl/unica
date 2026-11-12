@@ -410,3 +410,22 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
 .u-rail-grid .u-vector-arrow{stroke-width:1.7}
 @media(max-width:850px){.u-arrow .u-vector-arrow{width:40px;height:40px}}
 @media(max-width:480px){.u-pill .u-vector-arrow{width:17px;height:17px}}
+
+/* Ajuste final da primeira dobra em telas pequenas, sem redesenhar a hero. */
+@media(max-width:600px){
+ .u-top .u-nav{min-height:70px}
+ .u-top .u-hero{padding-top:25px;padding-bottom:53px;gap:18px}
+ .u-top .u-heading{font-size:clamp(42px,11.25vw,61px);line-height:.915}
+ .u-top .u-heading .u-movem{margin-top:4px}
+ .u-top .u-hero-side{padding-top:0;margin-top:5px}
+ .u-top .u-hero-side p{font-size:clamp(16px,4.3vw,20px);max-width:31ch;line-height:1.32;margin-bottom:18px}
+ .u-top .u-arrow{margin-bottom:5px}
+ .u-top .u-arrow .u-vector-arrow{width:32px;height:32px}
+ .u-top .u-wave{margin-top:-25px;height:57px}
+ .u-service-rail{padding:7px 0 21px}
+ .u-rail-grid{row-gap:6px}
+ .u-rail-grid a{min-width:0;padding:10px 7px;gap:8px}
+ .u-rail-grid a:nth-child(odd){padding-left:0}
+ .u-rail-grid svg{width:24px;height:24px}
+ .u-scroll{margin-top:10px}
+}
