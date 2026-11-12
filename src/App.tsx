@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from 'react'
 import { QUOTE_LINK } from './content'
+import { Conversation } from './components/Conversation'
 import './studio.css'
 
 type IconName = 'laptop' | 'cart' | 'grid' | 'phone'
@@ -206,6 +207,8 @@ export default function App() {
           </div>
         </div>
       </section>
+
+      <Conversation />
 
       <section id="cores" className="u-color-section">
         <div className="u-wrap u-colors-layout">
