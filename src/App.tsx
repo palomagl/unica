@@ -33,41 +33,80 @@ const palettes = [
   { id: 'turquesa', name: 'Turquesa', accent: '#79E6D6' },
 ]
 
-type Project = {
-  name: string
-  brand: string
-  kind: string
-  outcome: string
-  visual: string
-  url: string
-}
-
-const projects: Project[] = [
+const projects = [
   {
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
-    outcome: 'Um cardápio que aproxima o cliente do pedido.',
+    outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
+    bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
-    outcome: 'Uma loja organizada para vender na internet.',
+    outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
     visual: 'karoane', url: 'https://karoane.vercel.app/',
+    bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
-    outcome: 'Uma apresentação mais forte e ferramentas para apoiar o atendimento.',
+    outcome: 'Uma solução para apresentar o trabalho da marmoraria e apoiar etapas do atendimento e orçamento.',
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
+    bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
-
+  {
+    name: 'Doação de sangue', brand: 'DOE+ RS', kind: 'Aplicação de impacto social',
+    outcome: 'Uma experiência digital para apoiar e incentivar a doação de sangue no Rio Grande do Sul.',
+    visual: 'doe', url: 'https://doe-mais-rs.vercel.app/',
+    bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
+  },
+  {
+    name: 'Rotina', brand: 'Minha Rotina', kind: 'Aplicativo de rotina',
+    outcome: 'Organização prática de atividades e hábitos no dia a dia, direto pelo celular.',
+    visual: 'rotina', url: '',
+    bg: 'linear-gradient(135deg,#8cc9b4,#305e58)',
+  },
 ]
-
-function RealProjectPreview({ project }: { project: Project }) {
-  return <div className={`u-project-real-image u-project-real-image--${project.visual}`}
-    role="img" aria-label={`Capturas reais de ${project.brand} no computador e no celular`} />
-}
 
 function NewLogo() {
   return <span className="u-new-logo"><BrandSymbol /><span className="u-wordmark">ÚNICA</span></span>
+}
+
+/** Conceitos gráficos autorais: nenhuma foto, screenshot ou mockup do site antigo. */
+function ProjectArtwork({ visual, phone = false }: { visual: string; phone?: boolean }) {
+  if (visual === 'bruto') return <div className={`u-art u-art-bruto ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>BRUTO<span>.</span></b><span>MENU&nbsp;&nbsp; PEDIDOS</span></div>
+    <div className="u-bruto-circle" />
+    <div className="u-art-title">FOME DE<br /><em>BRUTO.</em></div>
+    <div className="u-art-chip">PEÇA O SEU <ArrowUpRight /></div>
+    <div className="u-art-caption">PROPOSTA VISUAL · HAMBURGUERIA</div>
+  </div>
+  if (visual === 'karoane') return <div className={`u-art u-art-karoane ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>karoane.</b><span>COLEÇÃO&nbsp; <ArrowUpRight /></span></div>
+    <div className="u-karoane-shape"><i/><i/><i/></div>
+    <div className="u-art-title">CORES PARA<br /><em>CRIAR.</em></div>
+    <div className="u-art-chip">EXPLORAR <ArrowUpRight /></div>
+    <div className="u-art-caption">PROPOSTA VISUAL · LOJA ONLINE</div>
+  </div>
+  if (visual === 'doe') return <div className={`u-art u-art-doe ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>DOE<span>+</span> RS</b><span>DOAÇÃO DE SANGUE</span></div>
+    <div className="u-doe-symbol" aria-hidden="true">+</div>
+    <div className="u-art-title">UM GESTO.<br /><em>MUITAS VIDAS.</em></div>
+    <div className="u-art-chip">SAIBA MAIS <ArrowUpRight /></div>
+    <div className="u-art-caption">CONCEITO VISUAL · IMPACTO SOCIAL</div>
+  </div>
+  if (visual === 'rotina') return <div className={`u-art u-art-rotina ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>minha rotina<span>.</span></b><span>MEU DIA</span></div>
+    <div className="u-rotina-lines" aria-hidden="true"><i/><i/><i/></div>
+    <div className="u-art-title">SEU DIA.<br /><em>SEU RITMO.</em></div>
+    <div className="u-art-chip">ORGANIZE-SE <ArrowUpRight /></div>
+    <div className="u-art-caption">CONCEITO VISUAL · ORGANIZAÇÃO PESSOAL</div>
+  </div>
+  return <div className={`u-art u-art-vertice ${phone ? 'u-art-phone' : ''}`}>
+    <div className="u-art-nav"><b>VÉRTICE<span> / </span></b><span>MÁRMORES</span></div>
+    <div className="u-vertice-shape"><span/><span/><span/></div>
+    <div className="u-art-title">MATÉRIA.<br /><em>FORMA.</em></div>
+    <div className="u-art-chip">CONHEÇA <ArrowUpRight /></div>
+    <div className="u-art-caption">CONCEITO VISUAL · MARMORARIA</div>
+  </div>
 }
 
 export default function App() {
@@ -215,13 +254,17 @@ export default function App() {
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
-            <div className="u-project-visual u-project-visual-real" key={p.visual}>
-              <RealProjectPreview project={p} />
+            <div className="u-project-visual" style={{background:p.bg}} key={p.visual}>
+              <div style={{width:'100%'}}>
+                <div className="u-desktop-frame"><ProjectArtwork visual={p.visual}/></div>
+                <div className="u-stand"/>
+              </div>
+              <div className="u-phone-frame"><ProjectArtwork visual={p.visual} phone/></div>
             </div>
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
-              <p className="u-project-outcome">{p.outcome}</p>
+              <p>{p.outcome}</p><p className="u-concept-note">Ilustração conceitual — conheça o projeto para ver como funciona.</p>
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
