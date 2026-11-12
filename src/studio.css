@@ -397,3 +397,16 @@ body{margin:0}
  .u-site .u-pill-final{max-width:100%}
 }
 @media(prefers-reduced-motion:reduce){.u-project-visual,.u-project-copy{animation:none}}
+
+/* UI icon system: explicit SVG shapes so iOS never replaces ↗ with an emoji. */
+.u-vector-arrow{display:inline-block;width:18px;height:18px;flex:none;vertical-align:-.16em;stroke:currentColor;transition:transform .25s ease}
+a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2px)}
+.u-arrow{display:inline-flex;align-items:center}
+.u-arrow .u-vector-arrow{width:62px;height:62px;stroke-width:1.4}
+.u-art-chip{display:inline-flex;align-items:center;gap:6px}
+.u-art-chip .u-vector-arrow{width:13px;height:13px}
+.u-art-nav .u-vector-arrow{width:12px;height:12px}
+.u-mobile-nav .u-vector-arrow{width:18px;height:18px}
+.u-rail-grid .u-vector-arrow{stroke-width:1.7}
+@media(max-width:850px){.u-arrow .u-vector-arrow{width:40px;height:40px}}
+@media(max-width:480px){.u-pill .u-vector-arrow{width:17px;height:17px}}
