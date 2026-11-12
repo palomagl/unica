@@ -735,3 +735,62 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
     grid-column: 1 / -1;
   }
 }
+
+
+/* PROFUNDIDADE CONSISTENTE — hover das capas reais segue a mesma linguagem
+   dos dispositivos originais, sem reescrever as interfaces. */
+#projetos .u-project-visual--motion {
+  perspective: 1100px;
+  --motion-rotate-x: 0deg;
+  --motion-rotate-y: 0deg;
+  --motion-shift-x: 0px;
+  --motion-shift-y: 0px;
+  background: #e9c3cc;
+}
+#projetos .u-project-visual--motion .u-project-cover {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transform-origin: center center;
+  transform: translate3d(var(--motion-shift-x), var(--motion-shift-y), 0)
+    rotateX(var(--motion-rotate-x)) rotateY(var(--motion-rotate-y)) scale(1.008);
+  transition: transform .38s cubic-bezier(.19,.8,.22,1), filter .4s ease;
+  backface-visibility: hidden;
+  will-change: transform;
+  filter: drop-shadow(0 10px 12px #2213110a);
+}
+#projetos .u-project-feature:hover .u-project-visual--motion .u-project-cover {
+  transform: translate3d(var(--motion-shift-x), var(--motion-shift-y), 0)
+    rotateX(var(--motion-rotate-x)) rotateY(var(--motion-rotate-y)) scale(1.018);
+}
+#projetos .u-project-visual--motion::after {
+  box-shadow: inset 0 0 0 1px #321c1213;
+}
+#projetos .u-project-visual--motion:has(.u-project-cover[src$="bruto.svg"]) {
+  background: #512b1f !important;
+}
+#projetos .u-project-visual--motion:has(.u-project-cover[src$="karoane.svg"]) {
+  background: #eaa4b7 !important;
+}
+#projetos .u-project-visual--motion:has(.u-project-cover[src$="vertice.svg"]) {
+  background: #eee7df !important;
+}
+@media (hover: none), (pointer: coarse) {
+  #projetos .u-project-visual--motion .u-project-cover,
+  #projetos .u-project-feature:hover .u-project-visual--motion .u-project-cover {
+    transform: none;
+    transition: none;
+    filter: none;
+    will-change: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #projetos .u-project-visual--motion .u-project-cover,
+  #projetos .u-project-feature:hover .u-project-visual--motion .u-project-cover {
+    transform: none;
+    transition: none;
+    filter: none;
+    will-change: auto;
+  }
+}

@@ -257,7 +257,29 @@ export default function App() {
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
-            <div className={`u-project-visual ${p.cover ? 'u-project-visual--hybrid' : ''}`} style={{background:p.bg}} key={p.visual}>
+            <div
+              className={`u-project-visual ${p.cover ? 'u-project-visual--hybrid u-project-visual--motion' : ''}`}
+              style={{background:p.bg}}
+              key={p.visual}
+              onPointerMove={(event) => {
+                if (!p.cover || event.pointerType !== 'mouse' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+                const el = event.currentTarget
+                const rect = el.getBoundingClientRect()
+                const x = (event.clientX - rect.left) / rect.width - 0.5
+                const y = (event.clientY - rect.top) / rect.height - 0.5
+                el.style.setProperty('--motion-rotate-y', `${(x * 3.5).toFixed(2)}deg`)
+                el.style.setProperty('--motion-rotate-x', `${(-y * 3.5).toFixed(2)}deg`)
+                el.style.setProperty('--motion-shift-x', `${(-x * 9).toFixed(1)}px`)
+                el.style.setProperty('--motion-shift-y', `${(-y * 8).toFixed(1)}px`)
+              }}
+              onPointerLeave={(event) => {
+                const el = event.currentTarget
+                el.style.setProperty('--motion-rotate-x', '0deg')
+                el.style.setProperty('--motion-rotate-y', '0deg')
+                el.style.setProperty('--motion-shift-x', '0px')
+                el.style.setProperty('--motion-shift-y', '0px')
+              }}
+            >
               {p.cover ? (
                 <img
                   className="u-project-cover"
