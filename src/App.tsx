@@ -47,19 +47,16 @@ const projects: Project[] = [
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
     outcome: 'Um cardápio que aproxima o cliente do pedido.',
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
-    bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
     outcome: 'Uma loja organizada para vender na internet.',
     visual: 'karoane', url: 'https://karoane.vercel.app/',
-    bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
     outcome: 'Uma apresentação mais forte e ferramentas para apoiar o atendimento.',
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
-    bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
 
 ]
