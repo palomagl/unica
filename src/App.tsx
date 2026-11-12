@@ -271,7 +271,7 @@ export default function App() {
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
-            <div className={`u-project-visual ${p.cover ? `u-project-visual--devices u-devices-${p.visual}` : ''}`} style={{background:p.bg}} key={p.visual}>
+            <div className={`u-project-visual ${p.cover ? `u-project-visual--devices u-devices-${p.visual}` : p.visual === 'doe' ? 'u-project-visual--doe' : ''}`} style={{background:p.bg}} key={p.visual}>
               {p.cover ? (
                 <div className="u-device-stage" aria-label={`Telas reais do projeto ${p.brand}, em computador e celular`}>
                   <img
@@ -292,6 +292,31 @@ export default function App() {
                     decoding="async"
                     loading="lazy"
                   />
+                </div>
+              ) : p.visual === 'doe' ? (
+                <div className="u-doe-stage" aria-label="Telas reais da versão mobile do DOE+ RS">
+                  <div className="u-doe-device u-doe-device--primary">
+                    <div className="u-doe-screen">
+                      <img
+                        src="https://raw.githubusercontent.com/palomagl/doe-mais-rs/main/docs/screenshots/dashboard.png"
+                        alt="Tela de painel do aplicativo DOE+ RS"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <span className="u-doe-device-notch" aria-hidden="true" />
+                  </div>
+                  <div className="u-doe-device u-doe-device--secondary">
+                    <div className="u-doe-screen">
+                      <img
+                        src="https://raw.githubusercontent.com/palomagl/doe-mais-rs/main/docs/screenshots/hero-gameplay.png"
+                        alt="Tela do jogo Corrida pela Vida do DOE+ RS"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                    <span className="u-doe-device-notch" aria-hidden="true" />
+                  </div>
                 </div>
               ) : (
                 <>

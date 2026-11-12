@@ -1033,3 +1033,126 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   #projetos .u-devices-bruto .u-device-laptop {width:92%;left:1.5%;bottom:5%}
   #projetos .u-devices-bruto .u-device-phone {width:24%;right:2.5%;bottom:3%}
 }
+
+
+/* DOE+ RS — projeto exclusivamente mobile. Duas telas reais em
+   dispositivos independentes, mantendo o mesmo ritmo do portfólio. */
+#projetos .u-project-visual--doe {
+  display: block;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 0;
+  background: linear-gradient(135deg,#bd3c50 0%,#992c42 50%,#64263a 100%) !important;
+}
+#projetos .u-project-visual--doe::before {
+  content: '';
+  position: absolute;
+  width: 78%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  left: -26%;
+  top: -36%;
+  border: 1px solid #ffffff39;
+  box-shadow: 0 0 0 46px #ffffff0c, 0 0 0 100px #ffffff09;
+  pointer-events: none;
+}
+#projetos .u-project-visual--doe::after {
+  content: '';
+  position: absolute;
+  width: 55%;
+  aspect-ratio: 1;
+  right: -28%;
+  bottom: -52%;
+  border-radius: 50%;
+  background: radial-gradient(circle,#f8dfdb26,transparent 66%);
+  pointer-events: none;
+}
+#projetos .u-doe-stage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+  overflow: hidden;
+}
+#projetos .u-doe-device {
+  position: absolute;
+  height: 83%;
+  aspect-ratio: 0.48;
+  box-sizing: border-box;
+  background: #1b1720;
+  border: clamp(4px,.5vw,7px) solid #1d171d;
+  border-radius: clamp(18px,2.6vw,33px);
+  box-shadow: 0 25px 35px #2e10184f, inset 0 0 0 1px #ac858e;
+  overflow: hidden;
+  transform-origin: center bottom;
+  transition: transform .7s cubic-bezier(.16,.85,.2,1), box-shadow .7s;
+  will-change: transform;
+}
+#projetos .u-doe-device--primary {
+  left: 27%;
+  bottom: 5%;
+  z-index: 2;
+  transform: rotate(-3deg);
+}
+#projetos .u-doe-device--secondary {
+  height: 74%;
+  left: 53%;
+  bottom: 11%;
+  z-index: 1;
+  transform: rotate(7deg);
+  box-shadow: 0 17px 27px #2e101850, inset 0 0 0 1px #ac858e;
+}
+#projetos .u-doe-screen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  background: #fff8f3;
+}
+#projetos .u-doe-screen img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+}
+#projetos .u-doe-device-notch {
+  position: absolute;
+  z-index: 3;
+  width: 34%;
+  height: 12px;
+  left: 33%;
+  top: 0;
+  background: #17151a;
+  border-radius: 0 0 11px 11px;
+}
+@media (hover: hover) and (pointer: fine) {
+  #projetos .u-project-feature:hover .u-doe-device--primary {
+    transform: translate(-10px,-13px) rotate(-5deg) scale(1.012);
+    box-shadow: 0 34px 43px #2e10185e, inset 0 0 0 1px #ac858e;
+  }
+  #projetos .u-project-feature:hover .u-doe-device--secondary {
+    transform: translate(12px,-19px) rotate(10deg) scale(1.02);
+    box-shadow: 0 30px 37px #2e10185e, inset 0 0 0 1px #ac858e;
+  }
+}
+@media (max-width: 900px) {
+  #projetos .u-doe-device--primary { left: 35%; }
+  #projetos .u-doe-device--secondary { left: 53%; }
+}
+@media (max-width: 600px) {
+  #projetos .u-doe-device {
+    border-width: 4px;
+    border-radius: 17px;
+    box-shadow: 0 11px 16px #2e10184c;
+  }
+  #projetos .u-doe-device--primary { left: 33%; bottom: 5%; height: 87%; }
+  #projetos .u-doe-device--secondary { left: 56%; bottom: 13%; height: 73%; }
+  #projetos .u-doe-device-notch { height: 6px; border-radius: 0 0 5px 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #projetos .u-doe-device { transition: none; will-change: auto; }
+  #projetos .u-project-feature:hover .u-doe-device--primary { transform: rotate(-3deg); }
+  #projetos .u-project-feature:hover .u-doe-device--secondary { transform: rotate(7deg); }
+}
