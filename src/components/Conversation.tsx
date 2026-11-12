@@ -32,6 +32,7 @@ function playNotification(context: AudioContext) {
 
 export function Conversation() {
   const root = useRef<HTMLElement>(null)
+  const chatBodyRef = useRef<HTMLDivElement>(null)
   const timeouts = useRef<number[]>([])
   const audioContext = useRef<AudioContext | null>(null)
   const soundEnabled = useRef(false)
@@ -100,6 +101,20 @@ export function Conversation() {
     return clear
   }, [started, playKey, motionAllowed])
 
+  // Mostra sempre o último balão, inclusive o convite final.
+  // A página não rola: somente o interior da simulação de conversa.
+  useEffect(() => {
+    const element = chatBodyRef.current
+    if (!element) return
+    const frame = window.requestAnimationFrame(() => {
+      element.scrollTo({
+        top: element.scrollHeight,
+        behavior: motionAllowed ? 'smooth' : 'instant',
+      })
+    })
+    return () => window.cancelAnimationFrame(frame)
+  }, [step, typing, motionAllowed])
+
   useEffect(() => () => {
     clear()
     if (audioContext.current) void audioContext.current.close().catch(() => {})
@@ -150,7 +165,7 @@ export function Conversation() {
                 <span className="u-chat-identity"><strong>ÚNICA</strong><small>estúdio digital</small></span>
                 <span className="u-chat-header-icon" aria-hidden="true">◦◦◦</span>
               </div>
-              <div className="u-chat-body" aria-live="off">
+              <div className="u-chat-body" ref={chatBodyRef} aria-live="off">
                 <span className="u-chat-day">HOJE</span>
                 {SCRIPT.slice(0,step).map((item,i)=><div key={i} className={`u-chat-message ${item.from === 'studio' ? 'studio' : 'client'}`}>
                   <span>{item.message}</span><small>9:{String(41+i).padStart(2,'0')}{item.from === 'studio' ? ' ✓✓' : ''}</small>

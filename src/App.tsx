@@ -5,6 +5,7 @@ import { SolutionsShowcase } from './components/SolutionsShowcase'
 import { ArrowUpRight } from './components/InterfaceIcons'
 import { BrandSymbol } from './components/BrandSymbol'
 import { ArchitectureShowcase } from './components/ArchitectureShowcase'
+import { ExperienceLab } from './components/ExperienceLab'
 import './studio.css'
 
 type IconName = 'laptop' | 'cart' | 'grid' | 'phone'
@@ -34,34 +35,53 @@ const palettes = [
   { id: 'turquesa', name: 'Turquesa', accent: '#79E6D6' },
 ]
 
-const projects = [
+type Project = {
+  name: string
+  brand: string
+  kind: string
+  outcome: string
+  tags: string[]
+  visual: string
+  url: string
+  bg: string
+  /** Substituir pelos prints reais depois que as imagens forem enviadas. */
+  cover?: string
+  mobileCover?: string
+}
+
+const projects: Project[] = [
   {
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
-    outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
+    outcome: 'Um cardápio que aproxima o cliente do pedido.',
+    tags: ['Cardápio digital', 'Pedidos', 'Experiência'],
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
-    outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
+    outcome: 'Uma loja organizada para vender na internet.',
+    tags: ['E-commerce', 'Catálogo', 'Carrinho'],
     visual: 'karoane', url: 'https://karoane.vercel.app/',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
-    outcome: 'Uma solução para apresentar o trabalho da marmoraria e apoiar etapas do atendimento e orçamento.',
+    outcome: 'Uma apresentação mais forte e ferramentas para apoiar o atendimento.',
+    tags: ['Solução sob medida', '3D', 'Orçamentos'],
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
   {
     name: 'Doação de sangue', brand: 'DOE+ RS', kind: 'Aplicação de impacto social',
-    outcome: 'Uma experiência digital para apoiar e incentivar a doação de sangue no Rio Grande do Sul.',
+    outcome: 'Tecnologia para apoiar e incentivar a doação de sangue.',
+    tags: ['Aplicativo', 'Impacto social', 'Informação'],
     visual: 'doe', url: 'https://doe-mais-rs.vercel.app/',
     bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
   },
   {
-    name: 'Organização pessoal', brand: 'Minha Rotina', kind: 'Aplicativo de rotina',
-    outcome: 'Organização prática de atividades e hábitos no dia a dia, direto pelo celular.',
+    name: 'Rotina', brand: 'Minha Rotina', kind: 'Aplicativo de rotina',
+    outcome: 'Atividades e hábitos organizados no celular.',
+    tags: ['Organização', 'Produtividade', 'Mobile'],
     visual: 'rotina', url: '',
     bg: 'linear-gradient(135deg,#8cc9b4,#305e58)',
   },
@@ -227,7 +247,7 @@ export default function App() {
       </section>
 
       <Conversation />
-      <div className="u-kinetic-strip" aria-hidden="true"><div className="u-kinetic-track">{Array.from({length: 4}, (_, i) => <span key={i}>IDEIAS EM MOVIMENTO <i>✳</i> SISTEMAS QUE FUNCIONAM <i>✳</i></span>)}</div></div>
+      <div className="u-kinetic-strip" aria-hidden="true"><div className="u-kinetic-track">{Array.from({length: 4}, (_, i) => <span key={i}>IDEIAS EM MOVIMENTO <BrandSymbol className="u-kinetic-icon" /> SISTEMAS QUE FUNCIONAM <BrandSymbol className="u-kinetic-icon" /></span>)}</div></div>
 
       <section id="cores" className="u-color-section">
         <div className="u-wrap u-colors-layout">
@@ -248,6 +268,8 @@ export default function App() {
         </div>
       </section>
 
+      <ExperienceLab />
+
       <section id="projetos" className="u-section">
         <div className="u-wrap">
           <div className="u-portfolio-top u-reveal">
@@ -257,15 +279,16 @@ export default function App() {
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
             <div className="u-project-visual" style={{background:p.bg}} key={p.visual}>
               <div style={{width:'100%'}}>
-                <div className="u-desktop-frame"><ProjectArtwork visual={p.visual}/></div>
+                <div className="u-desktop-frame">{p.cover ? <img src={p.cover} alt={`Prévia do projeto ${p.brand}`} loading="lazy" /> : <ProjectArtwork visual={p.visual}/>}</div>
                 <div className="u-stand"/>
               </div>
-              <div className="u-phone-frame"><ProjectArtwork visual={p.visual} phone/></div>
+              <div className="u-phone-frame">{p.mobileCover ? <img src={p.mobileCover} alt={`Prévia mobile de ${p.brand}`} loading="lazy" /> : <ProjectArtwork visual={p.visual} phone/>}</div>
             </div>
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
-              <p>{p.outcome}</p><p className="u-concept-note">Ilustração conceitual — conheça o projeto para ver como funciona.</p>
+              <p className="u-project-outcome">{p.outcome}</p>
+              <div className="u-project-keywords" aria-label="Destaques do projeto">{p.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>

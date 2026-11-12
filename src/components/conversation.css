@@ -88,3 +88,21 @@
 .u-chat-composer .u-plus-icon{font-size:19px;line-height:1;color:#6b665d}
 .u-mic-icon{display:block;width:10px;height:15px;border-radius:7px;border:1.5px solid #777;position:relative}
 .u-mic-icon:after{content:'';position:absolute;width:6px;height:5px;border:1.5px solid #777;border-top:0;border-radius:0 0 6px 6px;left:0;bottom:-5px}
+
+
+/* Chat confiável: novo conteúdo empurra os balões anteriores para cima;
+   o convite final continua visível sem rolar a página inteira. */
+.u-chat-body{overscroll-behavior:contain;scroll-padding-bottom:14px;padding-bottom:14px}
+.u-chat-message,.u-chat-result,.u-chat-day,.u-typing{flex-shrink:0}
+.u-chat-result{border:1px solid #a4c76f;box-shadow:0 8px 18px #44240f30}
+.u-chat-result:hover{transform:translateY(-2px);box-shadow:0 10px 25px #44240f35}
+.u-chat-result .u-chat-link-icon{flex-shrink:0}
+.u-chat-composer{flex-shrink:0}
+.u-chat-body:focus-visible{outline:2px solid var(--u-accent)}
+@media(max-width:480px){
+ .u-chat-body{padding:11px 9px 14px}
+ .u-chat-result{max-width:98%;padding:9px}
+ .u-chat-result strong{font-size:11px}
+ .u-chat-result small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.u-chat-result:hover{transform:none}}
