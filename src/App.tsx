@@ -4,8 +4,6 @@ import { Conversation } from './components/Conversation'
 import { SolutionsShowcase } from './components/SolutionsShowcase'
 import { ArrowUpRight } from './components/InterfaceIcons'
 import { BrandSymbol } from './components/BrandSymbol'
-import { ArchitectureShowcase } from './components/ArchitectureShowcase'
-import { ExperienceLab } from './components/ExperienceLab'
 import './studio.css'
 
 type IconName = 'laptop' | 'cart' | 'grid' | 'phone'
@@ -40,94 +38,39 @@ type Project = {
   brand: string
   kind: string
   outcome: string
-  tags: string[]
   visual: string
   url: string
-  bg: string
-  /** Substituir pelos prints reais depois que as imagens forem enviadas. */
-  cover?: string
-  mobileCover?: string
 }
 
 const projects: Project[] = [
   {
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
     outcome: 'Um cardápio que aproxima o cliente do pedido.',
-    tags: ['Cardápio digital', 'Pedidos', 'Experiência'],
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
     outcome: 'Uma loja organizada para vender na internet.',
-    tags: ['E-commerce', 'Catálogo', 'Carrinho'],
     visual: 'karoane', url: 'https://karoane.vercel.app/',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
     outcome: 'Uma apresentação mais forte e ferramentas para apoiar o atendimento.',
-    tags: ['Solução sob medida', '3D', 'Orçamentos'],
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
-  {
-    name: 'Doação de sangue', brand: 'DOE+ RS', kind: 'Aplicação de impacto social',
-    outcome: 'Tecnologia para apoiar e incentivar a doação de sangue.',
-    tags: ['Aplicativo', 'Impacto social', 'Informação'],
-    visual: 'doe', url: 'https://doe-mais-rs.vercel.app/',
-    bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
-  },
-  {
-    name: 'Rotina', brand: 'Minha Rotina', kind: 'Aplicativo de rotina',
-    outcome: 'Atividades e hábitos organizados no celular.',
-    tags: ['Organização', 'Produtividade', 'Mobile'],
-    visual: 'rotina', url: '',
-    bg: 'linear-gradient(135deg,#8cc9b4,#305e58)',
-  },
+
 ]
+
+function RealProjectPreview({ project }: { project: Project }) {
+  return <div className={`u-project-real-image u-project-real-image--${project.visual}`}
+    role="img" aria-label={`Capturas reais de ${project.brand} no computador e no celular`} />
+}
 
 function NewLogo() {
   return <span className="u-new-logo"><BrandSymbol /><span className="u-wordmark">ÚNICA</span></span>
-}
-
-/** Conceitos gráficos autorais: nenhuma foto, screenshot ou mockup do site antigo. */
-function ProjectArtwork({ visual, phone = false }: { visual: string; phone?: boolean }) {
-  if (visual === 'bruto') return <div className={`u-art u-art-bruto ${phone ? 'u-art-phone' : ''}`}>
-    <div className="u-art-nav"><b>BRUTO<span>.</span></b><span>MENU&nbsp;&nbsp; PEDIDOS</span></div>
-    <div className="u-bruto-circle" />
-    <div className="u-art-title">FOME DE<br /><em>BRUTO.</em></div>
-    <div className="u-art-chip">PEÇA O SEU <ArrowUpRight /></div>
-    <div className="u-art-caption">PROPOSTA VISUAL · HAMBURGUERIA</div>
-  </div>
-  if (visual === 'karoane') return <div className={`u-art u-art-karoane ${phone ? 'u-art-phone' : ''}`}>
-    <div className="u-art-nav"><b>karoane.</b><span>COLEÇÃO&nbsp; <ArrowUpRight /></span></div>
-    <div className="u-karoane-shape"><i/><i/><i/></div>
-    <div className="u-art-title">CORES PARA<br /><em>CRIAR.</em></div>
-    <div className="u-art-chip">EXPLORAR <ArrowUpRight /></div>
-    <div className="u-art-caption">PROPOSTA VISUAL · LOJA ONLINE</div>
-  </div>
-  if (visual === 'doe') return <div className={`u-art u-art-doe ${phone ? 'u-art-phone' : ''}`}>
-    <div className="u-art-nav"><b>DOE<span>+</span> RS</b><span>DOAÇÃO DE SANGUE</span></div>
-    <div className="u-doe-symbol" aria-hidden="true">+</div>
-    <div className="u-art-title">UM GESTO.<br /><em>MUITAS VIDAS.</em></div>
-    <div className="u-art-chip">SAIBA MAIS <ArrowUpRight /></div>
-    <div className="u-art-caption">CONCEITO VISUAL · IMPACTO SOCIAL</div>
-  </div>
-  if (visual === 'rotina') return <div className={`u-art u-art-rotina ${phone ? 'u-art-phone' : ''}`}>
-    <div className="u-art-nav"><b>minha rotina<span>.</span></b><span>MEU DIA</span></div>
-    <div className="u-rotina-lines" aria-hidden="true"><i/><i/><i/></div>
-    <div className="u-art-title">SEU DIA.<br /><em>SEU RITMO.</em></div>
-    <div className="u-art-chip">ORGANIZE-SE <ArrowUpRight /></div>
-    <div className="u-art-caption">CONCEITO VISUAL · ORGANIZAÇÃO PESSOAL</div>
-  </div>
-  return <div className={`u-art u-art-vertice ${phone ? 'u-art-phone' : ''}`}>
-    <div className="u-art-nav"><b>VÉRTICE<span> / </span></b><span>MÁRMORES</span></div>
-    <div className="u-vertice-shape"><span/><span/><span/></div>
-    <div className="u-art-title">MATÉRIA.<br /><em>FORMA.</em></div>
-    <div className="u-art-chip">CONHEÇA <ArrowUpRight /></div>
-    <div className="u-art-caption">CONCEITO VISUAL · MARMORARIA</div>
-  </div>
 }
 
 export default function App() {
@@ -199,14 +142,14 @@ export default function App() {
           </a>
           <nav className="u-menu" aria-label="Navegação principal">
             <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
-            <a href="#experiencia">Diferenciais</a><a href="#estrutura">Estrutura</a><a href="#contato">Contato</a>
+            <a href="#cores">Cores</a><a href="#contato">Contato</a>
           </nav>
           <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento <ArrowUpRight /></a>
           <button className="u-hamburger" type="button" aria-label={openMenu ? 'Fechar menu' : 'Abrir menu'} aria-controls="u-mobile-menu" aria-expanded={openMenu} onClick={() => setOpenMenu(v => !v)}>
             <span className={`u-ham-lines ${openMenu ? 'open' : ''}`}><i/><i/><i/></span>
           </button>
           {openMenu && <nav id="u-mobile-menu" className="u-mobile-nav" aria-label="Menu mobile">
-            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#experiencia'],['Estrutura','#estrutura'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
+            {[['Projetos','#projetos'],['Serviços','#servicos'],['Cores','#cores'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
             <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Pedir orçamento <span aria-hidden="true"><ArrowUpRight /></span></a>
           </nav>}
         </header>
@@ -268,8 +211,6 @@ export default function App() {
         </div>
       </section>
 
-      <ExperienceLab />
-
       <section id="projetos" className="u-section">
         <div className="u-wrap">
           <div className="u-portfolio-top u-reveal">
@@ -277,18 +218,13 @@ export default function App() {
             <p className="u-lead">Conheça alguns trabalhos e veja como cada projeto foi pensado para um objetivo diferente.</p>
           </div>
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
-            <div className="u-project-visual" style={{background:p.bg}} key={p.visual}>
-              <div style={{width:'100%'}}>
-                <div className="u-desktop-frame">{p.cover ? <img src={p.cover} alt={`Prévia do projeto ${p.brand}`} loading="lazy" /> : <ProjectArtwork visual={p.visual}/>}</div>
-                <div className="u-stand"/>
-              </div>
-              <div className="u-phone-frame">{p.mobileCover ? <img src={p.mobileCover} alt={`Prévia mobile de ${p.brand}`} loading="lazy" /> : <ProjectArtwork visual={p.visual} phone/>}</div>
+            <div className="u-project-visual u-project-visual-real" key={p.visual}>
+              <RealProjectPreview project={p} />
             </div>
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
               <p className="u-project-outcome">{p.outcome}</p>
-              <div className="u-project-keywords" aria-label="Destaques do projeto">{p.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
@@ -302,8 +238,6 @@ export default function App() {
           </div>
         </div>
       </section>
-
-      <ArchitectureShowcase />
 
       <section id="contato" className="u-final u-final-remake">
         <div className="u-wrap">

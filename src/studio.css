@@ -592,3 +592,48 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   .u-final-orb{width:185px;font-size:13px}
   .u-final-orb svg{height:48px;width:48px}
 }
+
+/* Portfolio minimalista: capturas reais, sem molduras artificiais ou tags. */
+.u-project-feature{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);min-height:0;background:#f4e9dc}
+.u-project-visual-real{background:#f0e4d7!important;min-height:340px;padding:22px;display:flex;align-items:center;justify-content:center}
+.u-project-real-image{display:block;width:100%;max-width:700px;height:auto;aspect-ratio:700/392;object-fit:contain;filter:drop-shadow(0 18px 22px #4b2c2018)}
+.u-project-copy{padding:clamp(25px,3.5vw,54px)}
+.u-project-copy h3{font-size:clamp(37px,4vw,59px);margin-bottom:14px}
+.u-project-copy .u-project-brand{margin:0 0 16px}
+.u-project-copy .u-project-outcome{font-size:clamp(15px,1.4vw,18px);line-height:1.38;margin:0 0 22px}
+.u-project-copy>.u-pill{margin-top:0}
+.u-project-controls{margin-top:22px}
+.u-small-projects{margin-top:20px}
+@media(max-width:850px){
+  .u-project-feature{grid-template-columns:1fr}
+  .u-project-visual-real{min-height:0;padding:14px 18px}
+  .u-project-real-image{max-width:620px}
+  .u-project-copy{padding:24px 25px}
+  .u-project-copy h3{font-size:clamp(34px,6vw,49px)}
+}
+@media(max-width:600px){
+  .u-project-feature{border-radius:20px}
+  .u-project-visual-real{min-height:0;max-height:none;padding:12px 10px}
+  .u-project-real-image{max-width:100%;aspect-ratio:700/392}
+  .u-project-copy{padding:20px 20px 22px}
+  .u-project-copy .u-kicker{margin-bottom:12px}
+  .u-project-copy h3{font-size:clamp(31px,8vw,40px);margin-bottom:9px}
+  .u-project-copy .u-project-brand{margin:0 0 10px}
+  .u-project-copy .u-project-outcome{font-size:14px;margin-bottom:15px}
+  .u-project-controls{margin-top:17px}
+  .u-small-projects{justify-content:center;flex-wrap:wrap;overflow:visible}
+}
+
+/* Uma imagem otimizada reúne as seis capturas reais enviadas.
+   Cada projeto exibe seu próprio recorte, sem duplicar mockups. */
+.u-project-real-image{
+  width:100%;height:auto;aspect-ratio:700/392;
+  max-width:700px;flex:none;display:block;
+  background-image:url('/portfolio-reais.webp');
+  background-repeat:no-repeat;background-size:100% 300%;
+  filter:drop-shadow(0 18px 22px #4b2c2018);
+}
+.u-project-real-image--bruto{background-position:center top}
+.u-project-real-image--karoane{background-position:center center}
+.u-project-real-image--vertice{background-position:center bottom}
+@media(max-width:600px){.u-project-real-image{width:100%;height:auto;aspect-ratio:700/392}}
