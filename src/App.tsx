@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from 'react'
 import { QUOTE_LINK } from './content'
 import { Conversation } from './components/Conversation'
+import { SolutionsShowcase } from './components/SolutionsShowcase'
 import { ArrowUpRight } from './components/InterfaceIcons'
 import './studio.css'
 
@@ -201,11 +202,7 @@ export default function App() {
             <div><span className="u-kicker">SOLUÇÕES SOB MEDIDA</span><h2 className="u-h2">O digital que <mark>resolve,</mark><br />vende e conecta.</h2></div>
             <div><p className="u-lead">Cada negócio tem um desafio diferente. A solução certa precisa ser bonita, fácil de usar e fazer sentido na rotina de quem depende dela.</p><a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre meu projeto <ArrowUpRight /></a></div>
           </div>
-          <div className="u-list-solutions u-reveal">
-            {services.map(s => <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-sol" key={s.name}>
-              <Icon name={s.icon} /><div><h3>{s.name}</h3><p>{s.line}</p></div>
-            </a>)}
-          </div>
+          <SolutionsShowcase />
         </div>
       </section>
 
