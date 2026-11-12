@@ -199,14 +199,14 @@ export default function App() {
           </a>
           <nav className="u-menu" aria-label="Navegação principal">
             <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
-            <a href="#cores">Diferenciais</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a>
+            <a href="#experiencia">Diferenciais</a><a href="#estrutura">Estrutura</a><a href="#contato">Contato</a>
           </nav>
           <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento <ArrowUpRight /></a>
           <button className="u-hamburger" type="button" aria-label={openMenu ? 'Fechar menu' : 'Abrir menu'} aria-controls="u-mobile-menu" aria-expanded={openMenu} onClick={() => setOpenMenu(v => !v)}>
             <span className={`u-ham-lines ${openMenu ? 'open' : ''}`}><i/><i/><i/></span>
           </button>
           {openMenu && <nav id="u-mobile-menu" className="u-mobile-nav" aria-label="Menu mobile">
-            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#cores'],['Sobre','#sobre'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
+            {[['Projetos','#projetos'],['Serviços','#servicos'],['Diferenciais','#experiencia'],['Estrutura','#estrutura'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
             <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Pedir orçamento <span aria-hidden="true"><ArrowUpRight /></span></a>
           </nav>}
         </header>
