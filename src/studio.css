@@ -1011,3 +1011,25 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   transition:none;transform:none;
  }
 }
+
+
+/* Bruto / prints atuais: dispositivos independentes, imagem fiel e contraste. */
+#projetos .u-devices-bruto {
+  background:radial-gradient(circle at 24% 17%,#c56c4a7a,transparent 46%),linear-gradient(135deg,#9c573c,#693929 61%,#442720) !important;
+}
+@media (min-width:901px) {
+  #projetos .u-devices-bruto .u-device-laptop {
+    width:min(89%,830px);
+    left:3%;
+    bottom:7%;
+  }
+  #projetos .u-devices-bruto .u-device-phone {
+    width:min(24%,225px);
+    right:3%;
+    bottom:5%;
+  }
+}
+@media (max-width:600px) {
+  #projetos .u-devices-bruto .u-device-laptop {width:92%;left:1.5%;bottom:5%}
+  #projetos .u-devices-bruto .u-device-phone {width:24%;right:2.5%;bottom:3%}
+}

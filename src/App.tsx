@@ -288,7 +288,7 @@ export default function App() {
                     src={`/screens/${p.visual}-mobile-alpha.svg`}
                     alt={`Interface original do ${p.brand} no celular`}
                     width={p.visual === 'vertice' ? 419 : 393}
-                    height={p.visual === 'vertice' ? 854 : 790}
+                    height={p.visual === 'vertice' ? 854 : p.visual === 'bruto' ? 794 : 790}
                     decoding="async"
                     loading="lazy"
                   />
