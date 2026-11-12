@@ -82,3 +82,9 @@
 .u-talk-mobile-cta{font-size:13px!important}
 }
 @media(prefers-reduced-motion:reduce){.u-iphone{opacity:1;transform:none}.u-chat-message,.u-chat-result,.u-typing i{animation:none!important}}
+
+.u-chat-link-icon .u-vector-arrow{width:19px;height:19px}
+.u-talk-controls svg{display:inline-block;width:17px;height:17px;flex:none}
+.u-chat-composer .u-plus-icon{font-size:19px;line-height:1;color:#6b665d}
+.u-mic-icon{display:block;width:10px;height:15px;border-radius:7px;border:1.5px solid #777;position:relative}
+.u-mic-icon:after{content:'';position:absolute;width:6px;height:5px;border:1.5px solid #777;border-top:0;border-radius:0 0 6px 6px;left:0;bottom:-5px}
