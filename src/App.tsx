@@ -35,18 +35,18 @@ const palettes = [
 
 const projects = [
   {
-    name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
-    outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
-    visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
-    cover: '/cover-bruto.svg',
-    bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
-  },
-  {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
     outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
     visual: 'karoane', url: 'https://karoane.vercel.app/',
     cover: '/cover-karoane.svg',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
+  },
+  {
+    name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
+    outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
+    visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
+    cover: '/cover-bruto.svg',
+    bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
@@ -295,11 +295,11 @@ export default function App() {
                   />
                 </div>
               ) : p.visual === 'doe' ? (
-                <div className="u-doe-stage" aria-label="Telas reais da versão mobile do DOE+ RS">
+                <div className="u-doe-stage" aria-label="Telas reais do aplicativo mobile DOE+ RS">
                   <div className="u-doe-device u-doe-device--primary">
                     <div className="u-doe-screen">
                       <img
-                        src="https://raw.githubusercontent.com/palomagl/doe-mais-rs/main/docs/screenshots/dashboard.png"
+                        src="/projects/doe/home.webp"
                         alt="Tela de painel do aplicativo DOE+ RS"
                         loading="lazy"
                         decoding="async"
@@ -310,8 +310,8 @@ export default function App() {
                   <div className="u-doe-device u-doe-device--secondary">
                     <div className="u-doe-screen">
                       <img
-                        src="https://raw.githubusercontent.com/palomagl/doe-mais-rs/main/docs/screenshots/hero-gameplay.png"
-                        alt="Tela do jogo Corrida pela Vida do DOE+ RS"
+                        src="/projects/doe/hemocentros.webp"
+                        alt="Tela de hemocentros do DOE+ RS"
                         loading="lazy"
                         decoding="async"
                       />
