@@ -1179,3 +1179,24 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
 @media (prefers-reduced-motion: reduce) {
   .u-kinetic-track { animation: none !important; }
 }
+
+/* Economia de dados: manter a imagem principal nítida, evitando baixar
+   a imagem secundária quando o navegador indica conexão 2G ou Data Saver. */
+#projetos .u-device-stage--lite .u-device-laptop {
+  width: 94%;
+  left: 3%;
+  bottom: 7%;
+}
+#projetos .u-doe-stage--lite .u-doe-device--primary {
+  left: 42%;
+  transform: translateX(-15%) rotate(-2deg);
+}
+@media (max-width: 600px) {
+  #projetos .u-device-stage--lite .u-device-laptop {
+    width: 98%;
+    left: 1%;
+  }
+  #projetos .u-doe-stage--lite .u-doe-device--primary {
+    left: 39%;
+  }
+}

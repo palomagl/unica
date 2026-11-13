@@ -116,12 +116,29 @@ function ProjectArtwork({ visual, phone = false }: { visual: string; phone?: boo
 export default function App() {
   const [palette, setPalette] = useState(0)
   const [project, setProject] = useState(0)
+  const [liteImages, setLiteImages] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
   const touchStart = useRef<number | null>(null)
   const progressRef = useRef<HTMLDivElement>(null)
   const projectTabsRef = useRef<HTMLDivElement>(null)
   const selected = palettes[palette]
   const p = projects[project]
+  useEffect(() => {
+    // Respeita o modo economia de dados e conexões 2G detectadas pelo navegador.
+    // Onde Network Information API não existe, mantemos a apresentação completa.
+    const network = (navigator as Navigator & { connection?: {
+      saveData?: boolean
+      effectiveType?: string
+      addEventListener?: (event: string, handler: () => void) => void
+      removeEventListener?: (event: string, handler: () => void) => void
+    } }).connection
+    if (!network) return
+    const update = () => setLiteImages(Boolean(network.saveData || network.effectiveType === 'slow-2g' || network.effectiveType === '2g'))
+    update()
+    network.addEventListener?.('change', update)
+    return () => network.removeEventListener?.('change', update)
+  }, [])
+
   const variables = {
     '--u-accent': selected.accent,
   } as CSSProperties
@@ -274,7 +291,7 @@ export default function App() {
           <div className="u-project-feature u-reveal" onTouchStart={swipeStart} onTouchEnd={swipeEnd} aria-label="Projetos em destaque, deslize para alternar no celular">
             <div className={`u-project-visual ${p.cover ? `u-project-visual--devices u-devices-${p.visual}` : p.visual === 'doe' ? 'u-project-visual--doe' : ''}`} style={{background:p.bg}} key={p.visual}>
               {p.cover ? (
-                <div className="u-device-stage" aria-label={`Telas reais do projeto ${p.brand}, em computador e celular`}>
+                <div className={`u-device-stage ${liteImages ? 'u-device-stage--lite' : ''}`} aria-label={`Prévia do projeto ${p.brand} em computador${liteImages ? '' : ' e celular'}`}>
                   <img
                     className="u-device-laptop"
                     src={`/screens/${p.visual}-desktop-alpha.svg`}
@@ -284,6 +301,7 @@ export default function App() {
                     decoding="async"
                     loading="lazy"
                   />
+                  {!liteImages && (
                   <img
                     className="u-device-phone"
                     src={`/screens/${p.visual}-mobile-alpha.svg`}
@@ -293,9 +311,10 @@ export default function App() {
                     decoding="async"
                     loading="lazy"
                   />
+                  )}
                 </div>
               ) : p.visual === 'doe' ? (
-                <div className="u-doe-stage" aria-label="Telas reais do aplicativo mobile DOE+ RS">
+                <div className={`u-doe-stage ${liteImages ? 'u-doe-stage--lite' : ''}`} aria-label="Telas do aplicativo DOE+ RS">
                   <div className="u-doe-device u-doe-device--primary">
                     <div className="u-doe-screen">
                       <img
@@ -307,7 +326,7 @@ export default function App() {
                     </div>
                     <span className="u-doe-device-notch" aria-hidden="true" />
                   </div>
-                  <div className="u-doe-device u-doe-device--secondary">
+                  {!liteImages && <div className="u-doe-device u-doe-device--secondary">
                     <div className="u-doe-screen">
                       <img
                         src="/projects/doe/hemocentros.webp"
@@ -317,7 +336,7 @@ export default function App() {
                       />
                     </div>
                     <span className="u-doe-device-notch" aria-hidden="true" />
-                  </div>
+                  </div>}
                 </div>
               ) : (
                 <>
