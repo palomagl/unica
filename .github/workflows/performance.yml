@@ -1,0 +1,68 @@
+name: Performance and build audit
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install exactly locked dependencies
+        run: npm ci
+      - name: Verify project assets
+        run: npm run perf:check
+      - name: Compile production bundle
+        run: npm run build
+      - name: Check production budgets
+        run: node scripts/build-audit.mjs
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 > preview.log 2>&1 &
+          echo $! > preview.pid
+          for i in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat preview.log
+          exit 1
+      - name: Lighthouse mobile performance audit
+        run: |
+          npx --yes lighthouse@12 http://127.0.0.1:4173/ \
+            --preset=desktop \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --output=json --output-path=./lighthouse-desktop.json --quiet
+          npx --yes lighthouse@12 http://127.0.0.1:4173/ \
+            --form-factor=mobile \
+            --screenEmulation.mobile=true \
+            --screenEmulation.width=390 \
+            --screenEmulation.height=844 \
+            --screenEmulation.deviceScaleFactor=3 \
+            --throttling-method=simulate \
+            --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+            --output=json --output-path=./lighthouse-mobile.json --quiet
+      - name: Summarize Lighthouse scores
+        if: always()
+        run: |
+          node -e "const fs=require('fs'); for(const type of ['desktop','mobile']){let p='lighthouse-'+type+'.json';if(!fs.existsSync(p))continue;let j=JSON.parse(fs.readFileSync(p));console.log(type, 'performance',Math.round(j.categories.performance.score*100),'LCP',j.audits['largest-contentful-paint'].displayValue,'CLS',j.audits['cumulative-layout-shift'].displayValue,'TBT',j.audits['total-blocking-time'].displayValue)}"
+      - name: Save Lighthouse results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: performance-audit
+          path: |
+            lighthouse-desktop.json
+            lighthouse-mobile.json
+            preview.log
+          if-no-files-found: ignore
