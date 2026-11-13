@@ -1152,3 +1152,30 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   #projetos .u-devices-rotina .u-device-laptop,
   #projetos .u-devices-rotina .u-device-phone {will-change:auto;}
 }
+
+
+/* Performance pass: animations remain on desktop, but mobile paint is cheaper.
+   Prefer transform/opacity; avoid full-width blur layers on low-powered devices. */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  .u-reveal {
+    filter: none;
+    transform: translateY(20px);
+    transition: opacity .5s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .u-reveal.is-visible { filter: none; transform: none; }
+  .u-hero .u-heading,
+  .u-hero-side { animation-duration: .55s; }
+  .u-swoosh { animation: none; }
+  .u-kinetic-track { animation-duration: 65s; }
+  #projetos .u-device-laptop,
+  #projetos .u-device-phone,
+  #projetos .u-doe-device {
+    will-change: auto;
+    filter: none;
+  }
+  #projetos .u-device-laptop,
+  #projetos .u-device-phone { transition-duration: .35s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .u-kinetic-track { animation: none !important; }
+}

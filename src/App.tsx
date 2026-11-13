@@ -282,7 +282,7 @@ export default function App() {
                     width={p.visual === 'vertice' ? 1261 : 1237}
                     height={774}
                     decoding="async"
-                    loading={project === 0 ? 'eager' : 'lazy'}
+                    loading="lazy"
                   />
                   <img
                     className="u-device-phone"
