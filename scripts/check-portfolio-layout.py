@@ -62,24 +62,45 @@ with sync_playwright() as playwright:
             check(page.locator(".u-floating-whatsapp").is_visible(),
                   f"{width}px: WhatsApp fixo não aparece")
 
-            # Quatro cards objetivos: entrada acessível e soluções de maior escopo.
+            # Desktop revela painel de explicação; mobile expande um so card.
             cards = page.locator(".u-price-card")
-            check(cards.count() == 4, f"{width}px: devem aparecer quatro opções")
+            check(cards.count() == 4, f"{width}px: devem aparecer quatro opcoes")
+            check("u-price-card--entry" in cards.first.get_attribute("class"),
+                  f"{width}px: falta destaque no preco de entrada")
+            check("u-price-card--bespoke" in cards.nth(3).get_attribute("class"),
+                  f"{width}px: falta destaque em sistemas/apps")
             for i, (title, expected_value) in enumerate(OFFERS):
                 card = cards.nth(i)
                 check(card.locator("h3").inner_text().strip() == title,
-                      f"{width}px: nome errado do serviço {i}")
+                      f"{width}px: servico errado no card {i}")
                 value = "".join(card.locator(".u-price-card-cost strong").inner_text().split())
                 check("".join(expected_value.split()) in value,
-                      f"{width}px: preço errado para {title}")
-                link = card.locator(".u-price-card-cta").get_attribute("href")
-                check("wa.me/" + PHONE in link,
-                      f"{width}px: CTA não abre o WhatsApp profissional")
-                check(card.get_attribute("class") is not None, f"{width}px: card sem estilo")
-            check("u-price-card--entry" in cards.nth(0).get_attribute("class"),
-                  f"{width}px: falta destaque para o preço de entrada")
-            check("u-price-card--bespoke" in cards.nth(3).get_attribute("class"),
-                  f"{width}px: falta contraste para sistemas e apps")
+                      f"{width}px: preco incorreto para {title}")
+                button = card.locator(".u-price-card-cta")
+                if button.get_attribute("aria-expanded") != "true":
+                    button.click()
+                check(button.get_attribute("aria-expanded") == "true",
+                      f"{width}px: detalhes nao abriram para {title}")
+                check(page.locator(".u-price-card.is-open").count() == 1,
+                      f"{width}px: mais de um card expandido")
+                if width <= 700:
+                    detail = card.locator(".u-price-mobile-details")
+                    check(detail.is_visible() and detail.locator("li").count() == 3,
+                          f"{width}px: detalhe mobile nao apareceu")
+                    check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
+                          f"{width}px: WhatsApp do detalhe incorreto")
+                    check(page.locator(".u-price-desktop-detail").is_hidden(),
+                          f"{width}px: painel desktop aparece no celular")
+                else:
+                    detail = page.locator(".u-price-desktop-detail")
+                    check(detail.is_visible() and detail.locator("li").count() == 3,
+                          f"{width}px: painel desktop nao abriu")
+                    check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
+                          f"{width}px: WhatsApp do painel incorreto")
+            cards.nth(3).locator(".u-price-card-cta").click()
+            check(page.locator(".u-price-card.is-open").count() == 0,
+                  f"{width}px: nao foi possivel fechar o detalhe")
+            cards.nth(0).locator(".u-price-card-cta").click()
 
             # FAQ: quatro perguntas com expansão e fechamento.
             questions = page.locator(".u-faq-entry button")
@@ -92,9 +113,10 @@ with sync_playwright() as playwright:
                   f"{width}px: dúvida não fecha")
 
             if width == 390:
-                page.locator(".u-price-card-cta").first.focus()
-                check(page.locator(".u-price-card-cta").first.evaluate("(el) => document.activeElement === el"),
-                      "CTA do investimento não recebe foco por teclado")
+                page.locator(".u-price-card-cta").nth(1).focus()
+                page.keyboard.press("Enter")
+                check(cards.nth(1).locator(".u-price-card-cta").get_attribute("aria-expanded") == "true",
+                      "Detalhe do investimento nao responde ao teclado")
                 page.locator(".u-faq-entry button").first.focus()
                 page.keyboard.press("Enter")
                 check(page.locator(".u-faq-answer").count() == 1,
