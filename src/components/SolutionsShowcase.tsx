@@ -4,10 +4,10 @@ import { QUOTE_LINK } from '../content'
 import './solutions.css'
 
 const options = [
-  { number: '01', title: 'Atrair e impressionar', category: 'Sites & experiências digitais', problem: 'Quando a primeira impressão precisa estar à altura do seu negócio.', result: 'Uma presença marcante, fácil de navegar e preparada para transformar visitas em oportunidades.', label: 'PRESENÇA' },
-  { number: '02', title: 'Vender pela internet', category: 'Lojas online & pedidos', problem: 'Para levar seus produtos mais longe e facilitar a escolha de quem compra.', result: 'Uma jornada de compra organizada, intuitiva e alinhada à personalidade da sua marca.', label: 'VENDAS' },
-  { number: '03', title: 'Organizar e automatizar', category: 'Sistemas & gestão', problem: 'Quando tarefas manuais estão tomando tempo demais da equipe.', result: 'Um sistema sob medida para centralizar informações e tornar o dia a dia mais simples.', label: 'GESTÃO' },
-  { number: '04', title: 'Tirar uma ideia do papel', category: 'Apps & soluções exclusivas', problem: 'Mesmo que ainda não exista um modelo pronto para o que você imaginou.', result: 'Uma solução desenhada em torno do seu objetivo — seja um app, plataforma ou algo novo.', label: 'IDEIAS' },
+  { number: '01', title: 'Seu negócio bem apresentado', category: 'Sites e experiências digitais', problem: 'Seu trabalho é bom. A presença online precisa mostrar isso.', developed: 'Sites, páginas de apresentação e experiências pensadas para a sua marca.', result: 'Quem chega entende o que você faz e encontra o caminho para conversar.', label: 'PRESENÇA' },
+  { number: '02', title: 'Vender sem complicar', category: 'Lojas virtuais e pedidos', problem: 'Produto bom não deveria depender de dezenas de mensagens para ser encontrado.', developed: 'Lojas com catálogo organizado e caminhos de compra adaptados à operação.', result: 'Mais clareza para quem compra e mais organização para quem vende.', label: 'VENDAS' },
+  { number: '03', title: 'Menos tarefas manuais', category: 'Sistemas e gestão', problem: 'Planilhas espalhadas e informações perdidas atrapalham o dia a dia.', developed: 'Painéis, controles e fluxos personalizados para o jeito de trabalhar da equipe.', result: 'A informação fica no lugar certo, sem precisar improvisar toda vez.', label: 'GESTÃO' },
+  { number: '04', title: 'Sua ideia em movimento', category: 'Aplicativos e soluções personalizadas', problem: 'Nem toda necessidade cabe numa ferramenta pronta.', developed: 'Apps e plataformas com funcionalidades definidas a partir do seu objetivo.', result: 'Uma experiência feita para as pessoas que realmente vão usá-la.', label: 'IDEIAS' },
 ] as const
 
 export function SolutionsShowcase() {
@@ -27,7 +27,8 @@ export function SolutionsShowcase() {
       <div className="u-solution-symbol" aria-hidden="true"><span>{current.number}</span><span className="u-solution-symbol-spark" aria-hidden="true"><ArrowUpRight /></span></div>
       <div className="u-solution-detail-body">
         <h3>{current.problem}</h3>
-        <p>{current.result}</p>
+        <p className="u-solution-developed"><strong>O que podemos criar</strong>{current.developed}</p>
+        <p className="u-solution-benefit"><strong>Na prática</strong>{current.result}</p>
         <a className="u-solution-link" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Quero uma solução assim <ArrowUpRight /></a>
       </div>
     </div>
