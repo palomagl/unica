@@ -42,7 +42,7 @@ jobs:
         run: python3 scripts/check-portfolio-layout.py
       - name: Guardar screenshots da revisão
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: visual-review
           path: visual-check/
