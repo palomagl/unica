@@ -420,7 +420,13 @@ export default function App() {
         </button>}
         <a className="u-floating-whatsapp" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer"
           aria-label="Conversar com a ÚNICA pelo WhatsApp profissional">
-          <span className="u-floating-dot" aria-hidden="true" />WhatsApp <ArrowUpRight />
+          <svg className="u-floating-wa-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M20.5 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.1-4.8A8.5 8.5 0 1 1 20.5 11.5Z"/>
+            <path d="M8.3 8.1c.1-.3.3-.5.6-.5h.7l1.1 2.4-.8 1c.7 1.3 1.7 2.3 3.1 2.9l1-.8 2.4 1.1v.7c0 .3-.2.6-.5.7-3.8 1.4-9-3.8-7.6-7.5Z"/>
+          </svg>
+          <span className="u-floating-wa-text">WhatsApp</span>
+          <ArrowUpRight />
         </a>
       </nav>
       <footer className="u-footer">
