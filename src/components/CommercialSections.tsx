@@ -22,7 +22,7 @@ export function InvestmentSection() {
         <header className="u-price-head u-reveal">
           <div>
             <span className="u-kicker">INVESTIMENTO / PONTO DE PARTIDA</span>
-            <h2 className="u-h2" id="u-investment-title">Ideia boa merece <mark>sair do papel.</mark></h2>
+            <h2 className="u-h2" id="u-investment-title">Toda ideia tem um <mark>ponto de partida.</mark></h2>
           </div>
           <p>Algumas formas de começar. O projeto certo, a gente descobre conversando.</p>
         </header>
