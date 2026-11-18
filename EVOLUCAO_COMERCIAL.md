@@ -11,13 +11,13 @@ marca, animações originais e fechamento foram mantidos.
   `startingAtBRL: null`, exibindo **A definir**, nunca valores inventados.
   Informar os valores autorizados em reais para landing, institucional e loja.
   Sistemas e aplicativos permanecem **Sob orçamento**.
-- **Sexto projeto:** `src/App.tsx` possui `sixthProject = null`. Para ativar,
-  fornecer nome, tipo, problema/objetivo, o que foi desenvolvido, natureza do
-  projeto, link e arquivos de desktop/mobile ou imagem aprovada.
-- **Natureza dos projetos:** Karoane está como comercial; DOE+ RS e Minha
-  Rotina como autorais. Bruto e Vértice foram definidos conservadoramente como
-  **Projeto de portfólio**, sem supor contratação. Confirmar antes de mudar
-  para comercial ou demonstração.
+- **Sexto projeto:** ROXO — Açaí do seu jeito incluído, com capturas do site
+  público em desktop e celular, mesmos dispositivos e efeitos dos outros.
+  O ROXO é uma loja demonstrativa; não inferir vendas nem resultados reais.
+- **Classificação dos projetos:** rótulos de comercial/autoral/portfólio
+  removidos da interface por solicitação. Não incluir promessas ou números.
+- **Links:** ROXO abre https://roxo-acaiteria.vercel.app/roxo e Minha Rotina
+  abre https://dashboard-three-khaki-68.vercel.app/, conforme páginas publicadas.
 - **Depoimentos:** `testimonials = []`, e o componente não renderiza
   enquanto não houver autorização e conteúdo real.
 - **Imagem social:** reutiliza `/unica-logo-black.png`, que já existe.
@@ -30,7 +30,7 @@ marca, animações originais e fechamento foram mantidos.
 - A seção de cores continua disponível no corpo do site.
 - Hero intacto; CTA principal atualizado para **Começar um projeto**.
 - Quatro opções originais de serviços mantidas, textos revisados.
-- Projetos preservados e com objetivo, entrega e vínculo explicitados.
+- Seis projetos preservados, com descrições objetivas e links quando disponíveis, sem selos classificatórios.
 - Investimento interativo com preços em configuração central.
 - Método editorial com quatro etapas, sem cards genéricos.
 - Depoimentos condicionais e nenhuma avaliação falsa.
