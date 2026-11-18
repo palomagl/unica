@@ -34,7 +34,7 @@ Nada de layout genérico de agência. Cada seção tem uma função e uma lingua
 | **Conversa animada** | Simulação de atendimento num iPhone, com controles e som opcional. |
 | **Cores em movimento** | Permite experimentar acentos de cor sem mudar a identidade principal. |
 | **Projetos** | Seis trabalhos com capturas em notebook/celular e navegação responsiva. |
-| **Investimento** | Quatro cards responsivos: entrada acessível em verde-limão, opções personalizáveis e contato direto pelo WhatsApp. |
+| **Investimento** | Quatro cards no desktop, painel explicativo ao clicar e lista compacta expansível no celular; WhatsApp somente depois dos detalhes. |
 | **Dúvidas** | Respostas objetivas e expansíveis, acessíveis por teclado. |
 | **Contato** | Atalhos para WhatsApp e botão de retorno ao topo. |
 
