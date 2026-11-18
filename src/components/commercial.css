@@ -47,6 +47,8 @@
 .u-price-footer a{display:inline-flex;justify-self:end;align-items:center;gap:7px;padding-bottom:8px;border-bottom:2px solid var(--u-accent);font-size:clamp(15px,1.45vw,19px);font-weight:550;line-height:1.25}
 .u-price-footer a strong{font-weight:900}
 .u-price-footer a svg{width:20px;height:20px;flex:none}
+.u-price-footer a>span{display:inline;min-width:0;line-height:1.35}
+@media(max-width:700px){.u-price-footer a{flex-wrap:nowrap;gap:9px;align-items:center}.u-price-footer a>span{max-width:265px}}
 @keyframes u-price-enter{from{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 /* Segunda composição: perguntas abertas, sem cartões ou mockups.
