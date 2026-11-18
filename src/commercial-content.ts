@@ -1,70 +1,41 @@
-// ÚNICA — catálogo comercial centralizado. Valores de entrada informados pela responsável.
-// Os preços não são pacotes fechados: escopo, recursos e serviços externos são avaliados na proposta.
-export type InvestmentCategoryId = 'presenca' | 'vendas' | 'funcionalidades'
+// ÚNICA — quatro pontos de partida aprovados para exibição na landing.
+// Serviços complementares e escopos especiais são apresentados via WhatsApp.
+// Valores são iniciais; hospedagem, domínio, integrações e manutenção à parte.
 export type InvestmentOption = {
   id: string
-  category: InvestmentCategoryId
   title: string
   summary: string
   startingAtBRL: number | null
-  details?: string
+  note?: string
 }
-export const investmentCategories: { id: InvestmentCategoryId; label: string; note: string }[] = [
-  { id: 'presenca', label: 'Presença digital', note: 'Para ser encontrado e bem apresentado.' },
-  { id: 'vendas', label: 'Vendas online', note: 'Para facilitar escolhas e pedidos.' },
-  { id: 'funcionalidades', label: 'Funcionalidades', note: 'Para resolver o que seu negócio precisa.' },
-]
-
 export const investments: InvestmentOption[] = [
   {
-    id: 'landing-essencial', category: 'presenca', title: 'Landing page essencial',
-    summary: 'Uma página simples e responsiva para apresentar sua oferta e direcionar para o WhatsApp.',
+    id: 'landing',
+    title: 'Landing page',
+    summary: 'Uma página para apresentar sua marca, ideia ou serviço e abrir conversas.',
     startingAtBRL: 700,
+    note: 'Soluções personalizadas têm investimento próprio.',
   },
   {
-    id: 'landing-personalizada', category: 'presenca', title: 'Landing page personalizada',
-    summary: 'Identidade mais exclusiva, elementos próprios e interações pensadas para sua marca.',
-    startingAtBRL: 1490,
-  },
-  {
-    id: 'site-empresas', category: 'presenca', title: 'Site para empresas',
-    summary: 'Serviços, diferenciais, informações e contato organizados de um jeito claro.',
+    id: 'site',
+    title: 'Site para empresas',
+    summary: 'Seu negócio com as informações certas, bem organizado e fácil de encontrar.',
     startingAtBRL: 1500,
-    details: 'Quantidade de páginas e funcionalidades definida na proposta.',
+    note: 'Páginas e recursos definidos na proposta.',
   },
   {
-    id: 'catalogo', category: 'vendas', title: 'Catálogo digital',
-    summary: 'Produtos com fotos e categorias, com pedidos direcionados ao WhatsApp.',
-    startingAtBRL: 990,
-    details: 'Sem checkout online no escopo inicial.',
-  },
-  {
-    id: 'cardapio', category: 'vendas', title: 'Cardápio com pedidos',
-    summary: 'Cardápio digital com categorias e montagem de pedidos para envio por WhatsApp.',
-    startingAtBRL: 1590,
-    details: 'Gestão avançada e pagamentos online são orçados à parte.',
-  },
-  {
-    id: 'loja', category: 'vendas', title: 'Loja virtual',
-    summary: 'E-commerce com catálogo, busca, carrinho, checkout, pagamentos, frete básico e painel de produtos e pedidos.',
+    id: 'loja',
+    title: 'Loja virtual',
+    summary: 'Produtos, carrinho, pagamentos e pedidos num só lugar, de acordo com sua operação.',
     startingAtBRL: 5900,
-    details: 'Implantação de escopo delimitado com soluções existentes; integrações especiais e recursos avançados são orçados à parte.',
+    note: 'Implantação com escopo delimitado.',
   },
   {
-    id: 'agendamento', category: 'funcionalidades', title: 'Site com agendamentos',
-    summary: 'Site integrado a uma ferramenta de agenda para profissionais e estabelecimentos.',
-    startingAtBRL: 2490,
-    details: 'O valor inicial utiliza uma solução de agenda existente, sem desenvolver uma plataforma do zero.',
-  },
-  {
-    id: 'sistema', category: 'funcionalidades', title: 'Sistema personalizado',
-    summary: 'Controle de operações, organização de informações e automação de processos próprios.',
+    id: 'personalizado',
+    title: 'Sistemas e apps',
+    summary: 'Uma solução pensada para processos, necessidades e ideias que não cabem no padrão.',
     startingAtBRL: null,
-  },
-  {
-    id: 'aplicativo', category: 'funcionalidades', title: 'Aplicativo',
-    summary: 'Aplicativos e plataformas definidos pelas funcionalidades, público e objetivos do projeto.',
-    startingAtBRL: null,
+    note: 'Escopo e investimento definidos em conversa.',
   },
 ]
 
