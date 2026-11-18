@@ -2,7 +2,7 @@
   <img src="./public/unica-logo-black.png" alt="Símbolo da ÚNICA — Estúdio Digital" width="104" />
 </p>
 
-<h1 align="center">ÚNICA<span>®</span></h1>
+<h1 align="center">ÚNICA</h1>
 <p align="center"><strong>Soluções digitais que movem negócios.</strong></p>
 <p align="center">
   Design com personalidade. Tecnologia com propósito.<br />
