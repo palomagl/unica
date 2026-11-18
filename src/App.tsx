@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from 'react'
-import { QUOTE_LINK } from './content'
+import { QUOTE_LINK, whatsappLink } from './content'
 import { Conversation } from './components/Conversation'
 import { SolutionsShowcase } from './components/SolutionsShowcase'
 import { InvestmentSection, FAQSection, TestimonialsSection } from './components/CommercialSections'
@@ -214,6 +214,7 @@ export default function App() {
 
   return (
     <div className="u-site" style={variables}>
+      <a className="u-skip-link" href="#servicos">Pular para as soluções</a>
       <div className="u-scroll-progress" ref={progressRef} aria-hidden="true" />
       <section className="u-top" id="inicio">
         <header className="u-nav u-wrap">
@@ -253,6 +254,7 @@ export default function App() {
             <span className="u-arrow" aria-hidden="true"><ArrowUpRight /></span>
             <p>Do que o cliente vê ao que faz tudo funcionar. Criamos soluções digitais com personalidade, pensadas para a realidade de cada negócio.</p>
             <a className="u-pill u-pill-light" href="#servicos">Conheça nossos serviços <ArrowUpRight /></a>
+            <span className="u-coverage"><span aria-hidden="true" />Atendimento online para todo o Brasil</span>
           </div>
         </div>
         <div className="u-wave" aria-hidden="true"><svg viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 115 C220 0 400 135 660 108 S1010 -5 1145 58 S1290 145 1440 0 L1440 160 L0 160 Z"/></svg></div>
@@ -375,7 +377,12 @@ export default function App() {
               <h3>{p.brand}</h3><p className="u-project-brand">{p.name}</p>
               <p className="u-project-description">{p.outcome}</p>
               {p.visual === 'roxo' && <small className="u-project-disclaimer">Demonstração de loja online.</small>}
-              {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre o projeto <ArrowUpRight /></a>}
+              <div className="u-project-action-row">
+                {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : null}
+                <a className="u-project-ask-link" href={whatsappLink(`Olá! Vi o projeto ${p.brand} no site da ÚNICA e gostaria de conversar sobre uma solução parecida para meu negócio.`)} target="_blank" rel="noopener noreferrer">
+                  Quero algo assim <ArrowUpRight />
+                </a>
+              </div>
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
                 <button className="u-control" type="button" aria-label="Próximo projeto" onClick={()=>changeProject(1)}>→</button>
@@ -436,7 +443,7 @@ export default function App() {
       <footer className="u-footer">
         <div className="u-wrap">
           <a href="#inicio" className="u-footer-brand" aria-label="ÚNICA, voltar ao começo"><NewLogo /></a>
-          <span>Sites, sistemas, e-commerces e soluções que fazem sentido.</span>
+          <span>Sites, catálogos, lojas, sistemas e apps. Atendimento online para todo o Brasil.</span>
           <a href="#inicio">Voltar ao topo ↑</a>
         </div>
       </footer>
