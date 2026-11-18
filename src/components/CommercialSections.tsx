@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { QUOTE_LINK, whatsappLink } from '../content'
 import { faqItems, investments, testimonials } from '../commercial-content'
 import { ArrowUpRight } from './InterfaceIcons'
-import { BrandSymbol } from './BrandSymbol'
 import './commercial.css'
 
 const money = (value: number) => new Intl.NumberFormat('pt-BR', {
@@ -10,70 +9,59 @@ const money = (value: number) => new Intl.NumberFormat('pt-BR', {
 }).format(value)
 
 /**
- * Uma vitrine, não uma tabela de preços: todas as quatro entradas
- * ficam visíveis e a seleção revela o detalhe em um palco único.
+ * A ÚNICA mostra quatro referências, sem vender "planos fechados".
+ * Destaques são editoriais: entrada acessível + soluções personalizadas.
  */
 export function InvestmentSection() {
-  const [selected, setSelected] = useState(0)
-  const current = investments[selected]
+  const design = [
+    { label: 'COMECE POR AQUI', style: 'entry', indexLabel: 'A MAIS ACESSÍVEL' },
+    { label: 'FEITO PARA SUA MARCA', style: 'brand', indexLabel: 'PERSONALIZÁVEL' },
+    { label: 'VENDA PELA INTERNET', style: 'store', indexLabel: 'VENDAS ONLINE' },
+    { label: 'SEM FÓRMULA PRONTA', style: 'bespoke', indexLabel: 'SOB MEDIDA' },
+  ] as const
+
   return (
-    <section className="u-investment" id="investimento" aria-labelledby="u-investment-title">
+    <section className="u-investment u-investment-v2" id="investimento" aria-labelledby="u-investment-title">
       <div className="u-wrap">
         <header className="u-price-head u-reveal">
           <div>
             <span className="u-kicker">INVESTIMENTO / PONTO DE PARTIDA</span>
             <h2 className="u-h2" id="u-investment-title">Toda ideia tem um <mark>ponto de partida.</mark></h2>
           </div>
-          <p>Algumas formas de começar. O projeto certo, a gente descobre conversando.</p>
+          <p>Do primeiro site a uma solução feita do zero. Escolha o que combina com sua ideia.</p>
         </header>
-
-        <div className="u-price-layout">
-          <div className="u-price-index" role="group" aria-label="Escolha uma solução">
-            {investments.map((item, index) => (
-              <button
-                type="button" key={item.id}
-                className={selected === index ? 'u-price-option is-active' : 'u-price-option'}
-                aria-pressed={selected === index}
-                aria-controls="u-price-stage"
-                onClick={() => setSelected(index)}
-              >
-                <span className="u-price-no">{String(index + 1).padStart(2, '0')}</span>
-                <span className="u-price-option-body">
-                  <strong>{item.title}</strong>
-                  <small>{item.startingAtBRL === null ? 'Sob orçamento' : 'A partir de ' + money(item.startingAtBRL)}</small>
-                </span>
-                <span className="u-price-chevron" aria-hidden="true"><ArrowUpRight /></span>
-              </button>
-            ))}
-            <div className="u-price-signature" aria-hidden="true">
-              <BrandSymbol />
-              <span>DO SEU JEITO.<br/>DO COMEÇO AO FINAL.</span>
-            </div>
-          </div>
-
-          <div className="u-price-stage" id="u-price-stage" aria-live="polite" aria-atomic="true">
-            <div className="u-price-stage-meta">
-              <span>ÚNICA / {String(selected + 1).padStart(2, '0')}</span>
-              <span>SEU PRÓXIMO PROJETO <span aria-hidden="true">↗</span></span>
-            </div>
-            <div className="u-price-stage-content" key={current.id}>
-              <span className="u-price-small-title">UMA POSSIBILIDADE</span>
-              <h3>{current.title}<span aria-hidden="true">.</span></h3>
-              <p>{current.summary}</p>
-              <div className="u-price-value">
-                <span>{current.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
-                <strong>{current.startingAtBRL === null ? 'Sob orçamento' : money(current.startingAtBRL)}</strong>
+        <div className="u-price-card-grid" aria-label="Quatro opções de investimento">
+          {investments.map((item, index) => (
+            <article key={item.id} className={`u-price-card u-price-card--${design[index].style}`}>
+              <div className="u-price-card-top">
+                <span className="u-price-card-number">{String(index + 1).padStart(2, '0')} / 04</span>
+                <span className="u-price-card-eyebrow">{design[index].label}</span>
               </div>
-              <a className="u-price-cta" href={whatsappLink(`Olá! Quero conversar sobre ${current.title.toLowerCase()} com a ÚNICA.`)} target="_blank" rel="noopener noreferrer">
-                Conversar sobre essa ideia <ArrowUpRight />
-              </a>
-            </div>
-            <BrandSymbol className="u-price-stage-brand" />
-          </div>
+              <div className="u-price-card-body">
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+              </div>
+              <div className="u-price-card-bottom">
+                <span className="u-price-card-kind">{design[index].indexLabel}</span>
+                <div className="u-price-card-cost">
+                  <span>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
+                  <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
+                </div>
+                <a className="u-price-card-cta"
+                  href={whatsappLink(`Olá! Tenho interesse em ${item.title.toLowerCase()} e gostaria de conversar sobre o meu projeto com a ÚNICA.`)}
+                  target="_blank" rel="noopener noreferrer"
+                  aria-label={`Conversar sobre ${item.title} no WhatsApp`}>
+                  <span>Quero conversar</span><ArrowUpRight />
+                </a>
+              </div>
+            </article>
+          ))}
         </div>
         <div className="u-price-footer">
-          <p>Valores de entrada para escopos definidos. Domínio, hospedagem, integrações extras e manutenção são combinados à parte.</p>
-          <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer"><span>Outras ideias? <strong>Chama no WhatsApp.</strong></span><ArrowUpRight /></a>
+          <p>São valores de partida, não pacotes fechados. Funcionalidades, domínio, hospedagem e manutenção são definidos na proposta.</p>
+          <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
+            <span>Não achou sua ideia? <strong>Fala com a gente.</strong></span><ArrowUpRight />
+          </a>
         </div>
       </div>
     </section>
