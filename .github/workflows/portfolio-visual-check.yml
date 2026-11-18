@@ -1,0 +1,49 @@
+name: Revisão visual de dispositivos e interações
+
+on:
+  push:
+    branches:
+      - fix/portfolio-visual-e-rolagem
+    paths:
+      - scripts/check-portfolio-layout.py
+      - .github/workflows/portfolio-visual-check.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/portfolio-visual-e-rolagem
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Compilar
+        run: |
+          npm ci
+          npm run build
+      - name: Abrir a prévia local
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/unica-preview.log 2>&1 &
+          for i in $(seq 1 25); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Instalar Playwright
+        run: python3 -m pip install --user playwright
+      - name: Conferir dispositivos, navegação e FAQ
+        run: python3 scripts/check-portfolio-layout.py
+      - name: Guardar screenshots da revisão
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-review
+          path: visual-check/
+          if-no-files-found: ignore
