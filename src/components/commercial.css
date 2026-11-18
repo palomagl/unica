@@ -133,3 +133,19 @@
   .u-nav .u-menu a{font-size:13px}
   .u-nav>.u-pill{padding:11px 15px;font-size:13px}
 }
+
+/* ROXO usa o mesmo palco, escala, sombra e movimento dos outros projetos. */
+#projetos .u-devices-roxo{
+  background:linear-gradient(135deg,#f4e8f4,#e2cbe9 55%,#a776b5)!important;
+}
+#projetos .u-project-disclaimer{
+  display:block;
+  font-family:'Hanken Grotesk',Arial,sans-serif;
+  font-size:11px;
+  line-height:1.4;
+  color:#765b4b;
+  margin:-7px 0 12px;
+}
+@media(max-width:600px){
+  #projetos .u-project-disclaimer{font-size:10px;margin:-5px 0 12px}
+}
