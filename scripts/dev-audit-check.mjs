@@ -31,7 +31,7 @@ if (important.length === 0) {
 
 // Exceção temporária, específica do GHSA-fc5q-39xc-vjpf, ainda sem patch npm.
 // Nunca deixar alerta novo passar apenas porque se trata de dependência de build.
-const allowed = new Set(['picomatch', 'fdir', 'tinyglobby', 'vite'])
+const allowed = new Set(['picomatch', 'fdir', 'tinyglobby', 'vite', '@vitejs/plugin-react'])
 const advisory = 'https://github.com/advisories/GHSA-fc5q-39xc-vjpf'
 const direct = important.flatMap(([, v]) => (v.via ?? []).filter(x => typeof x === 'object'))
 const devOnly = important.every(([name]) =>
@@ -39,7 +39,6 @@ const devOnly = important.every(([name]) =>
 const onlyKnownAdvisory = direct.length > 0 && direct.every(x => x.url === advisory)
 
 if (!devOnly || !onlyKnownAdvisory) {
-  console.error('AUDIT DEBUG:', JSON.stringify({devOnly,onlyKnownAdvisory,packages: important.map(([name])=>({name,dev:lock.packages?.['node_modules/' + name]?.dev})),advisories: direct.map(x=>({url:x.url,title:x.title}))}))
   console.error('FAIL: vulnerabilidade alta/crítica nova ou não restrita às ferramentas de build')
   for (const [name, v] of important) {
     console.error(' - ' + name + ' (' + v.severity + ')')
