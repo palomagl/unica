@@ -76,3 +76,16 @@
 @media(prefers-reduced-motion:reduce){
 .u-investment-option,.u-method-step{transition:none}
 }
+
+/* Evita recortes e rolagem interna no portfólio entre celular e tablet. */
+@media(max-width:900px){
+  #projetos .u-project-feature{height:auto!important;grid-template-rows:320px auto!important}
+  #projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:325px;max-height:none;overflow:visible}
+}
+@media(max-width:600px){
+  #projetos .u-project-feature{grid-template-rows:clamp(205px,61vw,265px) auto!important}
+  #projetos .u-project-feature>.u-project-copy{min-height:0!important}
+}
+@media(max-width:360px){
+  #projetos .u-project-feature{height:auto!important}
+}
