@@ -1,0 +1,35 @@
+name: Security checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependências do lockfile
+        run: npm ci
+      - name: Validar cabeçalhos, CSP e código
+        run: npm run security:check
+      - name: Auditar vulnerabilidades de produção
+        run: npm audit --omit=dev --audit-level=high
+      - name: Garantir build estático
+        run: npm run build
+      - name: Bloquear arquivos secretos versionados
+        run: |
+          if git ls-files | grep -E '(^|/)(\.env($|\.)|.*\.(pem|p12|key)$)'; then
+            echo 'Credencial ou arquivo de ambiente rastreado no Git' >&2
+            exit 1
+          fi
