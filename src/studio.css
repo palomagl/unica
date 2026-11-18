@@ -1338,3 +1338,23 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
   .u-demo h3{font-size:clamp(36px,3.25vw,51px)}
   .u-final h2{font-size:clamp(54px,5.15vw,86px)}
 }
+
+
+/* Ajustes discretos antes da prospecção: acessibilidade e contato contextual. */
+.u-skip-link{position:absolute;z-index:500;top:-90px;left:16px;padding:12px 18px;border-radius:0 0 12px 12px;background:#d2ff22;color:#28160f!important;font-size:14px;font-weight:900}
+.u-skip-link:focus{top:0;outline:3px solid #28160f;outline-offset:3px}
+.u-coverage{display:flex;align-items:center;gap:9px;margin-top:16px;color:#fff8f0;font-size:12px;line-height:1.4;font-weight:750;letter-spacing:.025em}
+.u-coverage>span{display:inline-block;width:8px;height:8px;flex:none;background:var(--u-accent);border-radius:2px;transform:rotate(45deg)}
+.u-project-action-row{display:flex;align-items:center;flex-wrap:wrap;gap:13px 18px;max-width:100%}
+.u-project-ask-link{display:inline-flex;align-items:center;gap:6px;font-size:13px!important;font-weight:800!important;line-height:1.3;border-bottom:1.5px solid currentColor;padding-bottom:4px;min-height:30px}
+.u-project-ask-link svg{height:16px;width:16px;flex:none;transition:transform .2s}
+.u-project-ask-link:hover svg{transform:translate(2px,-2px)}
+.u-footer .u-wrap>span{line-height:1.4;max-width:490px}
+@media(max-width:650px){
+  .u-coverage{font-size:11px;margin-top:13px}
+  .u-project-action-row{align-items:flex-start;flex-direction:column;gap:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .u-project-ask-link svg{transition:none}
+  .u-project-ask-link:hover svg{transform:none}
+}
