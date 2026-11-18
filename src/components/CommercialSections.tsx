@@ -73,7 +73,7 @@ export function InvestmentSection() {
         </div>
         <div className="u-price-footer">
           <p>Valores de entrada para escopos definidos. Domínio, hospedagem, integrações extras e manutenção são combinados à parte.</p>
-          <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Outras ideias? <strong>Chama no WhatsApp.</strong> <ArrowUpRight /></a>
+          <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer"><span>Outras ideias? <strong>Chama no WhatsApp.</strong></span><ArrowUpRight /></a>
         </div>
       </div>
     </section>
