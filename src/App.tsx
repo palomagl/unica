@@ -2,9 +2,11 @@ import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from
 import { QUOTE_LINK } from './content'
 import { Conversation } from './components/Conversation'
 import { SolutionsShowcase } from './components/SolutionsShowcase'
+import { InvestmentSection, ProcessSection, TestimonialsSection } from './components/CommercialSections'
 import { ArrowUpRight } from './components/InterfaceIcons'
 import { BrandSymbol } from './components/BrandSymbol'
 import './studio.css'
+import './components/commercial.css'
 
 type IconName = 'laptop' | 'cart' | 'grid' | 'phone'
 function Icon({ name }: { name: IconName }) {
@@ -20,10 +22,10 @@ function Icon({ name }: { name: IconName }) {
 }
 
 const services = [
-  { name: 'Sites institucionais', line: 'Uma presença digital que transmite confiança e abre novas oportunidades.', icon: 'laptop' as IconName },
-  { name: 'Lojas virtuais', line: 'Seus produtos apresentados de forma profissional, com uma jornada de compra simples.', icon: 'cart' as IconName },
-  { name: 'Sistemas personalizados', line: 'Mais organização para os processos do seu negócio.', icon: 'grid' as IconName },
-  { name: 'Aplicativos', line: 'Experiências digitais pensadas para acompanhar seus clientes.', icon: 'phone' as IconName },
+  { name: 'Sites e experiências digitais', line: 'Uma presença digital que transmite confiança e abre novas oportunidades.', icon: 'laptop' as IconName },
+  { name: 'Lojas virtuais e pedidos', line: 'Seus produtos apresentados de forma profissional, com uma jornada de compra simples.', icon: 'cart' as IconName },
+  { name: 'Sistemas e gestão', line: 'Mais organização para os processos do seu negócio.', icon: 'grid' as IconName },
+  { name: 'Aplicativos e soluções personalizadas', line: 'Experiências digitais pensadas para acompanhar seus clientes.', icon: 'phone' as IconName },
 ]
 
 const palettes = [
@@ -37,6 +39,7 @@ const projects = [
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
     outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
+    relationship: 'Projeto comercial', goal: 'Apresentar o catálogo da papelaria de forma clara e acessível.', built: 'Loja responsiva, apresentação de produtos e fluxo de compra.',
     visual: 'karoane', url: 'https://karoane.vercel.app/',
     cover: '/cover-karoane.svg',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
@@ -44,6 +47,7 @@ const projects = [
   {
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
     outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
+    relationship: 'Projeto de portfólio', goal: 'Facilitar o caminho entre conhecer o cardápio e fazer um pedido.', built: 'Experiência digital para apresentar o cardápio e direcionar pedidos.',
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
     cover: '/cover-bruto.svg',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
@@ -51,6 +55,7 @@ const projects = [
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
     outcome: 'Simulação de peças em 3D, personalização de materiais e organização de orçamentos.',
+    relationship: 'Projeto de portfólio', goal: 'Ajudar na apresentação das opções e na preparação de orçamentos.', built: 'Visualização de peças em 3D, seleção de materiais e organização de orçamentos.',
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
     cover: '/cover-vertice.svg',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
@@ -58,17 +63,23 @@ const projects = [
   {
     name: 'Doação de sangue', brand: 'DOE+ RS', kind: 'Aplicação de impacto social',
     outcome: 'Uma experiência digital para apoiar e incentivar a doação de sangue no Rio Grande do Sul.',
+    relationship: 'Projeto autoral', goal: 'Tornar informações sobre doação de sangue mais acessíveis.', built: 'Aplicação com informações para doadores e consulta de hemocentros.',
     visual: 'doe', url: 'https://doe-mais-rs.vercel.app/',
     bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
   },
   {
     name: 'Rotina', brand: 'Minha Rotina', kind: 'Plataforma de organização pessoal',
     outcome: 'Finanças, tarefas e hábitos organizados em uma experiência simples para o dia a dia.',
+    relationship: 'Projeto autoral', goal: 'Reunir a organização pessoal num só espaço.', built: 'Experiência de acompanhamento de tarefas, finanças e hábitos.',
     visual: 'rotina', url: '',
     cover: '/screens/rotina-desktop-alpha.svg',
     bg: 'linear-gradient(135deg,#dff4ee,#accdc5)',
   },
 ]
+// Sexto trabalho: preencher quando nome, objetivo, status, imagens e link forem confirmados.
+// Até lá, nenhum card ou informação fictícia será renderizado.
+const sixthProject: (typeof projects)[number] | null = null
+const visibleProjects = sixthProject ? [...projects, sixthProject] : projects
 
 function NewLogo() {
   return <span className="u-new-logo"><BrandSymbol /><span className="u-wordmark">ÚNICA</span></span>
@@ -122,7 +133,7 @@ export default function App() {
   const progressRef = useRef<HTMLDivElement>(null)
   const projectTabsRef = useRef<HTMLDivElement>(null)
   const selected = palettes[palette]
-  const p = projects[project]
+  const p = visibleProjects[project]
   useEffect(() => {
     // Respeita o modo economia de dados e conexões 2G detectadas pelo navegador.
     // Onde Network Information API não existe, mantemos a apresentação completa.
@@ -186,7 +197,7 @@ export default function App() {
     })
   }, [])
 
-  const changeProject = (step: number) => setProject((v) => (v + step + projects.length) % projects.length)
+  const changeProject = (step: number) => setProject((v) => (v + step + visibleProjects.length) % visibleProjects.length)
   const swipeStart = (event: TouchEvent<HTMLElement>) => { touchStart.current = event.touches[0]?.clientX ?? null }
   const swipeEnd = (event: TouchEvent<HTMLElement>) => {
     if (touchStart.current === null) return
@@ -212,16 +223,16 @@ export default function App() {
             <span>ESTÚDIO<br />DIGITAL</span>
           </a>
           <nav className="u-menu" aria-label="Navegação principal">
-            <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
-            <a href="#cores">Cores</a><a href="#contato">Contato</a>
+            <a href="#projetos">Projetos</a><a href="#servicos">Soluções</a>
+             <a href="#investimento">Investimento</a><a href="#contato">Contato</a>
           </nav>
-          <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Pedir orçamento <ArrowUpRight /></a>
+          <a className="u-pill" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">Começar um projeto <ArrowUpRight /></a>
           <button className="u-hamburger" type="button" aria-label={openMenu ? 'Fechar menu' : 'Abrir menu'} aria-controls="u-mobile-menu" aria-expanded={openMenu} onClick={() => setOpenMenu(v => !v)}>
             <span className={`u-ham-lines ${openMenu ? 'open' : ''}`}><i/><i/><i/></span>
           </button>
           {openMenu && <nav id="u-mobile-menu" className="u-mobile-nav" aria-label="Menu mobile">
-            {[['Projetos','#projetos'],['Serviços','#servicos'],['Cores','#cores'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
-            <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Pedir orçamento <span aria-hidden="true"><ArrowUpRight /></span></a>
+            {[['Projetos','#projetos'],['Soluções','#servicos'],['Investimento','#investimento'],['Contato','#contato']].map(([name,href]) => <a onClick={() => setOpenMenu(false)} href={href} key={href}>{name}<span aria-hidden="true"><ArrowUpRight /></span></a>)}
+            <a className="u-mobile-quote" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" onClick={() => setOpenMenu(false)}>Começar um projeto <span aria-hidden="true"><ArrowUpRight /></span></a>
           </nav>}
         </header>
         <div className="u-hero u-wrap">
@@ -350,21 +361,27 @@ export default function App() {
             </div>
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
-              <h3>{p.name}</h3><p className="u-project-brand">{p.brand}</p>
-              <p>{p.outcome}</p><p className="u-concept-note">{p.cover ? 'Capturas reais do projeto.' : 'Ilustração conceitual — conheça o projeto para ver como funciona.'}</p>
-              {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Quero um app assim <ArrowUpRight /></a>}
+              <h3>{p.brand}</h3><p className="u-project-brand">{p.name}</p>
+              <span className="u-project-nature">{p.relationship}</span>
+              <p className="u-project-problem"><strong>O desafio</strong>{p.goal}</p>
+              <p className="u-project-delivery"><strong>O que desenvolvemos</strong>{p.built}</p>
+              {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre o projeto <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
                 <button className="u-control" type="button" aria-label="Próximo projeto" onClick={()=>changeProject(1)}>→</button>
-                <span style={{alignSelf:'center',marginLeft:10,fontSize:13}}>{String(project+1).padStart(2,'0')} / {String(projects.length).padStart(2,'0')}</span>
+                <span style={{alignSelf:'center',marginLeft:10,fontSize:13}}>{String(project+1).padStart(2,'0')} / {String(visibleProjects.length).padStart(2,'0')}</span>
               </div>
             </div>
           </div>
           <div className="u-small-projects" ref={projectTabsRef} role="group" aria-label="Selecionar projeto">
-            {projects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver exemplo de ${q.name}: ${q.brand}`} onClick={()=>setProject(i)}>{q.name}</button>)}
+            {visibleProjects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver exemplo de ${q.name}: ${q.brand}`} onClick={()=>setProject(i)}>{q.name}</button>)}
           </div>
         </div>
       </section>
+
+      <InvestmentSection />
+      <ProcessSection />
+      <TestimonialsSection />
 
       <section id="contato" className="u-final u-final-remake">
         <div className="u-wrap">

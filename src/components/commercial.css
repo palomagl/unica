@@ -1,0 +1,101 @@
+/* Evolução editorial: reutiliza cores, fontes, botões e espaçamentos da ÚNICA. */
+.u-investment,.u-method{scroll-margin-top:24px}
+.u-investment{padding:clamp(70px,8vw,110px) 0;background:#eee3d5;color:#28160f}
+.u-investment-head{max-width:950px;margin-bottom:clamp(28px,4vw,54px)}
+.u-investment-head h2{max-width:850px}
+.u-investment-head>p{font-size:clamp(16px,1.5vw,20px);max-width:580px;line-height:1.5;margin-top:22px}
+.u-investment-body{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(18px,3vw,40px);align-items:stretch}
+.u-investment-list{border-top:1px solid #68412f4d;min-width:0}
+.u-investment-option{display:grid;grid-template-columns:39px minmax(0,1fr) 40px;align-items:center;gap:16px;padding:22px 16px;width:100%;min-height:93px;border:0;border-bottom:1px solid #68412f4d;background:transparent;color:inherit;text-align:left;cursor:pointer;font-size:clamp(21px,2.4vw,34px);font-weight:900;letter-spacing:-.05em;transition:background .25s,padding .25s}
+.u-investment-option:hover,.u-investment-option.is-active{background:#f8f0e5;padding-left:24px}
+.u-investment-num{font-size:12px;letter-spacing:0;color:#93684f;align-self:start;padding-top:12px;font-weight:800}
+.u-investment-indicator{display:grid;place-items:center;width:37px;height:37px;border-radius:50%;border:1px solid #8d6d5966}
+.u-investment-option.is-active .u-investment-indicator{background:var(--u-accent);border-color:transparent}
+.u-investment-indicator svg{width:21px;height:21px}
+.u-investment-detail{display:flex;flex-direction:column;min-width:0;min-height:470px;border-radius:27px;padding:clamp(25px,3.3vw,45px);background:#673a27;color:#fff9f3}
+.u-investment-detail-top{display:flex;justify-content:space-between;gap:16px;font-size:11px;font-weight:850;letter-spacing:.14em;opacity:.8}
+.u-investment-detail h3{font-size:clamp(34px,4vw,57px);line-height:1.02;letter-spacing:-.065em;margin:38px 0 13px}
+.u-investment-summary{font-size:clamp(16px,1.8vw,21px);line-height:1.35;max-width:490px;margin:0 0 25px}
+.u-investment-insight{display:grid;grid-template-columns:1fr 1fr;gap:26px;border-top:1px solid #ffffff35;padding:21px 0 25px}
+.u-investment-insight p{font-size:14px;line-height:1.5;margin:0;color:#fff4e9d9}
+.u-investment-insight strong{display:block;font-size:11px;letter-spacing:.11em;text-transform:uppercase;margin-bottom:8px;color:var(--u-accent)}
+.u-investment-bottom{display:flex;justify-content:space-between;gap:20px;align-items:end;border-top:1px solid #ffffff35;padding-top:22px;margin-top:auto;flex-wrap:wrap}
+.u-investment-price small{display:block;font-size:10px;letter-spacing:.13em;color:#ffffffba;font-weight:850;margin-bottom:8px}
+.u-investment-price strong{font-size:clamp(24px,2.6vw,35px);letter-spacing:-.05em}
+.u-investment-bottom .u-pill{white-space:nowrap;font-size:13px}
+.u-investment-note{font-size:12px;color:#654c3e;line-height:1.6;max-width:900px;margin:18px 0 0}
+.u-method{padding:clamp(75px,8vw,120px) 0;background:var(--u-cream);color:#28160f}
+.u-method-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(36px,6vw,100px)}
+.u-method-title h2{margin-top:22px}
+.u-method-title>p{font-size:18px;line-height:1.5;max-width:350px;margin:20px 0}
+.u-method-link{display:inline-flex;gap:10px;align-items:center;font-weight:850;text-underline-offset:5px;border-bottom:2px solid var(--u-accent);padding-bottom:8px}
+.u-method-link svg{width:20px;height:20px}
+.u-method-steps{list-style:none;margin:0;padding:0;border-top:1px solid #583a2c55}
+.u-method-step{display:grid;grid-template-columns:48px minmax(0,1fr) 34px;gap:22px;align-items:start;padding:clamp(22px,3vw,32px) 4px;border-bottom:1px solid #583a2c55;transition:padding-left .25s}
+.u-method-step:hover{padding-left:14px}
+.u-method-step-num{font-size:13px;color:#805c48;font-weight:850;padding-top:8px}
+.u-method-step h3{font-size:clamp(23px,2.5vw,35px);line-height:1.1;letter-spacing:-.055em;margin:0 0 9px}
+.u-method-step p{font-size:15px;line-height:1.45;max-width:440px;margin:0}
+.u-method-step-arrow{color:#76503f}
+.u-method-step-arrow svg{width:25px;height:25px}
+.u-testimonials{padding:60px 0;background:#eee3d5}
+.u-testimonials-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:26px}
+.u-testimonials blockquote{padding:24px;border-top:2px solid #673a27;margin:0}
+.u-testimonials blockquote p{font-size:22px;font-weight:800;line-height:1.3}
+.u-testimonials footer{font-size:13px}
+#projetos .u-project-nature{display:inline-flex;max-width:100%;align-items:center;font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;border:1px solid #62483a66;border-radius:50px;padding:7px 12px;margin:0 0 12px}
+#projetos .u-project-copy .u-project-problem,#projetos .u-project-copy .u-project-delivery{font-size:clamp(13px,1.15vw,15px)!important;line-height:1.4!important;margin:0 0 12px!important}
+#projetos .u-project-problem strong,#projetos .u-project-delivery strong{font-size:11px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:3px;color:#775a4b}
+#projetos .u-project-copy>.u-pill{margin-top:6px}
+#projetos .u-project-copy{overflow:auto;scrollbar-width:thin}
+@media(max-width:900px){
+.u-investment-body,.u-method-layout{grid-template-columns:1fr}
+.u-investment-detail{min-height:400px}
+.u-method-layout{gap:35px}
+}
+@media(max-width:600px){
+.u-investment{padding:72px 0}
+.u-investment-option{grid-template-columns:26px minmax(0,1fr) 34px;min-height:70px;padding:14px 9px;gap:8px;font-size:clamp(20px,5.8vw,26px)}
+.u-investment-option:hover,.u-investment-option.is-active{padding-left:14px}
+.u-investment-num{padding-top:6px}
+.u-investment-indicator{width:32px;height:32px}
+.u-investment-detail{min-height:0;padding:24px;border-radius:20px}
+.u-investment-detail h3{font-size:37px;margin:28px 0 15px}
+.u-investment-insight{grid-template-columns:1fr;gap:17px}
+.u-investment-bottom{align-items:flex-start;flex-direction:column}
+.u-investment-bottom .u-pill{max-width:100%;white-space:normal}
+.u-method-step{grid-template-columns:28px minmax(0,1fr) 22px;gap:12px;padding:22px 0}
+.u-method-step h3{font-size:24px}
+.u-method-step p{font-size:14px}
+#projetos .u-project-feature{height:auto!important;min-height:0!important;grid-template-rows:clamp(205px,61vw,265px) auto!important}
+#projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:360px!important;max-height:none;overflow:visible;padding:22px 20px 21px}
+#projetos .u-project-copy h3{margin-bottom:8px}
+#projetos .u-project-copy .u-project-brand{margin-bottom:10px}
+#projetos .u-project-copy .u-project-problem,#projetos .u-project-copy .u-project-delivery{font-size:13px!important}
+}
+@media(prefers-reduced-motion:reduce){
+.u-investment-option,.u-method-step{transition:none}
+}
+
+/* Evita recortes e rolagem interna no portfólio entre celular e tablet. */
+@media(max-width:900px){
+  #projetos .u-project-feature{height:auto!important;grid-template-rows:320px auto!important}
+  #projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:325px;max-height:none;overflow:visible}
+}
+@media(max-width:600px){
+  #projetos .u-project-feature{grid-template-rows:clamp(205px,61vw,265px) auto!important}
+  #projetos .u-project-feature>.u-project-copy{min-height:0!important}
+}
+@media(max-width:360px){
+  #projetos .u-project-feature{height:auto!important}
+}
+
+/* Cabeçalho compacto entre notebooks menores e o breakpoint mobile original. */
+@media(min-width:851px) and (max-width:1170px){
+  .u-nav{gap:10px}
+  .u-nav .u-brand{gap:10px}
+  .u-nav .u-brand>span:last-child{font-size:10px;padding-left:10px}
+  .u-nav .u-menu{gap:14px}
+  .u-nav .u-menu a{font-size:13px}
+  .u-nav>.u-pill{padding:11px 15px;font-size:13px}
+}
