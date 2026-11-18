@@ -40,7 +40,7 @@ export function InvestmentSection() {
                 <span className="u-price-no">{String(index + 1).padStart(2, '0')}</span>
                 <span className="u-price-option-body">
                   <strong>{item.title}</strong>
-                  <small>{item.startingAtBRL === null ? 'Sob orçamento' : 'Desde ' + money(item.startingAtBRL)}</small>
+                  <small>{item.startingAtBRL === null ? 'Sob orçamento' : 'A partir de ' + money(item.startingAtBRL)}</small>
                 </span>
                 <span className="u-price-chevron" aria-hidden="true"><ArrowUpRight /></span>
               </button>
@@ -61,7 +61,7 @@ export function InvestmentSection() {
               <h3>{current.title}<span aria-hidden="true">.</span></h3>
               <p>{current.summary}</p>
               <div className="u-price-value">
-                <span>{current.startingAtBRL === null ? 'INVESTIMENTO' : 'INVESTIMENTO INICIAL'}</span>
+                <span>{current.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
                 <strong>{current.startingAtBRL === null ? 'Sob orçamento' : money(current.startingAtBRL)}</strong>
               </div>
               <a className="u-price-cta" href={whatsappLink(`Olá! Quero conversar sobre ${current.title.toLowerCase()} com a ÚNICA.`)} target="_blank" rel="noopener noreferrer">
