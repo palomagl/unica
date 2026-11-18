@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { QUOTE_LINK, whatsappLink } from '../content'
 import { faqItems, investments, testimonials } from '../commercial-content'
 import { ArrowUpRight } from './InterfaceIcons'
@@ -62,80 +62,123 @@ function PriceDetails({ index, id }: { index: number; id: string }) {
 }
 
 export function InvestmentSection() {
-  const [selected, setSelected] = useState<number | null>(0)
+  const [selected, setSelected] = useState<number | null>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    if (selected === null || !window.matchMedia('(min-width: 701px)').matches) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    closeRef.current?.focus()
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setSelected(null)
+      if (event.key === 'Tab') {
+        const dialog = document.querySelector<HTMLElement>('.u-investment-dialog-content')
+        if (!dialog) return
+        const focusable = Array.from(dialog.querySelectorAll<HTMLElement>('button:not([disabled]), a[href]'))
+        if (!focusable.length) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus() }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus() }
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [selected])
+
+  const closeDetails = () => {
+    setSelected(null)
+    if (window.matchMedia('(min-width: 701px)').matches) {
+      requestAnimationFrame(() => lastTriggerRef.current?.focus())
+    }
+  }
 
   return (
-    <section className="u-investment u-investment-v2" id="investimento" aria-labelledby="u-investment-title">
+    <section className="u-investment u-investment-v3" id="investimento" aria-labelledby="u-investment-title">
       <div className="u-wrap">
         <header className="u-price-head u-reveal">
           <div>
-            <span className="u-kicker">INVESTIMENTO / PONTO DE PARTIDA</span>
-            <h2 className="u-h2" id="u-investment-title">Toda ideia tem um <mark>ponto de partida.</mark></h2>
+            <span className="u-kicker">ÚNICA / INVESTIMENTO</span>
+            <h2 className="u-h2" id="u-investment-title">
+              <span className="u-investment-title-line">Escolha como</span>
+              <span className="u-investment-title-line"><mark>começar.</mark></span>
+            </h2>
           </div>
-          <p>Quatro caminhos possíveis. Toque em um para entender o que podemos construir.</p>
+          <p>Do primeiro site ao projeto feito sob medida. Quatro caminhos para encontrar o que combina com seu negócio.</p>
         </header>
 
-        <div className="u-investment-explorer">
-          <div className="u-investment-option-grid" aria-label="Escolha a solução que combina com sua ideia">
-            {investments.map((item, index) => {
-              const info = investmentDetails[index]
-              const isOpen = selected === index
-              return (
-                <article key={item.id} className={`u-investment-option u-investment-option--${info.theme}${isOpen ? ' is-open' : ''}`}>
-                  <button
-                    className="u-investment-option-trigger"
-                    type="button"
-                    aria-expanded={isOpen}
-                    aria-controls={`u-investment-mobile-panel-${item.id}`}
-                    onClick={() => setSelected(isOpen ? null : index)}
-                  >
-                    <span className="u-investment-option-top">
-                      <span className="u-investment-option-no">0{index + 1} / 04</span>
-                      <span className="u-investment-option-label">{info.label}</span>
-                    </span>
-                    <span className="u-investment-option-name">{item.title}</span>
-                    <span className="u-investment-option-bottom">
-                      <span className="u-investment-option-price">
-                        <small>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</small>
-                        <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
-                      </span>
-                      <span className="u-investment-option-indicator" aria-hidden="true">{isOpen ? '−' : '+'}</span>
-                    </span>
-                    <span className="u-investment-option-hint">{isOpen ? 'Ocultar detalhes' : 'Entender essa solução'}</span>
-                  </button>
-                  <div className="u-investment-mobile-panel" id={`u-investment-mobile-panel-${item.id}`}>
-                    {isOpen && <PriceDetails index={index} id={`u-investment-mobile-detail-${item.id}`} />}
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-          <div className="u-investment-desktop-panel" aria-live="polite">
-            {selected === null ? (
-              <div className="u-investment-desktop-empty">
-                <span>ÚNICA / SEU PRÓXIMO PROJETO</span>
-                <strong>Uma ideia de cada vez.</strong>
-                <p>Escolha uma opção ao lado para entender onde ela pode levar seu negócio.</p>
-              </div>
-            ) : (
-              <div key={investments[selected].id} className="u-investment-desktop-inner">
-                <div className="u-investment-desktop-meta">
-                  <span>ÚNICA / 0{selected + 1}</span>
-                  <span>ENTENDA A SOLUÇÃO ↗</span>
+        <div className="u-investment-card-grid" aria-label="Soluções e investimentos iniciais">
+          {investments.map((item, index) => {
+            const details = investmentDetails[index]
+            const isOpen = selected === index
+            return (
+              <article key={item.id} className={`u-investment-card u-investment-card--${details.theme}`}>
+                <div className="u-investment-card-head">
+                  <span className="u-investment-card-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="u-investment-card-tag">{index === 0 ? 'MAIS ACESSÍVEL' : index === 1 ? 'PERSONALIZÁVEL' : index === 2 ? 'VENDAS ONLINE' : 'SOB MEDIDA'}</span>
                 </div>
-                <h3>{investments[selected].title}<span aria-hidden="true">.</span></h3>
-                <PriceDetails index={selected} id="u-investment-desktop-detail" />
-              </div>
-            )}
-          </div>
+                <div className="u-investment-card-main">
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                </div>
+                <div className="u-investment-card-value">
+                  <span>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
+                  <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
+                </div>
+                <div className="u-investment-card-examples">
+                  <span>O QUE PODEMOS CONSTRUIR</span>
+                  <ul>
+                    {details.possibilities.map(possibility => <li key={possibility}>{possibility}</li>)}
+                  </ul>
+                </div>
+                <button className="u-investment-card-toggle" type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`u-investment-card-mobile-${item.id}`}
+                  onClick={event => {
+                    lastTriggerRef.current = event.currentTarget
+                    if (isOpen) closeDetails()
+                    else setSelected(index)
+                  }}>
+                  <span>{isOpen ? 'Fechar detalhes' : 'Entender melhor'}</span>
+                  <span className="u-investment-card-icon" aria-hidden="true">{isOpen ? '−' : '↗'}</span>
+                </button>
+                <div className="u-investment-card-mobile-detail" id={`u-investment-card-mobile-${item.id}`}>
+                  {isOpen && <PriceDetails index={index} id={`u-investment-mobile-info-${item.id}`}/>}
+                </div>
+              </article>
+            )
+          })}
         </div>
-        <div className="u-price-footer">
-          <p>Esses são pontos de partida, não planos fechados. Escopo, domínio, hospedagem, integrações e manutenção são definidos em proposta.</p>
+
+        <div className="u-investment-contact">
+          <div>
+            <span>AINDA NÃO SABE POR ONDE COMEÇAR?</span>
+            <strong>A gente encontra o caminho junto.</strong>
+          </div>
           <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
-            <span>Não sabe qual escolher? <strong>A gente te ajuda.</strong></span><ArrowUpRight />
+            Falar sobre meu projeto <ArrowUpRight/>
           </a>
         </div>
+        <p className="u-investment-disclaimer">Valores iniciais para escopos definidos. Funcionalidades, domínio, hospedagem, integrações e manutenção são combinados na proposta.</p>
       </div>
+
+      {selected !== null && <div className="u-investment-dialog" role="presentation"
+          onMouseDown={event => { if (event.target === event.currentTarget) closeDetails() }}>
+        <div className="u-investment-dialog-content" role="dialog" aria-modal="true"
+          aria-labelledby="u-investment-dialog-heading">
+          <div className="u-investment-dialog-top">
+            <span>ÚNICA / CONHEÇA A SOLUÇÃO</span>
+            <button type="button" ref={closeRef} onClick={closeDetails} aria-label="Fechar detalhes">✕</button>
+          </div>
+          <h3 id="u-investment-dialog-heading">{investments[selected].title}<span aria-hidden="true">.</span></h3>
+          <PriceDetails index={selected} id="u-investment-dialog-detail" />
+        </div>
+      </div>}
     </section>
   )
 }
