@@ -18,7 +18,7 @@ const appSource = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8
 const issues = []
 if (appSource.includes("loading={project === 0 ? 'eager' : 'lazy'}")) issues.push('Portfolio forces eager loading before reaching the section')
 if (appSource.includes('<ArchitectureShowcase />') || appSource.includes('<ExperienceLab />')) issues.push('Removed sections were unexpectedly restored')
-const missing = ['bruto','karoane','vertice','rotina'].flatMap(name => [
+const missing = ['bruto','karoane','vertice','rotina','roxo'].flatMap(name => [
   join(publicRoot,'screens',name+'-desktop-alpha.svg'),
   join(publicRoot,'screens',name+'-mobile-alpha.svg'),
 ]).filter(p => !files.some(f => f.filename === p))
