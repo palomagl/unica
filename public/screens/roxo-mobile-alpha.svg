@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="393" height="790" viewBox="0 0 393 790" role="img" aria-labelledby="roxo-mobile-title"><title id="roxo-mobile-title">Prévia ilustrativa da versão mobile ROXO baseada no projeto original</title>
+<defs><clipPath id="mob"><rect x="17" y="22" width="359" height="744" rx="35"/></clipPath></defs>
+<rect x="5" y="5" width="383" height="780" rx="51" fill="#1B181D" stroke="#343038" stroke-width="5"/>
+<rect x="17" y="22" width="359" height="744" rx="35" fill="#FAF8F5"/>
+<g clip-path="url(#mob)">
+<rect x="17" y="22" width="359" height="36" rx="0" fill="#FFFFFF" />
+<text x="37" y="46" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="#3E1949" >9:41</text>
+<text x="309" y="46" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#3E1949" >●●  ▰</text>
+<rect x="139" y="17" width="115" height="25" rx="14" fill="#18151C" />
+<rect x="17" y="58" width="359" height="64" rx="0" fill="#FFFFFF" />
+<text x="36" y="101" font-family="Arial,Helvetica,sans-serif" font-size="34" font-weight="900" fill="#3E1949" letter-spacing="-2">ROXO</text>
+<rect x="129" y="78" width="10" height="8" rx="3" fill="#9EC642" />
+<text x="264" y="99" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" fill="#3E1949" >☰</text>
+<text x="318" y="100" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="700" fill="#3E1949" >▢</text>
+<rect x="17" y="123" width="359" height="53" rx="0" fill="#FFFFFF" />
+<rect x="32" y="134" width="177" height="31" rx="14" fill="#651875" />
+<text x="77" y="155" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" >Entrega</text>
+<text x="241" y="155" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#75657D" >Retirada</text>
+<text x="37" y="210" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="800" fill="#651875" letter-spacing="1.7">SEU MOMENTO ROXO</text>
+<text x="36" y="245" font-family="Arial,Helvetica,sans-serif" font-size="26" font-weight="900" fill="#3E1949" >O que vai ser hoje?</text>
+<text x="37" y="271" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="500" fill="#75657D" >Primeiro escolha. Depois, monte do seu jeito.</text>
+<rect x="32" y="288" width="328" height="73" rx="16" fill="#F0E5F1" />
+<text x="48" y="314" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="800" fill="#3E1949" >Clube ROXO</text>
+<text x="48" y="336" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="500" fill="#3E1949" >10 pedidos = 1 copo grátis</text>
+<text x="335" y="326" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700" fill="#651875" >›</text>
+<text x="34" y="397" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="900" fill="#3E1949" >Seu açaí, suas escolhas</text>
+<rect x="32" y="412" width="158" height="148" rx="13" fill="#FFFFFF" stroke="#E8E0E9" stroke-width="1.5"/>
+<rect x="33" y="413" width="156" height="76" rx="12" fill="#F0E5F1" />
+<g transform="translate(110 449) scale(.36)"><g transform="translate(0 0) scale(1)">
+<ellipse cx="0" cy="110" rx="150" ry="21" fill="#421148" opacity=".09"/>
+<path d="M-110 25 Q-103 110 0 122 Q103 110 110 25 Z" fill="#D2C5D5" stroke="#A593AA" stroke-width="4"/>
+<path d="M-118 15 Q-118 -25 0 -27 Q118 -25 118 15 Q80 57 0 52 Q-80 57 -118 15Z" fill="#6B227A"/>
+<ellipse cx="0" cy="-2" rx="120" ry="50" fill="#5D166C"/>
+<ellipse cx="-63" cy="-3" rx="37" ry="21" fill="#A76A77"/><ellipse cx="28" cy="-13" rx="44" ry="25" fill="#F5F0EB"/>
+<circle cx="-76" cy="-30" r="17" fill="#C9285E"/><circle cx="-77" cy="-30" r="9" fill="#F46485"/>
+<circle cx="-22" cy="-42" r="20" fill="#FFD98B"/><circle cx="-20" cy="-42" r="11" fill="#F7BE5B"/>
+<circle cx="48" cy="-34" r="18" fill="#D63565"/><circle cx="51" cy="-39" r="8" fill="#FF90A9"/>
+<circle cx="82" cy="-5" r="14" fill="#F6D370"/>
+<path d="M-70 23Q-30 50 5 30T88 20" fill="none" stroke="#9A4B86" stroke-width="8" stroke-linecap="round"/>
+</g></g>
+<text x="42" y="506" font-family="Arial,Helvetica,sans-serif" font-size="12.3" font-weight="800" fill="#3E1949" >Copos de açaí</text>
+<text x="42" y="523" font-family="Arial,Helvetica,sans-serif" font-size="9.7" font-weight="500" fill="#75657D" >300, 500 e 700 ml</text>
+<text x="42" y="548" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#651875" >Montar do meu jeito  ↗</text>
+<rect x="200" y="412" width="158" height="148" rx="13" fill="#FFFFFF" stroke="#E8E0E9" stroke-width="1.5"/>
+<rect x="201" y="413" width="156" height="76" rx="12" fill="#F0E5F1" />
+<g transform="translate(278 449) scale(.36)"><g transform="translate(0 0) scale(1)">
+<ellipse cx="0" cy="110" rx="150" ry="21" fill="#421148" opacity=".09"/>
+<path d="M-110 25 Q-103 110 0 122 Q103 110 110 25 Z" fill="#D2C5D5" stroke="#A593AA" stroke-width="4"/>
+<path d="M-118 15 Q-118 -25 0 -27 Q118 -25 118 15 Q80 57 0 52 Q-80 57 -118 15Z" fill="#6B227A"/>
+<ellipse cx="0" cy="-2" rx="120" ry="50" fill="#5D166C"/>
+<ellipse cx="-63" cy="-3" rx="37" ry="21" fill="#A76A77"/><ellipse cx="28" cy="-13" rx="44" ry="25" fill="#F5F0EB"/>
+<circle cx="-76" cy="-30" r="17" fill="#C9285E"/><circle cx="-77" cy="-30" r="9" fill="#F46485"/>
+<circle cx="-22" cy="-42" r="20" fill="#FFD98B"/><circle cx="-20" cy="-42" r="11" fill="#F7BE5B"/>
+<circle cx="48" cy="-34" r="18" fill="#D63565"/><circle cx="51" cy="-39" r="8" fill="#FF90A9"/>
+<circle cx="82" cy="-5" r="14" fill="#F6D370"/>
+<path d="M-70 23Q-30 50 5 30T88 20" fill="none" stroke="#9A4B86" stroke-width="8" stroke-linecap="round"/>
+</g></g>
+<text x="210" y="506" font-family="Arial,Helvetica,sans-serif" font-size="12.3" font-weight="800" fill="#3E1949" >Combos</text>
+<text x="210" y="523" font-family="Arial,Helvetica,sans-serif" font-size="9.7" font-weight="500" fill="#75657D" >2 ou 3 copos</text>
+<text x="210" y="548" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#651875" >Montar do meu jeito  ↗</text>
+<rect x="32" y="571" width="158" height="148" rx="13" fill="#FFFFFF" stroke="#E8E0E9" stroke-width="1.5"/>
+<rect x="33" y="572" width="156" height="76" rx="12" fill="#F0E5F1" />
+<g transform="translate(110 608) scale(.36)"><g transform="translate(0 0) scale(1)">
+<ellipse cx="0" cy="110" rx="150" ry="21" fill="#421148" opacity=".09"/>
+<path d="M-110 25 Q-103 110 0 122 Q103 110 110 25 Z" fill="#D2C5D5" stroke="#A593AA" stroke-width="4"/>
+<path d="M-118 15 Q-118 -25 0 -27 Q118 -25 118 15 Q80 57 0 52 Q-80 57 -118 15Z" fill="#6B227A"/>
+<ellipse cx="0" cy="-2" rx="120" ry="50" fill="#5D166C"/>
+<ellipse cx="-63" cy="-3" rx="37" ry="21" fill="#A76A77"/><ellipse cx="28" cy="-13" rx="44" ry="25" fill="#F5F0EB"/>
+<circle cx="-76" cy="-30" r="17" fill="#C9285E"/><circle cx="-77" cy="-30" r="9" fill="#F46485"/>
+<circle cx="-22" cy="-42" r="20" fill="#FFD98B"/><circle cx="-20" cy="-42" r="11" fill="#F7BE5B"/>
+<circle cx="48" cy="-34" r="18" fill="#D63565"/><circle cx="51" cy="-39" r="8" fill="#FF90A9"/>
+<circle cx="82" cy="-5" r="14" fill="#F6D370"/>
+<path d="M-70 23Q-30 50 5 30T88 20" fill="none" stroke="#9A4B86" stroke-width="8" stroke-linecap="round"/>
+</g></g>
+<text x="42" y="665" font-family="Arial,Helvetica,sans-serif" font-size="12.3" font-weight="800" fill="#3E1949" >Copo felicidade</text>
+<text x="42" y="682" font-family="Arial,Helvetica,sans-serif" font-size="9.7" font-weight="500" fill="#75657D" >Creme e complementos</text>
+<text x="42" y="707" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#651875" >Montar do meu jeito  ↗</text>
+<rect x="200" y="571" width="158" height="148" rx="13" fill="#FFFFFF" stroke="#E8E0E9" stroke-width="1.5"/>
+<rect x="201" y="572" width="156" height="76" rx="12" fill="#F0E5F1" />
+<g transform="translate(278 608) scale(.36)"><g transform="translate(0 0) scale(1)">
+<ellipse cx="0" cy="110" rx="150" ry="21" fill="#421148" opacity=".09"/>
+<path d="M-110 25 Q-103 110 0 122 Q103 110 110 25 Z" fill="#D2C5D5" stroke="#A593AA" stroke-width="4"/>
+<path d="M-118 15 Q-118 -25 0 -27 Q118 -25 118 15 Q80 57 0 52 Q-80 57 -118 15Z" fill="#6B227A"/>
+<ellipse cx="0" cy="-2" rx="120" ry="50" fill="#5D166C"/>
+<ellipse cx="-63" cy="-3" rx="37" ry="21" fill="#A76A77"/><ellipse cx="28" cy="-13" rx="44" ry="25" fill="#F5F0EB"/>
+<circle cx="-76" cy="-30" r="17" fill="#C9285E"/><circle cx="-77" cy="-30" r="9" fill="#F46485"/>
+<circle cx="-22" cy="-42" r="20" fill="#FFD98B"/><circle cx="-20" cy="-42" r="11" fill="#F7BE5B"/>
+<circle cx="48" cy="-34" r="18" fill="#D63565"/><circle cx="51" cy="-39" r="8" fill="#FF90A9"/>
+<circle cx="82" cy="-5" r="14" fill="#F6D370"/>
+<path d="M-70 23Q-30 50 5 30T88 20" fill="none" stroke="#9A4B86" stroke-width="8" stroke-linecap="round"/>
+</g></g>
+<text x="210" y="665" font-family="Arial,Helvetica,sans-serif" font-size="12.3" font-weight="800" fill="#3E1949" >Açaí de 1 litro</text>
+<text x="210" y="682" font-family="Arial,Helvetica,sans-serif" font-size="9.7" font-weight="500" fill="#75657D" >Tamanho família</text>
+<text x="210" y="707" font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="700" fill="#651875" >Montar do meu jeito  ↗</text>
+<rect x="17" y="742" width="359" height="35" rx="0" fill="#FFFFFF" />
+<text x="40" y="760" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="800" fill="#3E1949" >⌂</text>
+<text x="107" y="759" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#3E1949" >Ofertas</text>
+<text x="186" y="759" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#3E1949" >Pedidos</text>
+<text x="268" y="759" font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="700" fill="#3E1949" >Perfil</text>
+</g><rect x="147" y="771" width="99" height="5" rx="3" fill="#F7F4F8"/></svg>
