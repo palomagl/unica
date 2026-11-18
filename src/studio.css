@@ -1200,3 +1200,49 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
     left: 39%;
   }
 }
+
+/* Headline mobile em 3 linhas: preserva hero desktop, aproveita a largura. */
+.u-heading-desktop{display:block}
+.u-heading-desktop>span{display:block}
+.u-heading-mobile{display:none!important}
+@media(max-width:600px){
+ .u-heading-desktop{display:none!important}
+ .u-top .u-heading-mobile{display:block!important;width:100%;max-width:100%;line-height:.98}
+ .u-heading-mobile>span{display:block;white-space:nowrap;letter-spacing:-.082em}
+ .u-heading-mobile>span:first-child{font-size:clamp(29px,9.2vw,51px)}
+ .u-heading-mobile>span:nth-child(2){font-size:clamp(38px,11.4vw,61px);padding:7px 0 5px}
+ .u-heading-mobile>span:nth-child(3){font-size:clamp(49px,13.7vw,72px);padding-top:7px}
+ .u-top .u-heading-mobile .u-movem{
+   display:inline-block;max-width:none;width:auto;padding:0 .12em .045em;
+   margin:0 0 0 4px;border-radius:15px;vertical-align:baseline
+ }
+ .u-top .u-hero-side{margin-top:14px}
+ .u-top .u-swoosh{width:40%;margin:14px 0 0 43%;height:14px;border-top-width:5px}
+ .u-top .u-swoosh:after{border-top-width:4px}
+}
+@media(max-width:360px){
+ .u-heading-mobile>span:first-child{font-size:clamp(28px,9.1vw,33px)}
+ .u-heading-mobile>span:nth-child(2){font-size:clamp(37px,11vw,42px)}
+ .u-heading-mobile>span:nth-child(3){font-size:clamp(48px,13.4vw,54px)}
+}
+/* Contato sempre acessível, topo aparece ao rolar.
+   Sem dependências, sem blur pesado, seguro para celulares de entrada. */
+.u-floating-actions{position:fixed;right:max(17px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));z-index:49;display:flex;flex-direction:column;align-items:flex-end;gap:9px;pointer-events:none}
+.u-floating-actions>*{pointer-events:auto}
+.u-floating-actions a,.u-floating-actions button{border-radius:100px;min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border:1px solid #24140d;font-size:13px;font-weight:900;box-shadow:0 5px 0 #29180e25;transition:transform .2s}
+.u-floating-actions a:hover,.u-floating-actions button:hover{transform:translateY(-3px)}
+.u-floating-whatsapp{background:var(--u-accent);color:#21150f!important}
+.u-floating-whatsapp svg{width:18px;height:18px}
+.u-floating-dot{width:8px;height:8px;background:#25170f;border-radius:50%}
+.u-floating-top{background:#f8f0e5;color:#28160f}
+.u-floating-top span{font-size:12px}
+.u-floating-actions a:focus-visible,.u-floating-actions button:focus-visible{outline:3px solid #28160f;outline-offset:4px}
+@media(max-width:600px){
+ .u-floating-actions{right:11px;bottom:max(12px,env(safe-area-inset-bottom));gap:7px}
+ .u-floating-actions a,.u-floating-actions button{padding:9px 12px;min-height:42px;font-size:12px}
+ .u-floating-whatsapp svg{width:16px;height:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .u-floating-actions a,.u-floating-actions button{transition:none}
+ .u-floating-actions a:hover,.u-floating-actions button:hover{transform:none}
+}
