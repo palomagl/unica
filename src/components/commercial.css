@@ -260,3 +260,20 @@
 @media(prefers-reduced-motion:reduce){
   #projetos .u-small-projects button.u-project-preview{transition:none}
 }
+
+/* Resposta contextual logo abaixo da pergunta tocada no celular. */
+.u-faq-entry{display:contents}
+.u-faq-mobile-answer{display:none}
+@media(max-width:650px){
+  .u-faq-entry{display:block;width:100%}
+  .u-faq-layout>.u-faq-response{display:none}
+  .u-faq-mobile-answer{
+    display:block;background:#ede3d7;margin:0 0 4px;padding:20px 19px 24px;
+    border-radius:0 0 15px 15px;animation:u-faq-arrive .25s ease both
+  }
+  .u-faq-entry:has(.u-faq-mobile-answer) .u-faq-question{
+    border-radius:15px 15px 0 0;width:100%;
+  }
+  .u-faq-mobile-answer p{font-size:14px;line-height:1.55;margin:0}
+  .u-faq-mobile-answer .u-faq-response-label{margin-bottom:13px}
+}
