@@ -62,16 +62,24 @@ with sync_playwright() as playwright:
             check(page.locator(".u-floating-whatsapp").is_visible(),
                   f"{width}px: WhatsApp fixo não aparece")
 
-            # Quatro propostas base, acessíveis pelo mesmo painel.
-            check(page.locator(".u-price-option").count() == 4, "Precisam existir quatro entradas")
+            # Quatro cards objetivos: entrada acessível e soluções de maior escopo.
+            cards = page.locator(".u-price-card")
+            check(cards.count() == 4, f"{width}px: devem aparecer quatro opções")
             for i, (title, expected_value) in enumerate(OFFERS):
-                page.locator(".u-price-option").nth(i).click()
-                check(page.locator(".u-price-stage-content h3").inner_text().strip().rstrip(".") == title,
-                      f"{width}px: título do investimento {i} incorreto")
-                check("".join(expected_value.split()) in "".join(page.locator(".u-price-value strong").inner_text().split()),
-                      f"{width}px: preço incorreto para {title}")
-                check("wa.me/" + PHONE in page.locator(".u-price-cta").get_attribute("href"),
-                      f"{width}px: CTA do investimento não abre WhatsApp profissional")
+                card = cards.nth(i)
+                check(card.locator("h3").inner_text().strip() == title,
+                      f"{width}px: nome errado do serviço {i}")
+                value = "".join(card.locator(".u-price-card-cost strong").inner_text().split())
+                check("".join(expected_value.split()) in value,
+                      f"{width}px: preço errado para {title}")
+                link = card.locator(".u-price-card-cta").get_attribute("href")
+                check("wa.me/" + PHONE in link,
+                      f"{width}px: CTA não abre o WhatsApp profissional")
+                check(card.get_attribute("class") is not None, f"{width}px: card sem estilo")
+            check("u-price-card--entry" in cards.nth(0).get_attribute("class"),
+                  f"{width}px: falta destaque para o preço de entrada")
+            check("u-price-card--bespoke" in cards.nth(3).get_attribute("class"),
+                  f"{width}px: falta contraste para sistemas e apps")
 
             # FAQ: quatro perguntas com expansão e fechamento.
             questions = page.locator(".u-faq-entry button")
@@ -84,10 +92,9 @@ with sync_playwright() as playwright:
                   f"{width}px: dúvida não fecha")
 
             if width == 390:
-                page.locator(".u-price-option").first.focus()
-                page.keyboard.press("Enter")
-                check("Landing page" in page.locator(".u-price-stage-content h3").inner_text(),
-                      "Investimento não responde ao teclado")
+                page.locator(".u-price-card-cta").first.focus()
+                check(page.locator(".u-price-card-cta").first.evaluate("(el) => document.activeElement === el"),
+                      "CTA do investimento não recebe foco por teclado")
                 page.locator(".u-faq-entry button").first.focus()
                 page.keyboard.press("Enter")
                 check(page.locator(".u-faq-answer").count() == 1,
