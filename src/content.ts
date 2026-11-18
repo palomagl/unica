@@ -1,6 +1,6 @@
 // ÚNICA — conteúdo essencial da nova landing.
 export const CONTACT = {
-  whatsapp: '5551998127367',
+  whatsapp: '5551991872507',
 }
 export const whatsappLink = (message: string) =>
   `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`
