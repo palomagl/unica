@@ -66,13 +66,13 @@ const projects = [
   {
     name: 'Rotina', brand: 'Minha Rotina', kind: 'Plataforma de organização pessoal',
     outcome: 'Uma plataforma para reunir tarefas, finanças e hábitos e deixar a organização do dia a dia mais simples.',
-    visual: 'rotina', url: '',
+    visual: 'rotina', url: 'https://dashboard-three-khaki-68.vercel.app/',
     cover: '/screens/rotina-desktop-alpha.svg',
     bg: 'linear-gradient(135deg,#dff4ee,#accdc5)',
   },
 ]
 // Sexto projeto: ROXO — loja demonstrativa, com catálogo e personalização de pedidos.
-// Prévia vetorial das interfaces, a substituir por capturas reais aprovadas.
+// Molduras reutilizadas com capturas reais do site público em desktop e celular.
 const sixthProject: (typeof projects)[number] = {
   name: 'Açaiteria',
   brand: 'ROXO',
@@ -310,7 +310,7 @@ export default function App() {
                   <img
                     className="u-device-laptop"
                     src={`/screens/${p.visual}-desktop-alpha.svg`}
-                    alt={p.visual === 'roxo' ? 'Prévia ilustrativa do catálogo ROXO no computador' : `Interface original do ${p.brand} no computador`}
+                    alt={`Interface do ${p.brand} no computador`}
                     width={p.visual === 'vertice' ? 1261 : 1237}
                     height={774}
                     decoding="async"
@@ -320,7 +320,7 @@ export default function App() {
                   <img
                     className="u-device-phone"
                     src={`/screens/${p.visual}-mobile-alpha.svg`}
-                    alt={p.visual === 'roxo' ? 'Prévia ilustrativa do catálogo ROXO no celular' : `Interface original do ${p.brand} no celular`}
+                    alt={`Interface do ${p.brand} no celular`}
                     width={p.visual === 'vertice' ? 419 : 393}
                     height={p.visual === 'vertice' ? 854 : 790}
                     decoding="async"
@@ -367,7 +367,7 @@ export default function App() {
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.brand}</h3><p className="u-project-brand">{p.name}</p>
               <p className="u-project-description">{p.outcome}</p>
-              {p.visual === 'roxo' && <small className="u-project-disclaimer">Prévia ilustrativa das telas. Loja demonstrativa.</small>}
+              {p.visual === 'roxo' && <small className="u-project-disclaimer">Demonstração de loja online.</small>}
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre o projeto <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
