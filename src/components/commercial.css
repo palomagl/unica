@@ -43,11 +43,40 @@
 .u-testimonials blockquote{padding:24px;border-top:2px solid #673a27;margin:0}
 .u-testimonials blockquote p{font-size:22px;font-weight:800;line-height:1.3}
 .u-testimonials footer{font-size:13px}
-#projetos .u-project-nature{display:inline-flex;max-width:100%;align-items:center;font-size:11px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;border:1px solid #62483a66;border-radius:50px;padding:7px 12px;margin:0 0 12px}
-#projetos .u-project-copy .u-project-problem,#projetos .u-project-copy .u-project-delivery{font-size:clamp(13px,1.15vw,15px)!important;line-height:1.4!important;margin:0 0 12px!important}
-#projetos .u-project-problem strong,#projetos .u-project-delivery strong{font-size:11px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:3px;color:#775a4b}
-#projetos .u-project-copy>.u-pill{margin-top:6px}
-#projetos .u-project-copy{overflow:auto;scrollbar-width:thin}
+/* Os projetos têm altura natural: sem barra interna e sem texto cortado. */
+#projetos .u-project-feature{height:auto!important;min-height:520px}
+#projetos .u-project-feature>.u-project-visual{height:auto;min-height:520px}
+#projetos .u-project-feature>.u-project-copy{
+  height:auto!important;min-height:520px;overflow:visible!important;
+  scrollbar-width:auto;justify-content:flex-start
+}
+#projetos .u-project-copy h3{
+  font-family:'Hanken Grotesk',Arial,sans-serif;
+  font-weight:900;letter-spacing:-.07em;line-height:1.02
+}
+#projetos .u-project-copy .u-project-description{
+  font-family:'Hanken Grotesk',Arial,sans-serif;
+  font-weight:500;letter-spacing:-.015em;line-height:1.45;
+  max-width:410px;margin:0 0 22px;
+}
+#projetos .u-project-copy>.u-pill{margin-top:7px}
+#projetos .u-portfolio-top.u-reveal{transition-delay:0ms}
+#projetos .u-project-feature.u-reveal{transition-delay:110ms}
+#projetos .u-small-projects.u-reveal{transition-delay:190ms}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  #projetos .u-project-copy h3{
+    transition:transform .42s cubic-bezier(.2,.7,.2,1)
+  }
+  #projetos .u-project-feature:hover .u-project-copy h3{transform:translateX(5px)}
+  #projetos .u-project-controls .u-control{
+    transition:transform .24s ease,background-color .24s ease
+  }
+  #projetos .u-project-controls .u-control:hover{transform:translateY(-3px) scale(1.04)}
+  #projetos .u-small-projects button{
+    transition:transform .24s ease,background-color .24s ease,border-color .24s ease
+  }
+  #projetos .u-small-projects button:hover{transform:translateY(-3px)}
+}
 @media(max-width:900px){
 .u-investment-body,.u-method-layout{grid-template-columns:1fr}
 .u-investment-detail{min-height:400px}
@@ -71,23 +100,28 @@
 #projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:360px!important;max-height:none;overflow:visible;padding:22px 20px 21px}
 #projetos .u-project-copy h3{margin-bottom:8px}
 #projetos .u-project-copy .u-project-brand{margin-bottom:10px}
-#projetos .u-project-copy .u-project-problem,#projetos .u-project-copy .u-project-delivery{font-size:13px!important}
+
 }
 @media(prefers-reduced-motion:reduce){
 .u-investment-option,.u-method-step{transition:none}
 }
 
-/* Evita recortes e rolagem interna no portfólio entre celular e tablet. */
+/* A altura se adapta ao conteúdo em qualquer tela, sem scroll interno. */
 @media(max-width:900px){
-  #projetos .u-project-feature{height:auto!important;grid-template-rows:320px auto!important}
-  #projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:325px;max-height:none;overflow:visible}
+  #projetos .u-project-feature{height:auto!important;min-height:0!important;grid-template-rows:320px auto!important}
+  #projetos .u-project-feature>.u-project-visual{height:320px!important;min-height:320px!important}
+  #projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important}
 }
 @media(max-width:600px){
   #projetos .u-project-feature{grid-template-rows:clamp(205px,61vw,265px) auto!important}
-  #projetos .u-project-feature>.u-project-copy{min-height:0!important}
+  #projetos .u-project-feature>.u-project-visual{height:clamp(205px,61vw,265px)!important;min-height:0!important}
+  #projetos .u-project-feature>.u-project-copy{height:auto!important;min-height:0!important;padding:22px 20px 23px}
+  #projetos .u-project-copy h3{font-size:clamp(30px,8vw,39px);line-height:1.02}
+  #projetos .u-project-copy .u-project-description{font-size:14px!important;margin-bottom:18px}
 }
 @media(max-width:360px){
   #projetos .u-project-feature{height:auto!important}
+  #projetos .u-project-feature>.u-project-copy{padding:20px 17px 22px}
 }
 
 /* Cabeçalho compacto entre notebooks menores e o breakpoint mobile original. */
