@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Teste real no navegador: hero, 6 projetos, 4 investimentos, FAQ, links, atalhos e layout."""
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 from playwright.sync_api import sync_playwright
 
 URL = "http://127.0.0.1:4173/"
@@ -52,6 +53,11 @@ with sync_playwright() as playwright:
                     r = spans.nth(i).bounding_box()
                     check(r is not None and r["x"] >= -1 and r["x"] + r["width"] <= width + 1,
                           f"{width}px: linha {i+1} do hero extrapolou largura: {r}")
+
+            check(page.locator(".u-coverage").is_visible(),
+                  f"{width}px: informacao de atendimento online nao aparece")
+            check("todo o Brasil" in page.locator(".u-coverage").inner_text(),
+                  f"{width}px: cobertura de atendimento incorreta")
 
             # Botões de WhatsApp: nenhum contato antigo.
             links = page.locator('a[href*="wa.me/"]').evaluate_all(
@@ -154,6 +160,13 @@ with sync_playwright() as playwright:
                 page.wait_for_timeout(95)
                 check(page.locator("#projetos .u-project-copy h3").inner_text().strip() == name,
                       f"{width}px: projeto {name} incorreto")
+                # O projeto tambem precisa abrir um pedido de orcamento contextual.
+                ask = page.locator("#projetos .u-project-ask-link")
+                check(ask.is_visible(), f"{width}px: CTA do projeto {name} indisponivel")
+                address = ask.get_attribute("href")
+                message = parse_qs(urlsplit(address).query).get("text", [""])[0]
+                check("wa.me/" + PHONE in address and name in message,
+                      f"{width}px: CTA WhatsApp do projeto {name} nao identifica o trabalho")
                 if name == "DOE+ RS":
                     continue
                 result = page.evaluate("""() => {
@@ -171,6 +184,16 @@ with sync_playwright() as playwright:
                     check(el["x"] >= stage_bounds["x"] - 3 and el["right"] <= stage_bounds["right"] + 3 and
                           el["y"] >= stage_bounds["y"] - 3 and el["bottom"] <= stage_bounds["bottom"] + 3,
                           f"{width}px: {kind} cortou no {name}: {result}")
+
+            if width == 390:
+                skip = page.locator(".u-skip-link")
+                skip.focus()
+                check(page.evaluate("document.activeElement?.classList.contains('u-skip-link')"),
+                      "Atalho de teclado para as solucoes nao recebeu foco")
+                for path, expected in [("/robots.txt", "Sitemap:"), ("/sitemap.xml", "<urlset")]:
+                    result = page.request.get(URL.rstrip("/") + path)
+                    check(result.status == 200 and expected in result.text(),
+                          f"{path}: SEO basico indisponivel")
 
             # Topo aparece após rolagem, botão realmente leva ao começo.
             page.evaluate("window.scrollTo({top: 1250, behavior: 'instant'})")
