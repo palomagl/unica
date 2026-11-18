@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { QUOTE_LINK, whatsappLink } from '../content'
 import { faqItems, investmentCategories, investments, testimonials, type InvestmentCategoryId } from '../commercial-content'
 import { ArrowUpRight } from './InterfaceIcons'
+import { BrandSymbol } from './BrandSymbol'
 import './commercial.css'
 
 const money = (value: number) => new Intl.NumberFormat('pt-BR', {
@@ -9,75 +10,90 @@ const money = (value: number) => new Intl.NumberFormat('pt-BR', {
 }).format(value)
 
 export function InvestmentSection() {
-  const [active, setActive] = useState<InvestmentCategoryId>('presenca')
-  const category = investmentCategories.find(item => item.id === active)!
-  const items = investments.filter(item => item.category === active)
+  const [category, setCategory] = useState<InvestmentCategoryId>('presenca')
+  const [selected, setSelected] = useState(0)
+  const list = investments.filter(item => item.category === category)
+  const current = list[selected] ?? list[0]
+  const categoryIndex = investmentCategories.findIndex(item => item.id === category)
+
+  function chooseCategory(id: InvestmentCategoryId) {
+    setCategory(id)
+    setSelected(0)
+  }
 
   return (
-    <section className="u-investment" id="investimento" aria-labelledby="u-investment-title">
+    <section className="u-investment u-editorial" id="investimento" aria-labelledby="u-investment-title">
       <div className="u-wrap">
-        <div className="u-investment-heading">
-          <div>
-            <span className="u-kicker">INVESTIMENTO / 01—03</span>
-            <h2 className="u-h2" id="u-investment-title">Escolha por onde <mark>começar.</mark></h2>
+        <div className="u-investment-intro u-reveal">
+          <span className="u-kicker">INVESTIMENTO / ÚNICA</span>
+          <div className="u-investment-intro-grid">
+            <h2 className="u-h2" id="u-investment-title">Toda ideia tem um <mark>ponto de partida.</mark></h2>
+            <p>Não precisa saber o nome técnico. Escolha o que você quer fazer, veja o investimento inicial e vamos conversar.</p>
           </div>
-          <p>Uma solução pra cada momento. Encontre seu ponto de partida e a gente conversa sobre o que você precisa.</p>
         </div>
-        <div className="u-investment-tabs" role="tablist" aria-label="Categorias de investimento">
-          {investmentCategories.map((item, index) => (
+
+        <div className="u-investment-choices" role="tablist" aria-label="O que você quer construir?">
+          {investmentCategories.map((item, i) => (
             <button
-              key={item.id} type="button" id={`u-investment-tab-${item.id}`}
-              className={item.id === active ? 'u-investment-tab is-active' : 'u-investment-tab'}
-              role="tab" tabIndex={item.id === active ? 0 : -1} aria-selected={item.id === active}
-              aria-controls="u-investment-results"
-              onKeyDown={(event) => {
+              key={item.id} id={`u-choice-${item.id}`}
+              className={category === item.id ? 'u-investment-choice is-active' : 'u-investment-choice'}
+              role="tab" type="button"
+              aria-controls="u-investment-stage"
+              aria-selected={category === item.id}
+              tabIndex={category === item.id ? 0 : -1}
+              onClick={() => chooseCategory(item.id)}
+              onKeyDown={event => {
                 if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
                 event.preventDefault()
-                const current = investmentCategories.findIndex(c => c.id === active)
-                const next = event.key === 'Home' ? 0 : event.key === 'End'
-                  ? investmentCategories.length - 1
-                  : (current + (event.key === 'ArrowRight' ? 1 : -1) + investmentCategories.length) % investmentCategories.length
-                setActive(investmentCategories[next].id)
-                document.getElementById(`u-investment-tab-${investmentCategories[next].id}`)?.focus()
+                const next = event.key === 'Home' ? 0 : event.key === 'End' ? investmentCategories.length - 1
+                  : (categoryIndex + (event.key === 'ArrowRight' ? 1 : -1) + investmentCategories.length) % investmentCategories.length
+                chooseCategory(investmentCategories[next].id)
+                document.getElementById(`u-choice-${investmentCategories[next].id}`)?.focus()
               }}
-              onClick={() => setActive(item.id)}
             >
-              <span className="u-investment-tab-number">0{index + 1}</span>
+              <span className="u-investment-choice-number">0{i + 1}</span>
               <span>{item.label}</span>
-              <span className="u-investment-tab-dot" aria-hidden="true" />
+              <span className="u-investment-choice-mark" aria-hidden="true">↗</span>
             </button>
           ))}
         </div>
-        <div className="u-investment-category-heading">
-          <span>{category.note}</span>
-          <span>{String(items.length).padStart(2, '0')} SOLUÇÕES</span>
+
+        <div className="u-investment-stage" id="u-investment-stage" role="tabpanel"
+          aria-labelledby={`u-choice-${category}`} tabIndex={0}>
+          <div className="u-investment-stage-meta">
+            <span>SELECIONE UMA SOLUÇÃO</span>
+            <span>{String(selected + 1).padStart(2, '0')} / {String(list.length).padStart(2, '0')}</span>
+          </div>
+
+          <div className="u-investment-detail" key={current.id}>
+            <div className="u-investment-detail-main">
+              <h3>{current.title}<span className="u-investment-period" aria-hidden="true">.</span></h3>
+              <p>{current.summary}</p>
+              {current.details && <small>{current.details}</small>}
+            </div>
+            <div className="u-investment-detail-price">
+              <span>{current.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
+              <strong>{current.startingAtBRL === null ? 'Sob orçamento' : money(current.startingAtBRL)}</strong>
+              <a
+                href={whatsappLink(`Olá! Tenho interesse em ${current.title.toLowerCase()} e gostaria de conversar sobre meu projeto.`)}
+                target="_blank" rel="noopener noreferrer"
+                className="u-pill u-investment-cta"
+              >Conversar sobre essa ideia <ArrowUpRight /></a>
+            </div>
+          </div>
+          <div className="u-investment-rail" role="group" aria-label="Escolher uma solução dentro da categoria">
+            {list.map((item, index) => (
+              <button key={item.id} type="button"
+                className={selected === index ? 'u-investment-rail-item is-active' : 'u-investment-rail-item'}
+                aria-pressed={selected === index} onClick={() => setSelected(index)}>
+                <span>0{index + 1}</span>
+                {item.title}
+              </button>
+            ))}
+            <BrandSymbol className="u-investment-rail-symbol" />
+          </div>
         </div>
-        <div
-          className="u-investment-results" role="tabpanel"
-          id="u-investment-results" aria-labelledby={`u-investment-tab-${active}`}
-          key={active} tabIndex={0}
-        >
-          {items.map((item, index) => (
-            <article className="u-investment-product" key={item.id}>
-              <div className="u-investment-product-main">
-                <span className="u-investment-product-index">0{index + 1} <span aria-hidden="true">/</span> {String(items.length).padStart(2, '0')}</span>
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-                {item.details && <small>{item.details}</small>}
-              </div>
-              <div className="u-investment-product-side">
-                <span className="u-investment-price-label">{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
-                <strong className="u-investment-price">{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
-                <a
-                  href={whatsappLink(`Olá! Tenho interesse em ${item.title.toLowerCase()} e gostaria de conversar sobre meu projeto.`)}
-                  target="_blank" rel="noopener noreferrer"
-                  className="u-investment-action"
-                >Quero essa solução <ArrowUpRight /></a>
-              </div>
-            </article>
-          ))}
-        </div>
-        <p className="u-investment-footnote">Valores iniciais para escopos definidos, não preços fixos. O orçamento final depende das funcionalidades e complexidade. Domínio, hospedagem, serviços de terceiros e manutenção são tratados separadamente.</p>
+        <p className="u-investment-fineprint">Cada projeto tem seu escopo. Valores de entrada, não pacotes fechados. Domínio, hospedagem e manutenção são combinados separadamente.</p>
       </div>
     </section>
   )
@@ -86,53 +102,47 @@ export function InvestmentSection() {
 export function FAQSection() {
   const [active, setActive] = useState<number | null>(0)
   return (
-    <section className="u-faq" id="duvidas" aria-labelledby="u-faq-title">
-      <div className="u-wrap">
-        <div className="u-faq-heading">
-          <span className="u-kicker">PERGUNTAS RÁPIDAS / SEM ENROLAÇÃO</span>
-          <h2 className="u-h2" id="u-faq-title">Ainda ficou <mark>alguma dúvida?</mark></h2>
-          <p>Antes de começar, a gente te explica.</p>
+    <section className="u-faq u-editorial" id="duvidas" aria-labelledby="u-faq-title">
+      <div className="u-wrap u-faq-editorial">
+        <div className="u-faq-aside u-reveal">
+          <span className="u-kicker">ANTES DE COMEÇAR</span>
+          <h2 className="u-h2" id="u-faq-title">Ficou alguma <mark>dúvida?</mark></h2>
+          <p>As perguntas mais comuns, sem complicação.</p>
+          <div className="u-faq-sign" aria-hidden="true">
+            <span>?</span>
+            <BrandSymbol className="u-faq-sign-symbol" />
+          </div>
         </div>
-        <div className="u-faq-layout">
-          <div className="u-faq-choices" role="group" aria-label="Escolha uma dúvida">
+        <div className="u-faq-content">
+          <div className="u-faq-content-header">
+            <span>PERGUNTAS FREQUENTES</span>
+            <span>01 — 0{faqItems.length}</span>
+          </div>
+          <div className="u-faq-list">
             {faqItems.map((item, index) => (
-              <div className="u-faq-entry" key={item.question}>
-                <button
-                  type="button"
-                  className={active === index ? 'u-faq-question is-active' : 'u-faq-question'}
-                  aria-expanded={active === index}
-                  aria-controls={`u-faq-answer-mobile-${index}`}
-                  onClick={() => setActive(active === index ? null : index)}
-                >
-                  <span>{item.question}</span>
-                  <span className="u-faq-question-icon" aria-hidden="true">{active === index ? '−' : '+'}</span>
-                </button>
-                {active === index && <div className="u-faq-mobile-answer" id={`u-faq-answer-mobile-${index}`} role="region">
-                  <span className="u-faq-response-label">ÚNICA RESPONDE / 0{index + 1}</span>
-                  <p>{item.answer}</p>
-                </div>}
+              <div key={item.question} className={active === index ? 'u-faq-item is-active' : 'u-faq-item'}>
+                <h3>
+                  <button type="button" id={`u-faq-q-${index}`}
+                    aria-expanded={active === index} aria-controls={`u-faq-a-${index}`}
+                    onClick={() => setActive(active === index ? null : index)}>
+                    <span className="u-faq-number">{String(index + 1).padStart(2, '0')}</span>
+                    <span className="u-faq-question-text">{item.question}</span>
+                    <span className="u-faq-toggle" aria-hidden="true">{active === index ? '−' : '+'}</span>
+                  </button>
+                </h3>
+                {active === index && (
+                  <div role="region" aria-labelledby={`u-faq-q-${index}`}
+                    id={`u-faq-a-${index}`} className="u-faq-answer">
+                    <p>{item.answer}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
-          <div className="u-faq-response" id="u-faq-answer" aria-live="polite" aria-atomic="true">
-            {active === null ? (
-              <div className="u-faq-empty">
-                <span aria-hidden="true">↗</span>
-                <p>Escolha uma pergunta para descobrir a resposta.</p>
-              </div>
-            ) : (
-              <div className="u-faq-response-content" key={active}>
-                <span className="u-faq-response-label">ÚNICA RESPONDE / 0{active + 1}</span>
-                <h3>{faqItems[active].question}</h3>
-                <p>{faqItems[active].answer}</p>
-                <span className="u-faq-endmark" aria-hidden="true">↗</span>
-              </div>
-            )}
-          </div>
+          <a className="u-faq-outro" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
+            Quer perguntar outra coisa? <strong>Chama a ÚNICA.</strong><ArrowUpRight />
+          </a>
         </div>
-        <a className="u-faq-contact" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
-          Sua dúvida não está aqui? <strong>Vamos conversar.</strong><ArrowUpRight />
-        </a>
       </div>
     </section>
   )
@@ -145,7 +155,7 @@ export function TestimonialsSection() {
     <div className="u-wrap">
       <span className="u-kicker">QUEM JÁ CONSTRUIU COM A GENTE</span>
       <div className="u-testimonials-list">
-        {visible.map((item) => <blockquote key={item.name + item.company}>
+        {visible.map(item => <blockquote key={item.name + item.company}>
           <p>“{item.quote}”</p>
           <footer>{item.name} · {item.company}</footer>
         </blockquote>)}
