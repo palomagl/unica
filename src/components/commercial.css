@@ -1,114 +1,139 @@
-/* ÚNICA — investimento e dúvidas com composições próprias.
-   A seção de projetos abaixo é preservada sem alterações. */
-.u-investment,.u-faq{scroll-margin-top:20px}
-.u-investment{position:relative;isolation:isolate;background:#603522;color:#fff7ec;padding:clamp(82px,9vw,132px) 0 clamp(68px,7vw,108px);overflow:hidden}
-.u-investment:before{content:'';position:absolute;right:-115px;top:-175px;width:420px;height:420px;border:2px solid #ffffff14;border-radius:48% 53% 70% 30%;transform:rotate(23deg);pointer-events:none}
-.u-investment .u-kicker{color:#fff2e2}
-.u-investment-top{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(220px,.5fr);align-items:end;gap:clamp(22px,5vw,78px);margin-bottom:clamp(30px,5vw,65px)}
-.u-investment-top .u-h2{font-size:clamp(48px,5.5vw,84px);line-height:1.01;letter-spacing:-.076em;color:#fff6ed;max-width:920px}
-.u-investment-top .u-h2 mark{background:var(--u-accent);color:#24190d;border-radius:13px;padding:0 .09em .07em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.u-investment-top-aside{align-self:end}
-.u-investment-top-aside p{font-size:clamp(16px,1.45vw,20px);line-height:1.4;max-width:315px;margin:16px 0 5px;color:#fff1e8d9}
-.u-investment-symbol{display:block;width:72px;height:72px;color:#ffecda;transform:rotate(-8deg)}
-.u-investment-list{border-top:1px solid #fff3df8f}
-.u-investment-line{position:relative;display:grid;grid-template-columns:44px minmax(0,1.6fr) minmax(175px,.55fr) 48px;gap:clamp(12px,2.4vw,32px);align-items:center;padding:clamp(26px,3.1vw,45px) 6px;border-bottom:1px solid #fff3df82;isolation:isolate;transition:padding .32s,background .32s;color:#fff6ed!important}
-.u-investment-line:before{content:'';position:absolute;inset:0 -14px;z-index:-1;background:var(--u-accent);transform:scaleY(0);transform-origin:center;transition:transform .33s cubic-bezier(.2,.8,.2,1)}
-.u-investment-line:hover{padding-left:18px;padding-right:16px;color:#27190e!important}
-.u-investment-line:hover:before,.u-investment-line:focus-visible:before{transform:scaleY(1)}
-.u-investment-index{align-self:start;padding-top:9px;font-weight:800;letter-spacing:.09em;font-size:12px;color:#f4cfbd}
-.u-investment-line:hover .u-investment-index,.u-investment-line:hover .u-investment-pricegroup>small,.u-investment-line:hover .u-investment-name small{color:#28190f}
-.u-investment-name strong{font-size:clamp(29px,3.2vw,51px);font-weight:900;letter-spacing:-.068em;line-height:1.04;display:block}
-.u-investment-name small{display:block;max-width:490px;font-size:clamp(13px,1.08vw,16px);line-height:1.42;font-weight:500;color:#fff1e4c9;margin-top:10px}
-.u-investment-pricegroup{display:flex;align-items:flex-start;flex-direction:column;justify-content:center;min-width:0}
-.u-investment-pricegroup small{font-size:10px;font-weight:900;letter-spacing:.12em;color:#efcdbb;margin-bottom:9px}
-.u-investment-pricegroup strong{font-size:clamp(25px,2.7vw,42px);font-weight:900;letter-spacing:-.065em;line-height:1.03;overflow-wrap:anywhere}
-.u-investment-go{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:var(--u-accent);color:#26180f;transition:transform .3s,background .3s}
-.u-investment-go svg{width:24px;height:24px}
-.u-investment-line:hover .u-investment-go{transform:rotate(40deg);background:#29170f;color:#fff}
-.u-investment-bottom{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(30px,5vw,80px);align-items:end;margin-top:31px}
-.u-investment-bottom p{font-size:12px;line-height:1.55;color:#eed1bf;max-width:520px;margin:0}
-.u-investment-bottom a{font-size:clamp(17px,2vw,26px);font-weight:500;line-height:1.18;display:inline-flex;align-items:center;gap:8px;justify-self:end;padding-bottom:8px;border-bottom:2px solid var(--u-accent)}
-.u-investment-bottom a strong{font-weight:900}
-.u-investment-bottom a svg{width:24px;height:24px;flex:none;transition:transform .22s}
-.u-investment-bottom a:hover svg{transform:translate(4px,-4px)}
+/* ÚNICA — duas composições diferentes para evitar aparência de template.
+   01 Investimento: índice interativo + um único palco.
+   02 Dúvidas: cartaz editorial e respostas em linhas.
+   Usa a tipografia Hanken, contraste, geométricos e acento do site existente. */
+.u-investment,.u-faq{scroll-margin-top:24px}
+.u-investment{background:#673a27;color:#f8f0e5;position:relative;isolation:isolate;overflow:hidden;padding:clamp(75px,8vw,112px) 0 clamp(65px,6vw,95px)}
+.u-investment:before{content:'';pointer-events:none;position:absolute;right:-205px;top:-210px;width:520px;height:520px;border:2px solid #f8f0e526;border-radius:43% 57% 64% 36%;transform:rotate(26deg)}
+.u-price-head{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(200px,.45fr);gap:clamp(25px,5vw,70px);align-items:end;margin-bottom:clamp(37px,5vw,70px)}
+.u-price-head .u-kicker{color:#f8f0e5}
+.u-price-head h2{font-size:clamp(49px,5.7vw,86px);line-height:1.02;letter-spacing:-.075em;max-width:1000px}
+.u-price-head mark{background:var(--u-accent);color:#28160f;border-radius:14px;padding:0 .1em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.u-price-head>p{font-size:clamp(16px,1.55vw,22px);line-height:1.34;color:#f8f0e5e8;margin:0 0 5px;max-width:320px}
+.u-price-layout{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:clamp(20px,4vw,56px);align-items:stretch}
+.u-price-index{display:flex;flex-direction:column;min-width:0;border-top:1px solid #ffebd982}
+.u-price-option{display:grid;grid-template-columns:36px minmax(0,1fr) 30px;gap:clamp(11px,1.7vw,22px);align-items:center;min-height:103px;padding:clamp(18px,2.2vw,29px) 7px;border:0;border-bottom:1px solid #ffebd982;background:transparent;color:#fff1e4;text-align:left;transition:background .25s,padding .25s,color .25s}
+.u-price-option:hover{background:#ffffff12;padding-left:16px}
+.u-price-option.is-active{color:var(--u-accent);padding-left:16px}
+.u-price-no{align-self:start;font-size:12px;letter-spacing:.06em;font-weight:900;opacity:.7;padding-top:9px}
+.u-price-option-body{min-width:0}
+.u-price-option-body strong{display:block;font-size:clamp(24px,2.55vw,39px);font-weight:900;line-height:1.04;letter-spacing:-.057em}
+.u-price-option-body small{display:block;margin-top:7px;font-size:13px;font-weight:650;opacity:.73;letter-spacing:-.007em}
+.u-price-chevron{align-self:center;display:grid;place-items:center;border-radius:50%;width:30px;height:30px;transform:rotate(45deg);transition:transform .3s;background:transparent}
+.u-price-chevron svg{width:24px;height:24px}
+.u-price-option.is-active .u-price-chevron{transform:rotate(0deg)}
+.u-price-option:hover .u-price-chevron{transform:rotate(0deg)}
+.u-price-signature{display:flex;align-items:center;gap:17px;margin-top:auto;padding:40px 6px 0;color:#e1beab}
+.u-price-signature .u-brand-symbol{width:51px;height:51px;color:#ffead9}
+.u-price-signature span{font-size:11px;font-weight:900;line-height:1.25;letter-spacing:.12em}
+.u-price-stage{position:relative;display:flex;flex-direction:column;min-width:0;min-height:520px;padding:clamp(23px,3.6vw,49px);background:#f8f0e5;color:#28160f;border-radius:31px 31px 31px 9px;isolation:isolate;overflow:hidden}
+.u-price-stage:after{content:'';position:absolute;right:-70px;top:27%;width:185px;height:185px;border:3px solid #d6c5b6;border-radius:40% 60% 64% 36%;transform:rotate(-26deg);pointer-events:none;z-index:-1}
+.u-price-stage-meta{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #6543354a;padding-bottom:18px;align-items:center;font-size:11px;font-weight:900;letter-spacing:.1em}
+.u-price-stage-meta>span:last-child>span{font-size:17px}
+.u-price-stage-content{display:flex;flex-direction:column;align-items:flex-start;flex:1;animation:u-price-enter .4s cubic-bezier(.2,.8,.2,1) both}
+.u-price-small-title{font-size:11px;font-weight:900;letter-spacing:.1em;margin-top:clamp(30px,4vw,60px);color:#7c5a4b}
+.u-price-stage-content h3{font-size:clamp(47px,5vw,79px);max-width:620px;font-weight:900;line-height:.98;letter-spacing:-.078em;margin:13px 0 15px;overflow-wrap:break-word}
+.u-price-stage-content h3 span{color:#91ad00}
+.u-price-stage-content>p{font-size:clamp(15px,1.4vw,19px);line-height:1.43;max-width:475px;margin:0 0 clamp(22px,3vw,43px)}
+.u-price-value{margin-top:auto;padding-top:23px;border-top:1px solid #6543354a;width:100%;display:flex;flex-direction:column;gap:7px}
+.u-price-value>span{font-size:10px;font-weight:900;letter-spacing:.11em;color:#765443}
+.u-price-value strong{font-size:clamp(42px,5vw,69px);line-height:1;font-weight:900;letter-spacing:-.075em;overflow-wrap:anywhere}
+.u-price-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px;background:var(--u-accent);padding:14px 18px 14px 22px;color:#28160f!important;border-radius:99px;font-size:15px;font-weight:900!important;transition:transform .25s,background .25s;max-width:100%}
+.u-price-cta svg{width:24px;height:24px;flex-shrink:0}
+.u-price-cta:hover{transform:translateY(-3px);background:#c3ec16}
+.u-price-stage-brand{position:absolute;right:34px;bottom:31px;width:50px;height:50px;color:#28160f;opacity:.09;z-index:-1}
+.u-price-footer{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:25px;margin-top:28px}
+.u-price-footer p{max-width:630px;color:#f3ddcd;font-size:12px;line-height:1.52;margin:0}
+.u-price-footer a{display:inline-flex;justify-self:end;align-items:center;gap:7px;padding-bottom:8px;border-bottom:2px solid var(--u-accent);font-size:clamp(15px,1.45vw,19px);font-weight:550;line-height:1.25}
+.u-price-footer a strong{font-weight:900}
+.u-price-footer a svg{width:20px;height:20px;flex:none}
+@keyframes u-price-enter{from{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* Dúvidas como cartaz editorial em creme: não repete a interação de Investimento. */
-.u-faq{padding:clamp(78px,9vw,125px) 0 clamp(72px,8vw,114px);background:#f8f0e5;color:#28160f;position:relative;overflow:hidden}
-.u-faq-grid{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);align-items:start;gap:clamp(32px,6.2vw,100px)}
-.u-faq-intro{position:relative;min-width:0}
-.u-faq-intro .u-h2{font-size:clamp(48px,4.5vw,70px);letter-spacing:-.076em;line-height:1.04}
-.u-faq-intro .u-h2 mark{box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .1em .08em}
-.u-faq-intro>p{font-size:clamp(16px,1.55vw,20px);line-height:1.45;max-width:320px;margin:23px 0 0;color:#6c4a3c}
-.u-faq-graphic{font-size:clamp(165px,21vw,335px);display:block;font-weight:900;line-height:.8;letter-spacing:-.1em;margin-top:60px;color:#673a27;transform:rotate(-11deg);text-shadow:12px 12px 0 var(--u-accent);width:max-content;user-select:none;pointer-events:none}
-.u-faq-caption{display:flex;justify-content:space-between;gap:15px;padding:0 0 15px;border-bottom:3px solid #28160f;font-size:11px;letter-spacing:.09em;font-weight:900}
-.u-faq-item{border-bottom:1px solid #28160f78}
-.u-faq-item h3{margin:0;font-weight:inherit}
-.u-faq-item button{display:grid;grid-template-columns:35px minmax(0,1fr) 32px;width:100%;align-items:start;gap:clamp(8px,1.7vw,22px);padding:clamp(22px,2.5vw,34px) 4px;border:0;background:transparent;text-align:left;color:#28160f;transition:padding .24s,color .24s}
-.u-faq-item button:hover{padding-left:13px}
-.u-faq-item.is-active button{color:#603522}
-.u-faq-number{font-size:11px;font-weight:850;color:#876956;padding-top:8px}
-.u-faq-question{font-size:clamp(20px,2.1vw,31px);font-weight:900;line-height:1.12;letter-spacing:-.048em;max-width:625px}
-.u-faq-plus{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;font-size:21px;font-weight:700;background:transparent;border:1px solid #6747375e;transition:transform .24s,background .24s}
-.u-faq-item.is-active .u-faq-plus{background:var(--u-accent);border-color:var(--u-accent);transform:rotate(90deg)}
-.u-faq-answer{padding:0 55px 27px;animation:u-faq-show .32s ease both}
-.u-faq-answer p{font-size:clamp(15px,1.4vw,18px);line-height:1.47;color:#5a4035;max-width:620px;margin:0}
-.u-faq-contact{margin-top:25px;display:inline-flex;align-items:center;gap:8px;font-size:clamp(16px,1.55vw,22px);line-height:1.2;font-weight:550;padding-bottom:9px;border-bottom:3px solid var(--u-accent);max-width:100%;flex-wrap:wrap}
-.u-faq-contact strong{font-weight:900}
-.u-faq-contact svg{width:20px;height:20px;transition:transform .22s}
-.u-faq-contact:hover svg{transform:translate(4px,-4px)}
-@keyframes u-faq-show{from{opacity:.45;transform:translateY(-6px)}to{opacity:1;transform:none}}
+/* Segunda composição: perguntas abertas, sem cartões ou mockups.
+   É um cartaz editorial, não outro seletor. */
+.u-faq{background:#f8f0e5;color:#28160f;padding:clamp(80px,8vw,116px) 0 clamp(72px,7vw,100px)}
+.u-faq-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,5vw,89px);align-items:start}
+.u-faq-intro{position:relative;isolation:isolate;min-width:0}
+.u-faq-intro .u-h2{font-size:clamp(47px,4.8vw,76px);line-height:1.04;letter-spacing:-.076em;max-width:625px}
+.u-faq-intro .u-h2 mark{border-radius:11px;padding:0 .11em .05em}
+.u-faq-intro>p{font-size:clamp(16px,1.55vw,20px);line-height:1.43;max-width:350px;margin:19px 0 0}
+.u-faq-art{position:relative;margin-top:clamp(34px,6vw,85px);width:clamp(185px,24vw,295px);height:clamp(185px,24vw,295px);pointer-events:none}
+.u-faq-art-question{position:absolute;z-index:2;inset:10px 0 0;text-align:center;font-size:clamp(192px,23vw,303px);font-weight:900;letter-spacing:-.08em;line-height:1;color:#673a27;transform:rotate(-9deg)}
+.u-faq-art-stripe{position:absolute;left:1%;right:-13%;top:49%;height:32%;background:var(--u-accent);transform:rotate(-17deg);border-radius:50% 16% 31% 21%}
+.u-faq-body{min-width:0}
+.u-faq-meta{display:flex;justify-content:space-between;gap:12px;border-bottom:3px solid #28160f;padding:0 0 18px;font-size:11px;font-weight:900;letter-spacing:.095em}
+.u-faq-entry{border-bottom:1px solid #6245356e}
+.u-faq-entry h3{margin:0}
+.u-faq-entry button{display:grid;grid-template-columns:33px minmax(0,1fr) 34px;gap:clamp(12px,2vw,24px);align-items:start;background:transparent;border:0;width:100%;text-align:left;color:#28160f;padding:clamp(22px,2.5vw,32px) 2px;transition:padding .25s}
+.u-faq-entry button:hover{padding-left:12px}
+.u-faq-index{font-size:11px;color:#916047;letter-spacing:.08em;padding-top:9px;font-weight:900}
+.u-faq-question{font-size:clamp(21px,2.25vw,33px);line-height:1.12;letter-spacing:-.05em;font-weight:900}
+.u-faq-plus{display:grid;place-items:center;width:31px;height:31px;background:transparent;border:1px solid #6547378a;border-radius:50%;font-size:20px;font-weight:800;transition:transform .25s,background .25s}
+.u-faq-entry.is-active .u-faq-plus{background:var(--u-accent);border-color:var(--u-accent);transform:rotate(90deg)}
+.u-faq-answer{padding:0 41px 28px 57px;animation:u-faq-show .3s ease both}
+.u-faq-answer p{font-size:clamp(15px,1.35vw,18px);line-height:1.52;margin:0;max-width:570px;color:#67493b}
+.u-faq-outro{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;border-bottom:2px solid var(--u-accent);padding:7px 0 10px;margin-top:28px;font-size:clamp(16px,1.6vw,22px);font-weight:500}
+.u-faq-outro strong{font-weight:900}
+.u-faq-outro svg{width:22px;height:22px;flex:none}
+@keyframes u-faq-show{from{opacity:.5;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .u-testimonials{padding:60px 0;background:#eee3d5}
 .u-testimonials-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:26px}
 .u-testimonials blockquote{padding:24px;border-top:2px solid #673a27;margin:0}
 .u-testimonials blockquote p{font-size:22px;font-weight:800;line-height:1.3}
 .u-testimonials footer{font-size:13px}
-@media(max-width:900px){
- .u-investment-top{grid-template-columns:minmax(0,1fr) 230px;gap:20px}
- .u-investment-line{grid-template-columns:30px minmax(0,1.3fr) minmax(150px,.6fr) 40px;gap:14px}
- .u-investment-go{width:37px;height:37px}
- .u-faq-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:28px}
+@media(max-width:950px){
+ .u-price-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px}
+ .u-price-head{grid-template-columns:1fr;gap:20px}
+ .u-price-head>p{max-width:560px}
+ .u-price-option{grid-template-columns:28px minmax(0,1fr) 24px;gap:11px}
+ .u-price-option-body strong{font-size:clamp(23px,3vw,31px)}
+ .u-price-stage{padding:27px;min-height:490px}
+ .u-price-stage-content h3{font-size:clamp(43px,5.8vw,60px)}
+ .u-faq-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px}
 }
 @media(max-width:700px){
- .u-investment{padding:75px 0 80px}
- .u-investment-top{grid-template-columns:1fr;gap:0;margin-bottom:36px}
- .u-investment-top .u-h2{font-size:clamp(45px,11vw,65px)}
- .u-investment-top-aside{display:flex;align-items:center;gap:18px;margin-top:24px}
- .u-investment-top-aside p{margin:0;font-size:15px;max-width:430px}
- .u-investment-symbol{width:47px;height:47px;flex:none}
- .u-investment-line{grid-template-columns:23px minmax(0,1fr) 36px;column-gap:12px;row-gap:10px;padding:23px 2px}
- .u-investment-index{padding-top:7px}
- .u-investment-name strong{font-size:clamp(27px,7vw,37px)}
- .u-investment-name small{font-size:13px;margin-top:7px}
- .u-investment-pricegroup{grid-column:2;grid-row:2;gap:3px}
- .u-investment-pricegroup small{font-size:9px;margin:0}
- .u-investment-pricegroup strong{font-size:clamp(27px,7.8vw,36px)}
- .u-investment-go{grid-column:3;grid-row:1 / 3;align-self:center}
- .u-investment-bottom{grid-template-columns:1fr;gap:24px;margin-top:27px}
- .u-investment-bottom a{justify-self:start;flex-wrap:wrap;font-size:19px}
- .u-faq-grid{grid-template-columns:1fr;gap:34px}
- .u-faq-intro .u-h2{font-size:clamp(41px,9.8vw,56px)}
- .u-faq-intro>p{margin-top:18px}
- .u-faq-graphic{position:absolute;font-size:110px;top:0;right:12px;margin:0;transform:rotate(-16deg);opacity:.18;z-index:0;text-shadow:6px 6px 0 var(--u-accent)}
- .u-faq-intro>*:not(.u-faq-graphic){position:relative;z-index:1}
- .u-faq-item button{grid-template-columns:27px minmax(0,1fr) 28px;gap:10px;padding:23px 0}
- .u-faq-question{font-size:clamp(19px,5vw,25px)}
- .u-faq-number{padding-top:6px}
- .u-faq-plus{width:27px;height:27px;font-size:18px}
- .u-faq-answer{padding:0 35px 24px}
+ .u-investment{padding:75px 0 76px}
+ .u-price-head{margin-bottom:30px}
+ .u-price-head h2{font-size:clamp(43px,10vw,64px)}
+ .u-price-layout{grid-template-columns:1fr;gap:20px}
+ .u-price-option{min-height:62px;grid-template-columns:28px minmax(0,1fr) 28px;padding:14px 4px}
+ .u-price-option-body{display:flex;justify-content:space-between;gap:14px;align-items:center}
+ .u-price-option-body strong{font-size:clamp(20px,5.5vw,28px)}
+ .u-price-option-body small{font-size:11px;text-align:right;margin:0;flex:none}
+ .u-price-no{padding-top:3px}
+ .u-price-signature{display:none}
+ .u-price-stage{border-radius:24px 24px 24px 7px;min-height:0;padding:24px}
+ .u-price-small-title{margin-top:26px}
+ .u-price-stage-content h3{font-size:clamp(39px,9.7vw,60px);margin:10px 0 12px}
+ .u-price-stage-content>p{margin-bottom:27px}
+ .u-price-value{padding-top:18px}
+ .u-price-value strong{font-size:clamp(39px,10.8vw,57px)}
+ .u-price-cta{margin-top:20px;padding:13px 17px;font-size:14px}
+ .u-price-stage-brand{display:none}
+ .u-price-footer{grid-template-columns:1fr;gap:17px}
+ .u-price-footer a{justify-self:start}
+ .u-faq-layout{grid-template-columns:1fr;gap:32px}
+ .u-faq-intro .u-h2{font-size:clamp(42px,10vw,62px)}
+ .u-faq-intro>p{margin-top:15px}
+ .u-faq-art{display:none}
+ .u-faq-entry button{padding:22px 2px}
+ .u-faq-question{font-size:clamp(20px,5.8vw,28px)}
+ .u-faq-answer{padding:0 33px 22px 45px}
  .u-faq-answer p{font-size:15px}
 }
-@media(max-width:360px){
- .u-investment-line{grid-template-columns:20px minmax(0,1fr) 33px;gap:8px}
- .u-investment-name strong{font-size:26px}
- .u-investment-go{width:32px;height:32px}
- .u-investment-top .u-h2{font-size:42px}
+@media(max-width:380px){
+ .u-price-option-body small{font-size:10px}
+ .u-price-option-body strong{font-size:20px}
+ .u-price-stage-meta{font-size:9px}
+ .u-price-stage{padding:20px}
+ .u-price-cta{font-size:13px}
+ .u-faq-entry button{grid-template-columns:22px minmax(0,1fr) 28px;gap:9px}
+ .u-faq-question{font-size:19px}
+ .u-faq-answer{padding-left:31px}
 }
 @media(prefers-reduced-motion:reduce){
- .u-investment-line,.u-investment-line:before,.u-investment-go,.u-investment-bottom a svg,
- .u-faq-item button,.u-faq-plus,.u-faq-contact svg{transition:none!important}
- .u-investment-line:hover{padding-left:6px;padding-right:6px}
- .u-investment-line:hover:before{transform:none}
- .u-faq-answer{animation:none}
+ .u-price-option,.u-price-chevron,.u-price-cta,.u-faq-entry button,.u-faq-plus{transition:none}
+ .u-price-stage-content,.u-faq-answer{animation:none}
 }
 
 /* Os projetos têm altura natural: sem barra interna e sem texto cortado. */
