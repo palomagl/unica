@@ -1,0 +1,40 @@
+name: Atualização pontual do Vite — revisão de segurança
+on:
+  push:
+    branches: [polish/topo-e-valores-a-partir-de]
+    paths: [.github/workflows/upgrade-vite-once.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    if: github.repository == 'palomagl/unica'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: polish/topo-e-valores-a-partir-de
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Atualizar somente Vite e seu lockfile
+        run: npm install --save-dev 'vite@^8.3.8' --package-lock-only --ignore-scripts
+      - name: Instalar exatamente o lockfile
+        run: npm ci
+      - name: Validar produção
+        run: |
+          npm run security:check
+          npm run perf:check
+          npm run build
+          npm audit --omit=dev --audit-level=high
+      - name: Registrar atualização na branch de revisão
+        run: |
+          if git diff --quiet -- package.json package-lock.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "security: atualizar Vite para versão corrigida da série 8.3"
+          git push origin HEAD:polish/topo-e-valores-a-partir-de
