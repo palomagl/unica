@@ -39,6 +39,7 @@ const devOnly = important.every(([name]) =>
 const onlyKnownAdvisory = direct.length > 0 && direct.every(x => x.url === advisory)
 
 if (!devOnly || !onlyKnownAdvisory) {
+  console.error('AUDIT DEBUG:', JSON.stringify({devOnly,onlyKnownAdvisory, advisories: direct.map(x=>({url:x.url,title:x.title}))}))
   console.error('FAIL: vulnerabilidade alta/crítica nova ou não restrita às ferramentas de build')
   for (const [name, v] of important) {
     console.error(' - ' + name + ' (' + v.severity + ')')
