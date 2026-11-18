@@ -119,6 +119,8 @@ As proteções incluem:
 - **CI de segurança** para conferir cabeçalhos, padrões de risco e vulnerabilidades nas dependências.
 - **Dependabot** para revisão recorrente das dependências e GitHub Actions.
 
+**Alerta conhecido no ambiente de desenvolvimento:** o pacote transitivo `picomatch@4.0.7`, utilizado pelo Vite, tem o aviso [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf), sem versão corrigida publicada até esta revisão. Esse pacote é **dev-only** e não vai para o JavaScript servido ao visitante. O teste em `scripts/dev-audit-check.mjs` permite exclusivamente esse aviso identificado e **falha em caso de um novo alerta alto/crítico**. A auditoria das dependências de produção é bloqueante.
+
 > Segurança é um processo contínuo. Configuração de repositório, permissões da conta GitHub/Vercel, domínio, MFA e atualizações também precisam ser mantidos em dia. Não existe “site invulnerável”.
 
 ---
