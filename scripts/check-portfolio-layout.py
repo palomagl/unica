@@ -82,6 +82,16 @@ with sync_playwright() as playwright:
             check(page.locator(".u-faq-answer").count() == 0,
                   f"{width}px: dúvida não fecha")
 
+            if width == 390:
+                page.locator(".u-price-option").first.focus()
+                page.keyboard.press("Enter")
+                check("Landing page" in page.locator(".u-price-stage-content h3").inner_text(),
+                      "Investimento não responde ao teclado")
+                page.locator(".u-faq-entry button").first.focus()
+                page.keyboard.press("Enter")
+                check(page.locator(".u-faq-answer").count() == 1,
+                      "FAQ não responde à tecla Enter")
+
             # Carrossel: seis projetos, dispositivos dentro do palco.
             check(page.locator(".u-project-preview").count() == 6, "Faltam projetos")
             for index, name in enumerate(PROJECTS):
@@ -121,10 +131,8 @@ with sync_playwright() as playwright:
             if width in (320, 390, 768, 1440):
                 folder = Path("visual-check")
                 folder.mkdir(exist_ok=True)
-                page.locator("#investimento").scroll_into_view_if_needed()
-                page.screenshot(path=str(folder / f"investimento-{width}.png"))
-                page.locator("#duvidas").scroll_into_view_if_needed()
-                page.screenshot(path=str(folder / f"duvidas-{width}.png"))
+                page.locator("#investimento").screenshot(path=str(folder / f"investimento-{width}.png"), animations="disabled")
+                page.locator("#duvidas").screenshot(path=str(folder / f"duvidas-{width}.png"), animations="disabled")
                 page.evaluate("window.scrollTo(0,0)")
                 page.screenshot(path=str(folder / f"hero-{width}.png"))
             print(f"PASS: {width}px — hero, WhatsApp, investimentos, FAQ, seis projetos, topo, sem overflow")
