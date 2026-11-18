@@ -89,3 +89,13 @@
 @media(max-width:360px){
   #projetos .u-project-feature{height:auto!important}
 }
+
+/* Cabeçalho compacto entre notebooks menores e o breakpoint mobile original. */
+@media(min-width:851px) and (max-width:1170px){
+  .u-nav{gap:10px}
+  .u-nav .u-brand{gap:10px}
+  .u-nav .u-brand>span:last-child{font-size:10px;padding-left:10px}
+  .u-nav .u-menu{gap:14px}
+  .u-nav .u-menu a{font-size:13px}
+  .u-nav>.u-pill{padding:11px 15px;font-size:13px}
+}
