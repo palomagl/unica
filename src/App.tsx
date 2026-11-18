@@ -38,47 +38,51 @@ const palettes = [
 const projects = [
   {
     name: 'Papelaria', brand: 'Karoane', kind: 'Loja virtual',
-    outcome: 'Produtos organizados numa loja fácil de explorar, escolher e comprar.',
-    relationship: 'Projeto comercial', goal: 'Apresentar o catálogo da papelaria de forma clara e acessível.', built: 'Loja responsiva, apresentação de produtos e fluxo de compra.',
+    outcome: 'Uma loja virtual responsiva que organiza o catálogo da papelaria e facilita o caminho entre encontrar um produto e fazer um pedido.',
     visual: 'karoane', url: 'https://karoane.vercel.app/',
     cover: '/cover-karoane.svg',
     bg: 'linear-gradient(135deg,#eab3bc,#8a4b69)',
   },
   {
     name: 'Hamburgueria', brand: 'Bruto', kind: 'Site e pedidos online',
-    outcome: 'Uma experiência que valoriza o cardápio e facilita o caminho entre escolher e pedir.',
-    relationship: 'Projeto de portfólio', goal: 'Facilitar o caminho entre conhecer o cardápio e fazer um pedido.', built: 'Experiência digital para apresentar o cardápio e direcionar pedidos.',
+    outcome: 'Um site que apresenta o cardápio com personalidade e facilita o caminho entre escolher um produto e fazer um pedido.',
     visual: 'bruto', url: 'https://borapedir-delivery.vercel.app/bruto',
     cover: '/cover-bruto.svg',
     bg: 'linear-gradient(135deg,#8d492d,#3e261d)',
   },
   {
     name: 'Marmoraria', brand: 'Vértice Mármores', kind: 'Sistema e experiência digital',
-    outcome: 'Simulação de peças em 3D, personalização de materiais e organização de orçamentos.',
-    relationship: 'Projeto de portfólio', goal: 'Ajudar na apresentação das opções e na preparação de orçamentos.', built: 'Visualização de peças em 3D, seleção de materiais e organização de orçamentos.',
+    outcome: 'Uma experiência digital com visualização de peças em 3D, seleção de materiais e organização de orçamentos.',
     visual: 'vertice', url: 'https://vertice-marmores.vercel.app/',
     cover: '/cover-vertice.svg',
     bg: 'linear-gradient(135deg,#8c8579,#403b35)',
   },
   {
     name: 'Doação de sangue', brand: 'DOE+ RS', kind: 'Aplicação de impacto social',
-    outcome: 'Uma experiência digital para apoiar e incentivar a doação de sangue no Rio Grande do Sul.',
-    relationship: 'Projeto autoral', goal: 'Tornar informações sobre doação de sangue mais acessíveis.', built: 'Aplicação com informações para doadores e consulta de hemocentros.',
+    outcome: 'Uma aplicação que reúne informações para doadores e permite consultar hemocentros no Rio Grande do Sul.',
     visual: 'doe', url: 'https://doe-mais-rs.vercel.app/',
     bg: 'linear-gradient(135deg,#e65c5c,#71252d)',
   },
   {
     name: 'Rotina', brand: 'Minha Rotina', kind: 'Plataforma de organização pessoal',
-    outcome: 'Finanças, tarefas e hábitos organizados em uma experiência simples para o dia a dia.',
-    relationship: 'Projeto autoral', goal: 'Reunir a organização pessoal num só espaço.', built: 'Experiência de acompanhamento de tarefas, finanças e hábitos.',
-    visual: 'rotina', url: '',
+    outcome: 'Uma plataforma para reunir tarefas, finanças e hábitos e deixar a organização do dia a dia mais simples.',
+    visual: 'rotina', url: 'https://dashboard-three-khaki-68.vercel.app/',
     cover: '/screens/rotina-desktop-alpha.svg',
     bg: 'linear-gradient(135deg,#dff4ee,#accdc5)',
   },
 ]
-// Sexto trabalho: preencher quando nome, objetivo, status, imagens e link forem confirmados.
-// Até lá, nenhum card ou informação fictícia será renderizado.
-const sixthProject: (typeof projects)[number] | null = null
+// Sexto projeto: ROXO — loja demonstrativa, com catálogo e personalização de pedidos.
+// Molduras reutilizadas com capturas reais do site público em desktop e celular.
+const sixthProject: (typeof projects)[number] = {
+  name: 'Açaiteria',
+  brand: 'ROXO',
+  kind: 'Loja virtual e pedidos personalizados',
+  outcome: 'Uma loja demonstrativa para escolher açaís, montar combinações, acompanhar a sacola e fazer pedidos de forma mais simples.',
+  visual: 'roxo',
+  url: 'https://roxo-acaiteria.vercel.app/roxo',
+  cover: '/screens/roxo-desktop-alpha.svg',
+  bg: 'linear-gradient(135deg,#f3e4f3,#9161a7)',
+}
 const visibleProjects = sixthProject ? [...projects, sixthProject] : projects
 
 function NewLogo() {
@@ -306,7 +310,7 @@ export default function App() {
                   <img
                     className="u-device-laptop"
                     src={`/screens/${p.visual}-desktop-alpha.svg`}
-                    alt={`Interface original do ${p.brand} no computador`}
+                    alt={`Interface do ${p.brand} no computador`}
                     width={p.visual === 'vertice' ? 1261 : 1237}
                     height={774}
                     decoding="async"
@@ -316,7 +320,7 @@ export default function App() {
                   <img
                     className="u-device-phone"
                     src={`/screens/${p.visual}-mobile-alpha.svg`}
-                    alt={`Interface original do ${p.brand} no celular`}
+                    alt={`Interface do ${p.brand} no celular`}
                     width={p.visual === 'vertice' ? 419 : 393}
                     height={p.visual === 'vertice' ? 854 : 790}
                     decoding="async"
@@ -362,9 +366,8 @@ export default function App() {
             <div className="u-project-copy" key={p.name}>
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.brand}</h3><p className="u-project-brand">{p.name}</p>
-              <span className="u-project-nature">{p.relationship}</span>
-              <p className="u-project-problem"><strong>O desafio</strong>{p.goal}</p>
-              <p className="u-project-delivery"><strong>O que desenvolvemos</strong>{p.built}</p>
+              <p className="u-project-description">{p.outcome}</p>
+              {p.visual === 'roxo' && <small className="u-project-disclaimer">Demonstração de loja online.</small>}
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre o projeto <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
@@ -373,7 +376,7 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="u-small-projects" ref={projectTabsRef} role="group" aria-label="Selecionar projeto">
+          <div className="u-small-projects u-reveal" ref={projectTabsRef} role="group" aria-label="Selecionar projeto">
             {visibleProjects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver exemplo de ${q.name}: ${q.brand}`} onClick={()=>setProject(i)}>{q.name}</button>)}
           </div>
         </div>
