@@ -1,0 +1,54 @@
+name: ÚNICA — revisão visual responsiva e interações
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - src/App.tsx
+      - src/studio.css
+      - src/content.ts
+      - src/commercial-content.ts
+      - src/components/CommercialSections.tsx
+      - src/components/commercial.css
+      - scripts/check-portfolio-layout.py
+      - .github/workflows/unica-responsive-qa.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependências
+        run: npm ci
+      - name: Compilar a landing
+        run: |
+          npm run perf:check
+          npm run build
+          node scripts/build-audit.mjs
+      - name: Servir versão de produção
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/unica-preview.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Preparar Chrome e Playwright
+        run: python3 -m pip install --user playwright
+      - name: Testar 10 larguras + todas as interações
+        run: python3 scripts/check-portfolio-layout.py
+      - name: Guardar previews da revisão
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unica-preview-responsivo
+          path: visual-check/
+          if-no-files-found: ignore
