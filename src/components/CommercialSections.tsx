@@ -72,55 +72,63 @@ export function InvestmentSection() {
             <span className="u-kicker">INVESTIMENTO / PONTO DE PARTIDA</span>
             <h2 className="u-h2" id="u-investment-title">Toda ideia tem um <mark>ponto de partida.</mark></h2>
           </div>
-          <p>Do primeiro site a uma solução feita do zero. Escolha uma opção para entender como funciona.</p>
+          <p>Quatro caminhos possíveis. Toque em um para entender o que podemos construir.</p>
         </header>
 
-        <div className="u-price-card-grid" aria-label="Quatro soluções que você pode conhecer">
-          {investments.map((item, index) => {
-            const info = investmentDetails[index]
-            const isOpen = selected === index
-            return (
-              <article key={item.id}
-                className={`u-price-card u-price-card--${info.theme}${isOpen ? ' is-open' : ''}`}>
-                <div className="u-price-card-top">
-                  <span className="u-price-card-number">{String(index + 1).padStart(2, '0')} / 04</span>
-                  <span className="u-price-card-eyebrow">{info.label}</span>
-                </div>
-                <div className="u-price-card-body">
-                  <h3>{item.title}</h3>
-                  <p>{item.summary}</p>
-                </div>
-                <div className="u-price-card-bottom">
-                  <div className="u-price-card-cost">
-                    <span>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
-                    <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
-                  </div>
+        <div className="u-investment-explorer">
+          <div className="u-investment-option-grid" aria-label="Escolha a solução que combina com sua ideia">
+            {investments.map((item, index) => {
+              const info = investmentDetails[index]
+              const isOpen = selected === index
+              return (
+                <article key={item.id} className={`u-investment-option u-investment-option--${info.theme}${isOpen ? ' is-open' : ''}`}>
                   <button
-                    type="button" className="u-price-card-cta"
+                    className="u-investment-option-trigger"
+                    type="button"
                     aria-expanded={isOpen}
-                    aria-controls={`u-price-mobile-details-${item.id}`}
+                    aria-controls={`u-investment-mobile-panel-${item.id}`}
                     onClick={() => setSelected(isOpen ? null : index)}
                   >
-                    <span>{isOpen ? 'Fechar detalhes' : 'Entender essa solução'}</span>
-                    <span className="u-price-action-mark" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                    <span className="u-investment-option-top">
+                      <span className="u-investment-option-no">0{index + 1} / 04</span>
+                      <span className="u-investment-option-label">{info.label}</span>
+                    </span>
+                    <span className="u-investment-option-name">{item.title}</span>
+                    <span className="u-investment-option-bottom">
+                      <span className="u-investment-option-price">
+                        <small>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</small>
+                        <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
+                      </span>
+                      <span className="u-investment-option-indicator" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                    </span>
+                    <span className="u-investment-option-hint">{isOpen ? 'Ocultar detalhes' : 'Entender essa solução'}</span>
                   </button>
-                </div>
-                <div className="u-price-mobile-details" id={`u-price-mobile-details-${item.id}`}>
-                  {isOpen && <PriceDetails index={index} id={`u-price-mobile-inner-${item.id}`} />}
-                </div>
-              </article>
-            )
-          })}
-        </div>
-        {selected !== null && (
-          <div className="u-price-desktop-detail" aria-live="polite">
-            <div className="u-price-desktop-detail-top">
-              <span>ÚNICA / DETALHES DO PROJETO</span>
-              <span>{String(selected + 1).padStart(2, '0')} — 04</span>
-            </div>
-            <PriceDetails index={selected} id="u-price-desktop-explanation" />
+                  <div className="u-investment-mobile-panel" id={`u-investment-mobile-panel-${item.id}`}>
+                    {isOpen && <PriceDetails index={index} id={`u-investment-mobile-detail-${item.id}`} />}
+                  </div>
+                </article>
+              )
+            })}
           </div>
-        )}
+          <div className="u-investment-desktop-panel" aria-live="polite">
+            {selected === null ? (
+              <div className="u-investment-desktop-empty">
+                <span>ÚNICA / SEU PRÓXIMO PROJETO</span>
+                <strong>Uma ideia de cada vez.</strong>
+                <p>Escolha uma opção ao lado para entender onde ela pode levar seu negócio.</p>
+              </div>
+            ) : (
+              <div key={investments[selected].id} className="u-investment-desktop-inner">
+                <div className="u-investment-desktop-meta">
+                  <span>ÚNICA / 0{selected + 1}</span>
+                  <span>ENTENDA A SOLUÇÃO ↗</span>
+                </div>
+                <h3>{investments[selected].title}<span aria-hidden="true">.</span></h3>
+                <PriceDetails index={selected} id="u-investment-desktop-detail" />
+              </div>
+            )}
+          </div>
+        </div>
         <div className="u-price-footer">
           <p>Esses são pontos de partida, não planos fechados. Escopo, domínio, hospedagem, integrações e manutenção são definidos em proposta.</p>
           <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
