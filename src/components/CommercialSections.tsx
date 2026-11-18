@@ -8,17 +8,61 @@ const money = (value: number) => new Intl.NumberFormat('pt-BR', {
   style: 'currency', currency: 'BRL', maximumFractionDigits: 0,
 }).format(value)
 
-/**
- * A ÚNICA mostra quatro referências, sem vender "planos fechados".
- * Destaques são editoriais: entrada acessível + soluções personalizadas.
- */
+const investmentDetails = [
+  {
+    label: 'PARA COMEÇAR',
+    theme: 'entry',
+    audience: 'Para divulgar um serviço, produto, campanha ou negócio que precisa de uma apresentação objetiva.',
+    possibilities: ['Página focada em uma oferta', 'Visual responsivo e informações essenciais', 'Contato e chamada para ação'],
+  },
+  {
+    label: 'SUA MARCA NA INTERNET',
+    theme: 'brand',
+    audience: 'Para empresas que querem reunir serviços, informações, diferenciais e formas de contato em um lugar próprio.',
+    possibilities: ['Páginas institucionais', 'Seções de serviços e apresentação', 'Recursos e integrações avaliados na proposta'],
+  },
+  {
+    label: 'VENDAS ONLINE',
+    theme: 'store',
+    audience: 'Para negócios que precisam apresentar produtos e oferecer uma jornada de compra online.',
+    possibilities: ['Catálogo e organização de produtos', 'Carrinho e fluxo de pedidos', 'Pagamentos e frete conforme o escopo'],
+  },
+  {
+    label: 'DO SEU JEITO',
+    theme: 'bespoke',
+    audience: 'Para ideias que precisam de funcionalidades próprias, organização de processos ou experiências específicas.',
+    possibilities: ['Sistemas para tarefas e operações', 'Aplicativos e plataformas', 'Integrações e automações sob análise'],
+  },
+] as const
+
+function PriceDetails({ index, id }: { index: number; id: string }) {
+  const item = investments[index]
+  const details = investmentDetails[index]
+  return (
+    <div className="u-price-explanation" id={id}>
+      <div className="u-price-explanation-copy">
+        <span className="u-price-detail-kicker">ENTENDA ESSA SOLUÇÃO</span>
+        <h4>Para quem faz sentido?</h4>
+        <p>{details.audience}</p>
+        <span className="u-price-detail-kicker u-price-example-label">O QUE PODEMOS CONSTRUIR</span>
+        <ul>
+          {details.possibilities.map(possibility => <li key={possibility}>{possibility}</li>)}
+        </ul>
+      </div>
+      <div className="u-price-explanation-action">
+        <span className="u-price-detail-kicker">{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
+        <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
+        <a href={whatsappLink(`Olá! Gostaria de conversar sobre ${item.title.toLowerCase()} com a ÚNICA.`)}
+          target="_blank" rel="noopener noreferrer" className="u-price-detail-cta">
+          Conversar sobre essa ideia <ArrowUpRight />
+        </a>
+      </div>
+    </div>
+  )
+}
+
 export function InvestmentSection() {
-  const design = [
-    { label: 'COMECE POR AQUI', style: 'entry', indexLabel: 'A MAIS ACESSÍVEL' },
-    { label: 'FEITO PARA SUA MARCA', style: 'brand', indexLabel: 'PERSONALIZÁVEL' },
-    { label: 'VENDA PELA INTERNET', style: 'store', indexLabel: 'VENDAS ONLINE' },
-    { label: 'SEM FÓRMULA PRONTA', style: 'bespoke', indexLabel: 'SOB MEDIDA' },
-  ] as const
+  const [selected, setSelected] = useState<number | null>(0)
 
   return (
     <section className="u-investment u-investment-v2" id="investimento" aria-labelledby="u-investment-title">
@@ -28,39 +72,59 @@ export function InvestmentSection() {
             <span className="u-kicker">INVESTIMENTO / PONTO DE PARTIDA</span>
             <h2 className="u-h2" id="u-investment-title">Toda ideia tem um <mark>ponto de partida.</mark></h2>
           </div>
-          <p>Do primeiro site a uma solução feita do zero. Escolha o que combina com sua ideia.</p>
+          <p>Do primeiro site a uma solução feita do zero. Escolha uma opção para entender como funciona.</p>
         </header>
-        <div className="u-price-card-grid" aria-label="Quatro opções de investimento">
-          {investments.map((item, index) => (
-            <article key={item.id} className={`u-price-card u-price-card--${design[index].style}`}>
-              <div className="u-price-card-top">
-                <span className="u-price-card-number">{String(index + 1).padStart(2, '0')} / 04</span>
-                <span className="u-price-card-eyebrow">{design[index].label}</span>
-              </div>
-              <div className="u-price-card-body">
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-              </div>
-              <div className="u-price-card-bottom">
-                <span className="u-price-card-kind">{design[index].indexLabel}</span>
-                <div className="u-price-card-cost">
-                  <span>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
-                  <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
+
+        <div className="u-price-card-grid" aria-label="Quatro soluções que você pode conhecer">
+          {investments.map((item, index) => {
+            const info = investmentDetails[index]
+            const isOpen = selected === index
+            return (
+              <article key={item.id}
+                className={`u-price-card u-price-card--${info.theme}${isOpen ? ' is-open' : ''}`}>
+                <div className="u-price-card-top">
+                  <span className="u-price-card-number">{String(index + 1).padStart(2, '0')} / 04</span>
+                  <span className="u-price-card-eyebrow">{info.label}</span>
                 </div>
-                <a className="u-price-card-cta"
-                  href={whatsappLink(`Olá! Tenho interesse em ${item.title.toLowerCase()} e gostaria de conversar sobre o meu projeto com a ÚNICA.`)}
-                  target="_blank" rel="noopener noreferrer"
-                  aria-label={`Conversar sobre ${item.title} no WhatsApp`}>
-                  <span>Quero conversar</span><ArrowUpRight />
-                </a>
-              </div>
-            </article>
-          ))}
+                <div className="u-price-card-body">
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                </div>
+                <div className="u-price-card-bottom">
+                  <div className="u-price-card-cost">
+                    <span>{item.startingAtBRL === null ? 'INVESTIMENTO' : 'A PARTIR DE'}</span>
+                    <strong>{item.startingAtBRL === null ? 'Sob orçamento' : money(item.startingAtBRL)}</strong>
+                  </div>
+                  <button
+                    type="button" className="u-price-card-cta"
+                    aria-expanded={isOpen}
+                    aria-controls={`u-price-mobile-details-${item.id}`}
+                    onClick={() => setSelected(isOpen ? null : index)}
+                  >
+                    <span>{isOpen ? 'Fechar detalhes' : 'Entender essa solução'}</span>
+                    <span className="u-price-action-mark" aria-hidden="true">{isOpen ? '−' : '+'}</span>
+                  </button>
+                </div>
+                <div className="u-price-mobile-details" id={`u-price-mobile-details-${item.id}`}>
+                  {isOpen && <PriceDetails index={index} id={`u-price-mobile-inner-${item.id}`} />}
+                </div>
+              </article>
+            )
+          })}
         </div>
+        {selected !== null && (
+          <div className="u-price-desktop-detail" aria-live="polite">
+            <div className="u-price-desktop-detail-top">
+              <span>ÚNICA / DETALHES DO PROJETO</span>
+              <span>{String(selected + 1).padStart(2, '0')} — 04</span>
+            </div>
+            <PriceDetails index={selected} id="u-price-desktop-explanation" />
+          </div>
+        )}
         <div className="u-price-footer">
-          <p>São valores de partida, não pacotes fechados. Funcionalidades, domínio, hospedagem e manutenção são definidos na proposta.</p>
+          <p>Esses são pontos de partida, não planos fechados. Escopo, domínio, hospedagem, integrações e manutenção são definidos em proposta.</p>
           <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
-            <span>Não achou sua ideia? <strong>Fala com a gente.</strong></span><ArrowUpRight />
+            <span>Não sabe qual escolher? <strong>A gente te ajuda.</strong></span><ArrowUpRight />
           </a>
         </div>
       </div>
