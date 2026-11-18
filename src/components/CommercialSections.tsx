@@ -10,28 +10,28 @@ const money = (value: number) => new Intl.NumberFormat('pt-BR', {
 
 const investmentDetails = [
   {
-    label: 'PARA COMEÇAR',
+    label: 'PRA DAR O PRIMEIRO PASSO',
     theme: 'entry',
-    audience: 'Para divulgar um serviço, produto, campanha ou negócio que precisa de uma apresentação objetiva.',
-    possibilities: ['Página focada em uma oferta', 'Visual responsivo e informações essenciais', 'Contato e chamada para ação'],
+    audience: 'Para quem quer apresentar um serviço, uma ideia ou uma promoção e facilitar o primeiro contato.',
+    possibilities: ['Página para mostrar seu serviço ou oferta', 'Fotos e informações importantes', 'Botão para conversar ou pedir orçamento'],
   },
   {
-    label: 'SUA MARCA NA INTERNET',
+    label: 'MOSTRE SEUS PRODUTOS',
     theme: 'brand',
-    audience: 'Para empresas que querem reunir serviços, informações, diferenciais e formas de contato em um lugar próprio.',
-    possibilities: ['Páginas institucionais', 'Seções de serviços e apresentação', 'Recursos e integrações avaliados na proposta'],
+    audience: 'Para quem vende produtos e quer mostrar seu catálogo pela internet, sem precisar de carrinho ou pagamento no site.',
+    possibilities: ['Produtos com fotos e informações', 'Categorias para facilitar a busca', 'Contato pelo WhatsApp para tirar dúvidas ou pedir'],
   },
   {
-    label: 'VENDAS ONLINE',
+    label: 'VENDA PELO SEU SITE',
     theme: 'store',
-    audience: 'Para negócios que precisam apresentar produtos e oferecer uma jornada de compra online.',
-    possibilities: ['Catálogo e organização de produtos', 'Carrinho e fluxo de pedidos', 'Pagamentos e frete conforme o escopo'],
+    audience: 'Para negócios que querem receber pedidos diretamente em uma loja online, além de mostrar seus produtos.',
+    possibilities: ['Vitrine de produtos e categorias', 'Carrinho e acompanhamento de pedidos', 'Pagamento e entrega conforme a proposta'],
   },
   {
-    label: 'DO SEU JEITO',
+    label: 'FEITO PARA SUA IDEIA',
     theme: 'bespoke',
-    audience: 'Para ideias que precisam de funcionalidades próprias, organização de processos ou experiências específicas.',
-    possibilities: ['Sistemas para tarefas e operações', 'Aplicativos e plataformas', 'Integrações e automações sob análise'],
+    audience: 'Para quando seu negócio precisa de algo que os sites e aplicativos prontos não conseguem resolver.',
+    possibilities: ['Controle de pedidos ou agendamentos', 'Organização de processos e tarefas', 'Aplicativos e recursos feitos sob medida'],
   },
 ] as const
 
@@ -109,7 +109,7 @@ export function InvestmentSection() {
               <span className="u-investment-title-line"><mark>começar.</mark></span>
             </h2>
           </div>
-          <p>Do primeiro site ao projeto feito sob medida. Quatro caminhos para encontrar o que combina com seu negócio.</p>
+          <p>Quer divulgar um serviço, mostrar produtos ou vender online? Veja o que a gente pode criar para seu negócio.</p>
         </header>
 
         <div className="u-investment-card-grid" aria-label="Soluções e investimentos iniciais">
@@ -120,7 +120,7 @@ export function InvestmentSection() {
               <article key={item.id} className={`u-investment-card u-investment-card--${details.theme}`}>
                 <div className="u-investment-card-head">
                   <span className="u-investment-card-index">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="u-investment-card-tag">{index === 0 ? 'MAIS ACESSÍVEL' : index === 1 ? 'PERSONALIZÁVEL' : index === 2 ? 'VENDAS ONLINE' : 'SOB MEDIDA'}</span>
+                  <span className="u-investment-card-tag">{index === 0 ? 'MAIS ACESSÍVEL' : index === 1 ? 'MOSTRE SEUS PRODUTOS' : index === 2 ? 'VENDA ONLINE' : 'SOB MEDIDA'}</span>
                 </div>
                 <div className="u-investment-card-main">
                   <h3>{item.title}</h3>
@@ -155,15 +155,6 @@ export function InvestmentSection() {
           })}
         </div>
 
-        <div className="u-investment-contact">
-          <div>
-            <span>AINDA NÃO SABE POR ONDE COMEÇAR?</span>
-            <strong>A gente encontra o caminho junto.</strong>
-          </div>
-          <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer">
-            Falar sobre meu projeto <ArrowUpRight/>
-          </a>
-        </div>
         <p className="u-investment-disclaimer">Valores iniciais para escopos definidos. Funcionalidades, domínio, hospedagem, integrações e manutenção são combinados na proposta.</p>
       </div>
 
@@ -184,7 +175,7 @@ export function InvestmentSection() {
 }
 
 // Dúvidas curtas, não uma segunda vitrine de serviços.
-const visibleFaq = [faqItems[1], faqItems[0], faqItems[3], faqItems[4]]
+const visibleFaq = [faqItems[1], faqItems[0], faqItems[3], faqItems[4], faqItems[7], faqItems[8]]
 
 export function FAQSection() {
   const [active, setActive] = useState<number | null>(0)
@@ -202,7 +193,7 @@ export function FAQSection() {
         </div>
 
         <div className="u-faq-body">
-          <div className="u-faq-meta"><span>A ÚNICA RESPONDE</span><span>01 — 04</span></div>
+          <div className="u-faq-meta"><span>A ÚNICA RESPONDE</span><span>01 — 06</span></div>
           {visibleFaq.map((item, index) => (
             <div key={item.question} className={active === index ? 'u-faq-entry is-active' : 'u-faq-entry'}>
               <h3>
