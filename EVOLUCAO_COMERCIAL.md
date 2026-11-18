@@ -1,63 +1,46 @@
-# ÚNICA — revisão do catálogo, dúvidas e portfólio
+# ÚNICA — acabamento comercial e mobile
 
-Esta revisão acontece **após** o merge das PRs #2 e #3.
-Os ajustes estão na **PR #4**, sem publicação automática na `main`.
+## Branch e revisão
+- Branch: `feat/unica-hero-investimento-duvidas-autoral`
+- PR #7 em rascunho: revisar antes de mesclar à `main`.
+- A landing existente, o iPhone animado, o seletor de cores, os seis projetos
+  e o fechamento “Você imagina. A gente constrói.” foram preservados.
 
-## O que permaneceu
-- Hero e tipografia de destaque (somente texto lateral atualizado)
-- Cores marrom/creme/verde-limão e seletor de paletas
-- Conversa animada do iPhone
-- Interação de serviços, identidade e fechamento “Você imagina. A gente constrói.”
-- Seis projetos, links e imagens; layouts de notebook e celular reutilizados
-- Número do WhatsApp definido em `src/content.ts` (não alterado)
+## Mudanças
+- Hero: mesma direção visual, com frase em três linhas no celular.
+- Investimento: **quatro pontos de partida** em um índice editorial,
+  mostrando um único projeto em destaque por vez:
+  - Landing page — a partir de R$ 700
+  - Site para empresas — a partir de R$ 1.500
+  - Loja virtual — a partir de R$ 5.900
+  - Sistemas e apps — sob orçamento
+- Outros serviços não deixam de existir; são conversados pelo WhatsApp.
+- Dúvidas: quatro perguntas com respostas curtas e acessíveis; composição
+  diferente do investimento, sem cartões de aparência genérica.
+- Atalhos fixos de contato e, após rolagem, para voltar ao início.
 
-## Investimento — valores configurados em `src/commercial-content.ts`
-- Presença digital:
-  - Landing page essencial: **R$ 700**
-  - Landing page personalizada: **R$ 1.490**
-  - Site para empresas: **R$ 1.500**
-- Vendas online:
-  - Catálogo digital: **R$ 990**
-  - Cardápio com pedidos: **R$ 1.590**
-  - Loja virtual: **R$ 5.900**
-- Funcionalidades:
-  - Site com agendamentos: **R$ 2.490**
-  - Sistema personalizado: **Sob orçamento**
-  - Aplicativo: **Sob orçamento**
+## Canal de contato (confirmado)
+WhatsApp profissional: **55 51 99187-2507**. Configuração em `src/content.ts`:
+`5551991872507`. Todos os botões que usam `QUOTE_LINK` ou `whatsappLink`
+apontam para ele, inclusive os CTAs contextuais de cada solução.
 
-Os preços são de entrada e pressupõem escopos definidos.
-Domínio, hospedagem, terceiros e manutenção são tratados separadamente.
-Cada item envia mensagem contextual pelo WhatsApp, sem alterar seu número.
+## Valores e condições
+Os valores iniciais ficam centralizados em `src/commercial-content.ts`.
+Não são pacotes fechados. Custos com domínio, hospedagem, terceiros e
+manutenção são combinados separadamente. Evitar prometer prazos fixos
+sem um escopo aprovado.
 
-## FAQ
-- A seção “DO PRIMEIRO OI À ENTREGA” foi eliminada.
-- Sete perguntas clicáveis, com uma resposta por vez.
-- Desktop: perguntas à esquerda e resposta editorial à direita.
-- Mobile: resposta aparece imediatamente abaixo da pergunta selecionada.
-- Nenhum segundo iPhone, cards tradicionais nem accordion de biblioteca.
+## Desempenho e qualidade
+Nenhum pacote novo em produção; SVGs e imagens dos projetos preservados.
+Os checks incluem build, auditoria de arquivos e Lighthouse desktop/mobile.
+`scripts/check-portfolio-layout.py` executa verificação de navegador nas larguras
+320, 360, 390, 430, 480, 600, 768, 900, 1024 e 1440 px, incluindo:
+- Hero visível sem duplicação e sem rolagem horizontal
+- WhatsApp correto e acessível
+- Quatro bases de preço e botão de conversa contextual
+- Dúvidas abre/fecha e navegação por teclado
+- Seis projetos com dispositivos dentro do palco
+- Botão voltar ao topo
+- Capturas para revisão visual
 
-## Portfólio
-- Restituída a altura/escala do palco dos mockups no desktop.
-- CSS garante enquadramento nos pontos intermediários (celular largo/tablet).
-- Textos mais compactos, sem barra vertical interna.
-- Seletor de projetos agora tem miniaturas e nomes.
-- O ROXO usa capturas da loja publicada, com molduras de MacBook Air e iPhone.
-- Classificações “comercial / autoral / portfólio” não aparecem na interface,
-  conforme pedido mais recente. ROXO mantém nota de demonstração, sem inventar resultados.
-
-## Testes
-A revisão inclui:
-- `npm run perf:check`
-- `npm run build` com checagem TypeScript
-- `node scripts/build-audit.mjs`
-- Lighthouse desktop e mobile
-- `scripts/check-portfolio-layout.py`: Playwright confere os seis projetos,
-  cortes de notebooks/celulares em diversas larguras, FAQ, valores do catálogo
-  e ausência de rolagem horizontal indesejada.
-
-## Pontos que merecem revisão visual antes do merge
-- Posição dos mockups em telas 320, 390, 430, 480, 600, 768, 900, 1024 e 1440 px.
-- Seletor de miniaturas em celulares pequenos.
-- Composição editorial dos preços e navegação por categorias.
-- Alinhamento e movimento das respostas da FAQ.
-- Imagens do ROXO nos dispositivos, comparando com Bruto.
+Não realizar merge sem confirmar a composição real da prévia no celular.

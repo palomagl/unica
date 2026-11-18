@@ -126,6 +126,7 @@ export default function App() {
   const [project, setProject] = useState(0)
   const [liteImages, setLiteImages] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
+  const [showBackTop, setShowBackTop] = useState(false)
   const touchStart = useRef<number | null>(null)
   const progressRef = useRef<HTMLDivElement>(null)
   const projectTabsRef = useRef<HTMLDivElement>(null)
@@ -171,6 +172,7 @@ export default function App() {
       const total = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
       const progress = Math.min(1, Math.max(0, window.scrollY / total))
       if (progressRef.current) progressRef.current.style.transform = `scaleX(${progress})`
+      setShowBackTop(window.scrollY > 560)
     }
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
     update()
@@ -235,8 +237,15 @@ export default function App() {
         <div className="u-hero u-wrap">
           <div>
             <h1 className="u-heading">
-              <span>Soluções</span><span>digitais que</span>
-              <span className="u-movem"><em>movem</em></span><span>negócios</span>
+              <span className="u-heading-desktop">
+                <span>Soluções</span><span>digitais que</span>
+                <span className="u-movem"><em>movem</em></span><span>negócios</span>
+              </span>
+              <span className="u-heading-mobile">
+                <span>Soluções digitais</span>
+                <span>que <span className="u-movem"><em>movem</em></span></span>
+                <span>negócios</span>
+              </span>
             </h1>
             <div className="u-swoosh" aria-hidden="true" />
           </div>
@@ -404,6 +413,22 @@ export default function App() {
           <div className="u-final-tail"><span>SEU DESAFIO É O PONTO DE PARTIDA.</span><span>O RESTO, A GENTE DESENVOLVE.</span></div>
         </div>
       </section>
+      <nav className="u-floating-actions" aria-label="Acessos rápidos">
+        {showBackTop && <button className="u-floating-top" type="button" aria-label="Voltar ao início da página"
+          onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>
+          ↑ <span>Topo</span>
+        </button>}
+        <a className="u-floating-whatsapp" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer"
+          aria-label="Conversar com a ÚNICA pelo WhatsApp profissional">
+          <svg className="u-floating-wa-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M20.5 11.5a8.5 8.5 0 0 1-12.7 7.4L3 20l1.1-4.8A8.5 8.5 0 1 1 20.5 11.5Z"/>
+            <path d="M8.3 8.1c.1-.3.3-.5.6-.5h.7l1.1 2.4-.8 1c.7 1.3 1.7 2.3 3.1 2.9l1-.8 2.4 1.1v.7c0 .3-.2.6-.5.7-3.8 1.4-9-3.8-7.6-7.5Z"/>
+          </svg>
+          <span className="u-floating-wa-text">WhatsApp</span>
+          <ArrowUpRight />
+        </a>
+      </nav>
       <footer className="u-footer">
         <div className="u-wrap">
           <a href="#inicio" className="u-footer-brand" aria-label="ÚNICA, voltar ao começo"><NewLogo /></a>

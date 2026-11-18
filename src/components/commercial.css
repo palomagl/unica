@@ -1,91 +1,141 @@
-/* ÚNICA — investimento editorial e FAQ de perguntas rápidas; sem bibliotecas de UI. */
-.u-investment,.u-faq{scroll-margin-top:25px}
-.u-investment{padding:clamp(75px,8vw,115px) 0;background:#eee3d5;color:#28160f}
-.u-investment-heading{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.5fr);align-items:end;gap:28px;margin-bottom:clamp(28px,4vw,50px)}
-.u-investment-heading .u-h2{max-width:860px}
-.u-investment-heading>p{font-size:clamp(16px,1.45vw,20px);line-height:1.38;margin:0 0 7px;max-width:330px}
-.u-investment-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid #6d51464a;gap:12px;margin-bottom:19px}
-.u-investment-tab{display:flex;align-items:center;gap:12px;min-width:0;text-align:left;border:0;border-bottom:5px solid transparent;background:transparent;padding:14px 8px 20px;color:#856958;cursor:pointer;font-size:clamp(17px,1.9vw,27px);font-weight:900;letter-spacing:-.045em;transition:color .3s,border-color .3s}
-.u-investment-tab:hover,.u-investment-tab.is-active{color:#28160f}
-.u-investment-tab.is-active{border-bottom-color:#28160f}
-.u-investment-tab-number{font-size:10px;letter-spacing:0;font-weight:850;opacity:.68}
-.u-investment-tab-dot{width:9px;height:9px;border-radius:50%;flex:none;margin-left:auto}
-.u-investment-tab.is-active .u-investment-tab-dot{background:var(--u-accent);box-shadow:0 0 0 2px #28160f}
-.u-investment-category-heading{display:flex;justify-content:space-between;gap:12px;color:#745847;font-size:11px;font-weight:850;letter-spacing:.055em;text-transform:uppercase;padding:10px 0 18px}
-.u-investment-results{display:grid;gap:11px;outline-offset:5px;animation:u-investment-arrive .35s cubic-bezier(.23,.8,.2,1) both}
-.u-investment-product{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(235px,.43fr);gap:24px;align-items:center;padding:clamp(22px,2.8vw,37px);background:#fbf5eb;border:1px solid #654b3a26;border-radius:21px;transition:transform .27s,border-color .27s,box-shadow .27s}
-.u-investment-product:before{content:'';position:absolute;top:0;bottom:0;left:0;width:4px;background:var(--u-accent);transform:scaleY(0);transform-origin:bottom;transition:transform .3s}
-.u-investment-product:hover{transform:translateY(-3px);border-color:#654b3a4c;box-shadow:0 16px 30px #5034220d}
-.u-investment-product:hover:before{transform:scaleY(1)}
-.u-investment-product-index{font-size:10px;font-weight:900;letter-spacing:.1em;color:#8b6d59}
-.u-investment-product h3{font-size:clamp(25px,2.9vw,43px);letter-spacing:-.062em;line-height:1.08;font-weight:900;margin:11px 0 12px}
-.u-investment-product-main p{font-size:clamp(14px,1.25vw,16px);line-height:1.43;margin:0;max-width:690px}
-.u-investment-product-main small{display:block;font-size:12px;line-height:1.45;color:#806958;margin-top:11px;max-width:680px}
-.u-investment-product-side{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:0;border-left:1px solid #6d51463a;padding-left:clamp(20px,2.4vw,36px)}
-.u-investment-price-label{font-size:10px;font-weight:900;letter-spacing:.13em;color:#856a5b;margin-bottom:10px}
-.u-investment-price{font-size:clamp(30px,3.5vw,51px);font-weight:900;letter-spacing:-.07em;line-height:1.02;overflow-wrap:break-word}
-.u-investment-action{display:inline-flex;align-items:center;gap:10px;border-bottom:2px solid var(--u-accent);font-size:13px;font-weight:900;margin-top:22px;padding-bottom:5px;transition:gap .2s}
-.u-investment-action:hover{gap:17px}
-.u-investment-action svg{width:18px;height:18px}
-.u-investment-footnote{font-size:12px;color:#735a4b;line-height:1.6;max-width:950px;margin:21px 0 0}
-@keyframes u-investment-arrive{from{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* ÚNICA — duas composições diferentes para evitar aparência de template.
+   01 Investimento: índice interativo + um único palco.
+   02 Dúvidas: cartaz editorial e respostas em linhas.
+   Usa a tipografia Hanken, contraste, geométricos e acento do site existente. */
+.u-investment,.u-faq{scroll-margin-top:24px}
+.u-investment{background:#673a27;color:#f8f0e5;position:relative;isolation:isolate;overflow:hidden;padding:clamp(75px,8vw,112px) 0 clamp(65px,6vw,95px)}
+.u-investment:before{content:'';pointer-events:none;position:absolute;right:-205px;top:-210px;width:520px;height:520px;border:2px solid #f8f0e526;border-radius:43% 57% 64% 36%;transform:rotate(26deg)}
+.u-price-head{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(200px,.45fr);gap:clamp(25px,5vw,70px);align-items:end;margin-bottom:clamp(37px,5vw,70px)}
+.u-price-head .u-kicker{color:#f8f0e5}
+.u-price-head h2{font-size:clamp(49px,5.7vw,86px);line-height:1.02;letter-spacing:-.075em;max-width:1000px}
+.u-price-head mark{background:var(--u-accent);color:#28160f;border-radius:14px;padding:0 .1em .06em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.u-price-head>p{font-size:clamp(16px,1.55vw,22px);line-height:1.34;color:#f8f0e5e8;margin:0 0 5px;max-width:320px}
+.u-price-layout{display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:clamp(20px,4vw,56px);align-items:stretch}
+.u-price-index{display:flex;flex-direction:column;min-width:0;border-top:1px solid #ffebd982}
+.u-price-option{display:grid;grid-template-columns:36px minmax(0,1fr) 30px;gap:clamp(11px,1.7vw,22px);align-items:center;min-height:103px;padding:clamp(18px,2.2vw,29px) 7px;border:0;border-bottom:1px solid #ffebd982;background:transparent;color:#fff1e4;text-align:left;transition:background .25s,padding .25s,color .25s}
+.u-price-option:hover{background:#ffffff12;padding-left:16px}
+.u-price-option.is-active{color:var(--u-accent);padding-left:16px}
+.u-price-no{align-self:start;font-size:12px;letter-spacing:.06em;font-weight:900;opacity:.7;padding-top:9px}
+.u-price-option-body{min-width:0}
+.u-price-option-body strong{display:block;font-size:clamp(24px,2.55vw,39px);font-weight:900;line-height:1.04;letter-spacing:-.057em}
+.u-price-option-body small{display:block;margin-top:7px;font-size:13px;font-weight:650;opacity:.73;letter-spacing:-.007em}
+.u-price-chevron{align-self:center;display:grid;place-items:center;border-radius:50%;width:30px;height:30px;transform:rotate(45deg);transition:transform .3s;background:transparent}
+.u-price-chevron svg{width:24px;height:24px}
+.u-price-option.is-active .u-price-chevron{transform:rotate(0deg)}
+.u-price-option:hover .u-price-chevron{transform:rotate(0deg)}
+.u-price-signature{display:flex;align-items:center;gap:17px;margin-top:auto;padding:40px 6px 0;color:#e1beab}
+.u-price-signature .u-brand-symbol{width:51px;height:51px;color:#ffead9}
+.u-price-signature span{font-size:11px;font-weight:900;line-height:1.25;letter-spacing:.12em}
+.u-price-stage{position:relative;display:flex;flex-direction:column;min-width:0;min-height:520px;padding:clamp(23px,3.6vw,49px);background:#f8f0e5;color:#28160f;border-radius:31px 31px 31px 9px;isolation:isolate;overflow:hidden}
+.u-price-stage:after{content:'';position:absolute;right:-70px;top:27%;width:185px;height:185px;border:3px solid #d6c5b6;border-radius:40% 60% 64% 36%;transform:rotate(-26deg);pointer-events:none;z-index:-1}
+.u-price-stage-meta{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #6543354a;padding-bottom:18px;align-items:center;font-size:11px;font-weight:900;letter-spacing:.1em}
+.u-price-stage-meta>span:last-child>span{font-size:17px}
+.u-price-stage-content{display:flex;flex-direction:column;align-items:flex-start;flex:1;animation:u-price-enter .4s cubic-bezier(.2,.8,.2,1) both}
+.u-price-small-title{font-size:11px;font-weight:900;letter-spacing:.1em;margin-top:clamp(30px,4vw,60px);color:#7c5a4b}
+.u-price-stage-content h3{font-size:clamp(47px,5vw,79px);max-width:620px;font-weight:900;line-height:.98;letter-spacing:-.078em;margin:13px 0 15px;overflow-wrap:break-word}
+.u-price-stage-content h3 span{color:#91ad00}
+.u-price-stage-content>p{font-size:clamp(15px,1.4vw,19px);line-height:1.43;max-width:475px;margin:0 0 clamp(22px,3vw,43px)}
+.u-price-value{margin-top:auto;padding-top:23px;border-top:1px solid #6543354a;width:100%;display:flex;flex-direction:column;gap:7px}
+.u-price-value>span{font-size:10px;font-weight:900;letter-spacing:.11em;color:#765443}
+.u-price-value strong{font-size:clamp(42px,5vw,69px);line-height:1;font-weight:900;letter-spacing:-.075em;overflow-wrap:anywhere}
+.u-price-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:22px;background:var(--u-accent);padding:14px 18px 14px 22px;color:#28160f!important;border-radius:99px;font-size:15px;font-weight:900!important;transition:transform .25s,background .25s;max-width:100%}
+.u-price-cta svg{width:24px;height:24px;flex-shrink:0}
+.u-price-cta:hover{transform:translateY(-3px);background:#c3ec16}
+.u-price-stage-brand{position:absolute;right:34px;bottom:31px;width:50px;height:50px;color:#28160f;opacity:.09;z-index:-1}
+.u-price-footer{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:25px;margin-top:28px}
+.u-price-footer p{max-width:630px;color:#f3ddcd;font-size:12px;line-height:1.52;margin:0}
+.u-price-footer a{display:inline-flex;justify-self:end;align-items:center;gap:7px;padding-bottom:8px;border-bottom:2px solid var(--u-accent);font-size:clamp(15px,1.45vw,19px);font-weight:550;line-height:1.25}
+.u-price-footer a strong{font-weight:900}
+.u-price-footer a svg{width:20px;height:20px;flex:none}
+.u-price-footer a>span{display:inline;min-width:0;line-height:1.35}
+@media(max-width:700px){.u-price-footer a{flex-wrap:nowrap;gap:9px;align-items:center}.u-price-footer a>span{max-width:265px}}
+@keyframes u-price-enter{from{opacity:.5;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-.u-faq{background:var(--u-paper);padding:clamp(78px,8vw,112px) 0;color:#28160f}
-.u-faq-heading{max-width:820px;margin-bottom:clamp(30px,4vw,53px)}
-.u-faq-heading p{font-size:clamp(17px,1.6vw,22px);margin:20px 0 0}
-.u-faq-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(25px,5vw,70px);align-items:start}
-.u-faq-choices{display:flex;flex-wrap:wrap;align-items:flex-start;gap:11px}
-.u-faq-question{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;max-width:100%;text-align:left;padding:13px 15px 13px 19px;border:1px solid #674a3e66;border-radius:19px 19px 19px 6px;background:transparent;color:#28160f;cursor:pointer;font-size:clamp(13px,1.1vw,15px);font-weight:800;line-height:1.3;transition:background .24s,border-color .24s,transform .24s}
-.u-faq-question:hover{background:#ede1d4;transform:translateY(-2px)}
-.u-faq-question.is-active{background:var(--u-accent);border-color:var(--u-accent)}
-.u-faq-question-icon{flex:none;display:grid;place-items:center;width:23px;height:23px;border:1px solid #61473577;border-radius:50%;font-size:18px;line-height:1}
-.u-faq-response{position:relative;border-top:3px solid #28160f;min-height:280px;padding:26px 0 12px}
-.u-faq-response:before{content:'';position:absolute;top:-3px;left:0;width:82px;height:3px;background:var(--u-accent)}
-.u-faq-response-content{animation:u-faq-arrive .3s cubic-bezier(.2,.8,.2,1) both}
-.u-faq-response-label{display:block;font-size:10px;font-weight:900;letter-spacing:.12em;color:#896a56;margin-bottom:23px}
-.u-faq-response h3{font-size:clamp(24px,2.4vw,35px);font-weight:900;line-height:1.06;letter-spacing:-.055em;margin:0 0 17px}
-.u-faq-response p{font-size:clamp(14px,1.35vw,17px);line-height:1.5;max-width:560px;margin:0}
-.u-faq-endmark{display:inline-block;font-size:36px;color:#765640;margin-top:18px}
-.u-faq-empty{display:flex;align-items:start;gap:16px;color:#7a5c49}
-.u-faq-empty>span{font-size:40px;color:#28160f}
-.u-faq-empty p{font-size:18px;max-width:210px}
-.u-faq-contact{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:34px;font-size:clamp(15px,1.55vw,20px);font-weight:600;border-bottom:2px solid var(--u-accent);padding-bottom:9px}
-.u-faq-contact strong{font-weight:900}
-.u-faq-contact svg{margin-left:7px;transition:transform .2s}
-.u-faq-contact:hover svg{transform:translate(3px,-3px)}
-@keyframes u-faq-arrive{from{opacity:.4;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* Segunda composição: perguntas abertas, sem cartões ou mockups.
+   É um cartaz editorial, não outro seletor. */
+.u-faq{background:#f8f0e5;color:#28160f;padding:clamp(80px,8vw,116px) 0 clamp(72px,7vw,100px)}
+.u-faq-layout{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(30px,5vw,89px);align-items:start}
+.u-faq-intro{position:relative;isolation:isolate;min-width:0}
+.u-faq-intro .u-h2{font-size:clamp(47px,4.8vw,76px);line-height:1.04;letter-spacing:-.076em;max-width:625px}
+.u-faq-intro .u-h2 mark{border-radius:11px;padding:0 .11em .05em}
+.u-faq-intro>p{font-size:clamp(16px,1.55vw,20px);line-height:1.43;max-width:350px;margin:19px 0 0}
+.u-faq-art{position:relative;margin-top:clamp(34px,6vw,85px);width:clamp(185px,24vw,295px);height:clamp(185px,24vw,295px);pointer-events:none}
+.u-faq-art-question{position:absolute;z-index:2;inset:10px 0 0;text-align:center;font-size:clamp(192px,23vw,303px);font-weight:900;letter-spacing:-.08em;line-height:1;color:#673a27;transform:rotate(-9deg)}
+.u-faq-art-stripe{position:absolute;left:1%;right:-13%;top:49%;height:32%;background:var(--u-accent);transform:rotate(-17deg);border-radius:50% 16% 31% 21%}
+.u-faq-body{min-width:0}
+.u-faq-meta{display:flex;justify-content:space-between;gap:12px;border-bottom:3px solid #28160f;padding:0 0 18px;font-size:11px;font-weight:900;letter-spacing:.095em}
+.u-faq-entry{border-bottom:1px solid #6245356e}
+.u-faq-entry h3{margin:0}
+.u-faq-entry button{display:grid;grid-template-columns:33px minmax(0,1fr) 34px;gap:clamp(12px,2vw,24px);align-items:start;background:transparent;border:0;width:100%;text-align:left;color:#28160f;padding:clamp(22px,2.5vw,32px) 2px;transition:padding .25s}
+.u-faq-entry button:hover{padding-left:12px}
+.u-faq-index{font-size:11px;color:#916047;letter-spacing:.08em;padding-top:9px;font-weight:900}
+.u-faq-question{font-size:clamp(21px,2.25vw,33px);line-height:1.12;letter-spacing:-.05em;font-weight:900}
+.u-faq-plus{display:grid;place-items:center;width:31px;height:31px;background:transparent;border:1px solid #6547378a;border-radius:50%;font-size:20px;font-weight:800;transition:transform .25s,background .25s}
+.u-faq-entry.is-active .u-faq-plus{background:var(--u-accent);border-color:var(--u-accent)}
+.u-faq-answer{padding:0 41px 28px 57px;animation:u-faq-show .3s ease both}
+.u-faq-answer p{font-size:clamp(15px,1.35vw,18px);line-height:1.52;margin:0;max-width:570px;color:#67493b}
+.u-faq-outro{display:inline-flex;align-items:center;gap:7px;flex-wrap:wrap;border-bottom:2px solid var(--u-accent);padding:7px 0 10px;margin-top:28px;font-size:clamp(16px,1.6vw,22px);font-weight:500}
+.u-faq-outro strong{font-weight:900}
+.u-faq-outro svg{width:22px;height:22px;flex:none}
+@keyframes u-faq-show{from{opacity:.5;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .u-testimonials{padding:60px 0;background:#eee3d5}
 .u-testimonials-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:26px}
 .u-testimonials blockquote{padding:24px;border-top:2px solid #673a27;margin:0}
 .u-testimonials blockquote p{font-size:22px;font-weight:800;line-height:1.3}
 .u-testimonials footer{font-size:13px}
-@media(max-width:850px){
-  .u-investment-heading{grid-template-columns:1fr;gap:18px}
-  .u-investment-heading>p{max-width:580px}
-  .u-faq-layout{grid-template-columns:1fr;gap:26px}
-  .u-faq-response{min-height:205px}
+@media(max-width:950px){
+ .u-price-layout{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px}
+ .u-price-head{grid-template-columns:1fr;gap:20px}
+ .u-price-head>p{max-width:560px}
+ .u-price-option{grid-template-columns:28px minmax(0,1fr) 24px;gap:11px}
+ .u-price-option-body strong{font-size:clamp(23px,3vw,31px)}
+ .u-price-stage{padding:27px;min-height:490px}
+ .u-price-stage-content h3{font-size:clamp(43px,5.8vw,60px)}
+ .u-faq-layout{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px}
 }
-@media(max-width:650px){
-  .u-investment{padding:70px 0}
-  .u-investment-tabs{gap:4px}
-  .u-investment-tab{font-size:clamp(12px,3.2vw,16px);flex-direction:column;align-items:flex-start;gap:8px;padding:12px 5px 13px;border-bottom-width:4px}
-  .u-investment-tab-number{font-size:9px}
-  .u-investment-tab-dot{display:none}
-  .u-investment-category-heading{font-size:10px}
-  .u-investment-product{grid-template-columns:1fr;gap:18px;padding:23px;border-radius:17px}
-  .u-investment-product h3{font-size:clamp(27px,7vw,34px)}
-  .u-investment-product-side{border-left:0;border-top:1px solid #654b3a2f;padding:16px 0 0}
-  .u-investment-price{font-size:clamp(33px,9vw,44px)}
-  .u-investment-action{margin-top:15px}
-  .u-faq-question{width:100%;border-radius:15px 15px 15px 5px}
-  .u-faq-choices{gap:8px}
-  .u-faq-response{min-height:0}
-  .u-faq-contact{line-height:1.35}
+@media(max-width:700px){
+ .u-investment{padding:75px 0 76px}
+ .u-price-head{margin-bottom:30px}
+ .u-price-head h2{font-size:clamp(43px,10vw,64px)}
+ .u-price-layout{grid-template-columns:1fr;gap:20px}
+ .u-price-option{min-height:62px;grid-template-columns:28px minmax(0,1fr) 28px;padding:14px 4px}
+ .u-price-option-body{display:flex;justify-content:space-between;gap:14px;align-items:center}
+ .u-price-option-body strong{font-size:clamp(20px,5.5vw,28px)}
+ .u-price-option-body small{font-size:11px;text-align:right;margin:0;flex:none}
+ .u-price-no{padding-top:3px}
+ .u-price-signature{display:none}
+ .u-price-stage{border-radius:24px 24px 24px 7px;min-height:0;padding:24px}
+ .u-price-small-title{margin-top:26px}
+ .u-price-stage-content h3{font-size:clamp(39px,9.7vw,60px);margin:10px 0 12px}
+ .u-price-stage-content>p{margin-bottom:27px}
+ .u-price-value{padding-top:18px}
+ .u-price-value strong{font-size:clamp(39px,10.8vw,57px)}
+ .u-price-cta{margin-top:20px;padding:13px 17px;font-size:14px}
+ .u-price-stage-brand{display:none}
+ .u-price-footer{grid-template-columns:1fr;gap:17px}
+ .u-price-footer a{justify-self:start}
+ .u-faq-layout{grid-template-columns:1fr;gap:32px}
+ .u-faq-intro .u-h2{font-size:clamp(42px,10vw,62px)}
+ .u-faq-intro>p{margin-top:15px}
+ .u-faq-art{display:none}
+ .u-faq-entry button{padding:22px 2px}
+ .u-faq-question{font-size:clamp(20px,5.8vw,28px)}
+ .u-faq-answer{padding:0 33px 22px 45px}
+ .u-faq-answer p{font-size:15px}
+}
+@media(max-width:380px){
+ .u-price-option-body small{font-size:10px}
+ .u-price-option-body strong{font-size:20px}
+ .u-price-stage-meta{font-size:9px}
+ .u-price-stage{padding:20px}
+ .u-price-cta{font-size:13px}
+ .u-faq-entry button{grid-template-columns:22px minmax(0,1fr) 28px;gap:9px}
+ .u-faq-question{font-size:19px}
+ .u-faq-answer{padding-left:31px}
 }
 @media(prefers-reduced-motion:reduce){
-  .u-investment-results,.u-faq-response-content{animation:none}
-  .u-investment-tab,.u-investment-product,.u-investment-action,.u-faq-question,.u-faq-contact svg{transition:none}
-  .u-investment-product:hover,.u-faq-question:hover{transform:none}
+ .u-price-option,.u-price-chevron,.u-price-cta,.u-faq-entry button,.u-faq-plus{transition:none}
+ .u-price-stage-content,.u-faq-answer{animation:none}
 }
 
 /* Os projetos têm altura natural: sem barra interna e sem texto cortado. */
@@ -261,23 +311,6 @@
   #projetos .u-small-projects button.u-project-preview{transition:none}
 }
 
-/* Resposta contextual logo abaixo da pergunta tocada no celular. */
-.u-faq-entry{display:contents}
-.u-faq-mobile-answer{display:none}
-@media(max-width:650px){
-  .u-faq-entry{display:block;width:100%}
-  .u-faq-layout>.u-faq-response{display:none}
-  .u-faq-mobile-answer{
-    display:block;background:#ede3d7;margin:0 0 4px;padding:20px 19px 24px;
-    border-radius:0 0 15px 15px;animation:u-faq-arrive .25s ease both
-  }
-  .u-faq-entry:has(.u-faq-mobile-answer) .u-faq-question{
-    border-radius:15px 15px 0 0;width:100%;
-  }
-  .u-faq-mobile-answer p{font-size:14px;line-height:1.55;margin:0}
-  .u-faq-mobile-answer .u-faq-response-label{margin-bottom:13px}
-}
-
 /* Tablet e celular largo: o palco cresce com a imagem, nunca recorta o topo. */
 @media (min-width:601px) and (max-width:900px){
   #projetos .u-project-feature{grid-template-rows:clamp(355px,47vw,430px) auto!important}
@@ -294,81 +327,3 @@
   }
 }
 
-/* Refinamento de direção de arte — catálogo como página editorial, não cards de SaaS. */
-.u-investment-heading .u-h2{letter-spacing:-.066em;line-height:1.02}
-.u-investment-tabs{gap:0;margin-bottom:13px;border-bottom:2px solid #342118}
-.u-investment-tab{
-  position:relative;justify-content:space-between;border:0;border-bottom:4px solid transparent;
-  border-radius:0;padding:17px 17px 20px;gap:15px;
-  transition:background .23s,color .23s,border-color .23s
-}
-.u-investment-tab.is-active{background:var(--u-accent);border-color:#28160f;color:#28160f}
-.u-investment-tab:hover:not(.is-active){background:#f9f1e8;color:#28160f}
-.u-investment-tab-dot{display:none}
-.u-investment-category-heading{padding:12px 0 21px;letter-spacing:.08em}
-.u-investment-results{gap:0;border-top:1px solid #6d514654}
-.u-investment-product{
-  grid-template-columns:minmax(0,1fr) minmax(245px,.45fr);
-  background:transparent;border:0;border-bottom:1px solid #6d514654;
-  border-radius:0;box-shadow:none!important;
-  padding:clamp(22px,3.4vw,44px) clamp(10px,1.65vw,24px);
-  transition:background .23s,padding .23s
-}
-.u-investment-product:before{display:none}
-.u-investment-product:hover{
-  transform:none;background:#faf2e8;border-color:#6d514654;
-}
-.u-investment-product-main{display:grid;grid-template-columns:38px minmax(0,1fr);column-gap:clamp(13px,2vw,27px)}
-.u-investment-product-index{
-  grid-row:1/4;align-self:start;padding-top:9px;
-  color:#896852;font-family:'Hanken Grotesk',Arial,sans-serif;
-  font-size:11px;font-weight:900;letter-spacing:.015em
-}
-.u-investment-product-index span{opacity:.4}
-.u-investment-product h3{
-  grid-column:2;margin:0 0 13px;
-  font-size:clamp(30px,3.4vw,48px);max-width:570px;
-  letter-spacing:-.07em
-}
-.u-investment-product-main p{grid-column:2;font-size:clamp(14px,1.22vw,17px);max-width:600px}
-.u-investment-product-main small{grid-column:2;max-width:595px;color:#6e5444}
-.u-investment-product-side{
-  padding-left:clamp(19px,2.1vw,30px);
-  border-left:1px solid #6d51463e
-}
-.u-investment-price{font-size:clamp(35px,4.1vw,60px);letter-spacing:-.075em}
-.u-investment-price-label{margin-bottom:7px}
-.u-investment-action{font-size:14px;font-weight:900;margin-top:21px}
-.u-faq-question{
-  border-radius:7px 17px 17px 17px;
-  background:#faf4eb;
-  border-color:#593b2d50;
-  font-weight:800;box-shadow:none;
-}
-.u-faq-question.is-active{
-  border-color:#211811;
-  box-shadow:3px 3px 0 #28160f;
-}
-.u-faq-question-icon{font-size:16px;width:21px;height:21px;border-color:transparent}
-.u-faq-response h3{max-width:520px}
-@media(max-width:900px){
-  .u-investment-product{grid-template-columns:minmax(0,1fr) minmax(215px,.42fr)}
-}
-@media(max-width:650px){
-  .u-investment-tab{padding:11px 7px 13px;gap:4px;justify-content:flex-start}
-  .u-investment-product{grid-template-columns:1fr;padding:23px 3px 24px;gap:15px}
-  .u-investment-product-main{grid-template-columns:26px minmax(0,1fr);column-gap:12px}
-  .u-investment-product h3{font-size:clamp(27px,7.8vw,36px)}
-  .u-investment-product-index{padding-top:6px;font-size:10px}
-  .u-investment-product-side{
-    padding:14px 0 0 38px;border-left:0;border-top:0;
-    align-items:flex-start
-  }
-  .u-investment-price{font-size:clamp(37px,10.8vw,48px)}
-  .u-investment-action{margin-top:13px}
-  .u-faq-question{border-radius:7px 14px 14px 14px}
-  .u-faq-entry:has(.u-faq-mobile-answer) .u-faq-question{border-radius:7px 14px 0 0}
-}
-@media(prefers-reduced-motion:reduce){
- .u-investment-product,.u-investment-tab{transition:none}
-}
