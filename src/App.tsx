@@ -237,7 +237,7 @@ export default function App() {
         <div className="u-hero u-wrap">
           <div>
             <h1 className="u-heading">
-              <span className="u-heading-desktop" aria-hidden="true">
+              <span className="u-heading-desktop">
                 <span>Soluções</span><span>digitais que</span>
                 <span className="u-movem"><em>movem</em></span><span>negócios</span>
               </span>
