@@ -381,8 +381,8 @@
 }
 @media(max-width:600px){
 .u-investment{padding:72px 0}
-.u-investment-option{grid-template-columns:26px minmax(0,1fr) 34px;min-height:70px;padding:14px 9px;gap:8px;font-size:clamp(20px,5.8vw,26px)}
-.u-investment-option:hover,.u-investment-option.is-active{padding-left:14px}
+/* regra antiga de investimento removida: novo layout usa u-investment-option-trigger */
+/* regra antiga de investimento removida: novo layout usa u-investment-option-trigger */
 .u-investment-num{padding-top:6px}
 .u-investment-indicator{width:32px;height:32px}
 .u-investment-detail{min-height:0;padding:24px;border-radius:20px}
