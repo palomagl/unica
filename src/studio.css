@@ -1266,3 +1266,50 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
  .u-heading-mobile>span:nth-child(2){font-size:clamp(40px,12vw,45px)}
  .u-heading-mobile>span:nth-child(3){font-size:clamp(50px,14.8vw,56px)}
 }
+
+/* Atalho de topo: mesmo vocabulário gráfico da ÚNICA, sem aparência de botão padrão. */
+.u-floating-actions button.u-floating-top{
+  width:46px;
+  height:46px;
+  min-height:46px;
+  padding:0;
+  flex:none;
+  border-radius:50%;
+  border:1.5px solid #f8f0e5;
+  background:#2b1a12;
+  color:var(--u-accent);
+  box-shadow:0 4px 0 #29180e2b;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:transform .22s ease,box-shadow .22s ease,background .22s ease;
+}
+.u-floating-top svg{
+  display:block;
+  width:22px;
+  height:22px;
+  transition:transform .22s ease;
+}
+.u-floating-actions button.u-floating-top:hover{
+  transform:translateY(-3px);
+  background:#493020;
+  box-shadow:0 6px 0 #29180e25;
+}
+.u-floating-actions button.u-floating-top:hover svg{transform:translateY(-2px)}
+.u-floating-actions button.u-floating-top:focus-visible{
+  outline:3px solid var(--u-accent);
+  outline-offset:3px;
+}
+@media(max-width:600px){
+  .u-floating-actions button.u-floating-top{
+    width:41px;
+    height:41px;
+    min-height:41px;
+  }
+  .u-floating-top svg{width:20px;height:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .u-floating-actions button.u-floating-top,.u-floating-top svg{transition:none}
+  .u-floating-actions button.u-floating-top:hover,
+  .u-floating-actions button.u-floating-top:hover svg{transform:none}
+}
