@@ -60,7 +60,7 @@ export function InvestmentSection() {
           {items.map((item, index) => (
             <article className="u-investment-product" key={item.id}>
               <div className="u-investment-product-main">
-                <span className="u-investment-product-index">0{index + 1} / {category.label.toUpperCase()}</span>
+                <span className="u-investment-product-index">0{index + 1} <span aria-hidden="true">/</span> {String(items.length).padStart(2, '0')}</span>
                 <h3>{item.title}</h3>
                 <p>{item.summary}</p>
                 {item.details && <small>{item.details}</small>}
