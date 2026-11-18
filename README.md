@@ -6,7 +6,7 @@
 <p align="center"><strong>Soluções digitais que movem negócios.</strong></p>
 <p align="center">
   Design com personalidade. Tecnologia com propósito.<br />
-  Sites, lojas virtuais, sistemas e experiências digitais pensadas para a vida real.
+  Sites, catálogos, lojas virtuais, sistemas e experiências digitais para negócios de todo o Brasil.
 </p>
 
 <p align="center">
@@ -36,7 +36,7 @@ Nada de layout genérico de agência. Cada seção tem uma função e uma lingua
 | **Projetos** | Seis trabalhos com capturas em notebook/celular e navegação responsiva. |
 | **Investimento** | Landing page a partir de R$ 699, catálogo online a partir de R$ 1.499, loja virtual a partir de R$ 4.990 e sistemas/apps sob orçamento. Quatro cards autorais com detalhes ao clicar. |
 | **Dúvidas** | Seis respostas diretas para quem está começando, acessíveis por teclado. |
-| **Contato** | Atalhos para WhatsApp e botão de retorno ao topo. |
+| **Contato** | WhatsApp profissional, atendimento online para todo o Brasil, botão de topo e convite contextual em cada projeto. |
 
 ### Projetos apresentados
 
