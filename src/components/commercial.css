@@ -1,256 +1,125 @@
-/* ÚNICA / INVESTIMENTO — composição realmente nova.
-   Desktop: índice 2x2 e painel integrado. Mobile: opções compactas com detalhes
-   sob a opção tocada. O resto da marca e da FAQ não muda. */
-.u-investment{scroll-margin-top:24px}
-.u-investment-v2{
-  background:#673a27;color:#f8f0e5;position:relative;overflow:hidden;
-  padding:clamp(65px,6vw,94px) 0 clamp(65px,5.5vw,85px);
-}
-.u-investment-v2:before{
-  content:'';position:absolute;right:-100px;top:-150px;
-  width:320px;height:320px;border:2px solid #f8f0e52c;
-  border-radius:45% 55% 70% 30%;transform:rotate(28deg);
-  pointer-events:none
-}
-.u-investment-v2 .u-price-head{
-  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(170px,.6fr);
-  gap:clamp(20px,3vw,44px);align-items:end;margin-bottom:clamp(28px,3vw,39px)
-}
-.u-investment-v2 .u-price-head .u-kicker{color:#f8f0e5}
-.u-investment-v2 .u-price-head h2{
-  font-size:clamp(42px,4.15vw,64px);letter-spacing:-.072em;
-  line-height:1.02;max-width:800px
-}
-.u-investment-v2 .u-price-head mark{
-  background:var(--u-accent);color:#28160f;
-  border-radius:10px;padding:0 .08em .055em;
-  box-decoration-break:clone;-webkit-box-decoration-break:clone
-}
-.u-investment-v2 .u-price-head>p{
-  font-size:clamp(15px,1.2vw,18px);line-height:1.4;
-  color:#fff5ebd9;max-width:320px;margin:0
-}
-/* Largura compartilhada entre seletor e conteúdo: não empilhar um painel por baixo. */
-.u-investment-explorer{
-  display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);
-  gap:clamp(18px,2.2vw,32px);align-items:stretch
-}
-.u-investment-option-grid{
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:clamp(10px,1.25vw,17px);align-content:stretch
-}
-.u-investment-option{
-  min-width:0;min-height:210px;
-  border:1px solid #bba396;border-radius:19px 19px 19px 6px;
-  background:#f3e9dc;color:#2a190f;overflow:hidden;
-  transition:transform .22s ease,border-color .22s ease
-}
-.u-investment-option:hover{transform:translateY(-3px)}
-.u-investment-option.is-open{outline:2px solid var(--u-accent);outline-offset:2px}
-.u-investment-option--entry{background:var(--u-accent);border-color:var(--u-accent)}
-.u-investment-option--brand{background:#bd835e;border-color:#dca37c}
-.u-investment-option--store{background:#eadbcb}
-.u-investment-option--bespoke{
-  background:#281812;color:#f8f0e5;border:1.5px solid var(--u-accent)
-}
-.u-investment-option-trigger{
-  width:100%;height:100%;display:flex;flex-direction:column;
-  gap:10px;padding:clamp(17px,1.55vw,23px);
-  background:transparent;color:inherit;border:0;text-align:left;
-  cursor:pointer;min-width:0;font-family:inherit
-}
-.u-investment-option-trigger:focus-visible{outline:3px solid #23150c;outline-offset:-5px}
-.u-investment-option-top{
-  display:flex;justify-content:space-between;align-items:start;
-  gap:8px;font-size:9px;font-weight:900;letter-spacing:.065em
-}
-.u-investment-option-no{white-space:nowrap;opacity:.8}
-.u-investment-option-label{text-align:right;line-height:1.22}
-.u-investment-option--bespoke .u-investment-option-label{color:var(--u-accent)}
-.u-investment-option-name{
-  display:block;font-size:clamp(24px,2.25vw,34px);
-  font-weight:900;letter-spacing:-.064em;line-height:.99;
-  margin:clamp(4px,.9vw,12px) 0 auto;overflow-wrap:break-word
-}
-.u-investment-option-bottom{
-  display:flex;justify-content:space-between;align-items:end;gap:5px
-}
-.u-investment-option-price{display:flex;flex-direction:column;gap:4px;min-width:0}
-.u-investment-option-price small{
-  font-size:9px;letter-spacing:.08em;font-weight:900;opacity:.7
-}
-.u-investment-option-price strong{
-  font-size:clamp(25px,2.18vw,32px);
-  font-weight:900;letter-spacing:-.06em;line-height:1.06;overflow-wrap:anywhere
-}
-.u-investment-option--bespoke .u-investment-option-price strong{
-  color:var(--u-accent);font-size:clamp(22px,1.9vw,28px)
-}
-.u-investment-option-indicator{
-  display:grid;place-items:center;width:31px;height:31px;flex:none;
-  border-radius:50%;background:#2a190f;color:#f8f0e5;
-  font-size:22px;line-height:1;font-weight:800
-}
-.u-investment-option--bespoke .u-investment-option-indicator{
-  background:var(--u-accent);color:#2a190f
-}
-.u-investment-option-hint{
-  display:block;font-size:11px;font-weight:850;
-  text-decoration:underline;text-decoration-color:currentColor;
-  text-decoration-thickness:1px;text-underline-offset:4px;margin-top:2px
-}
-.u-investment-mobile-panel{display:none}
-.u-investment-desktop-panel{
-  min-width:0;display:flex;flex-direction:column;
-  background:#f6eee3;color:#2a190f;
-  border-radius:23px 23px 23px 7px;
-  padding:clamp(25px,2.5vw,37px);min-height:440px
-}
-.u-investment-desktop-inner{animation:u-investment-reveal .28s ease both}
-.u-investment-desktop-meta{
-  display:flex;justify-content:space-between;gap:14px;
-  padding-bottom:15px;border-bottom:1px solid #64443450;
-  font-size:10px;font-weight:900;letter-spacing:.1em
-}
-.u-investment-desktop-inner>h3{
-  font-size:clamp(38px,3.35vw,54px);font-weight:900;
-  letter-spacing:-.069em;line-height:.98;margin:30px 0 0
-}
-.u-investment-desktop-inner>h3 span{color:#8a9a00}
-.u-price-explanation{
-  display:flex;flex-direction:column;gap:0;padding-top:18px
-}
-.u-price-detail-kicker{
-  display:block;color:#89614c;font-size:10px;letter-spacing:.1em;
-  font-weight:900;margin-bottom:8px
-}
-.u-price-explanation h4{
-  font-size:clamp(20px,1.6vw,25px);font-weight:900;
-  letter-spacing:-.04em;line-height:1.1;margin:0 0 8px
-}
-.u-price-explanation-copy>p{
-  font-size:clamp(14px,1vw,16px);line-height:1.47;
-  margin:0 0 15px;max-width:520px
-}
-.u-price-example-label{margin:3px 0 10px}
-.u-price-explanation ul{
-  padding:0;margin:0;display:grid;gap:7px;list-style:none
-}
-.u-price-explanation li{
-  font-size:clamp(13px,.95vw,15px);line-height:1.37;
-  padding-left:19px;position:relative
-}
-.u-price-explanation li:before{
-  content:'';position:absolute;left:0;top:.47em;width:8px;height:8px;
-  border:1px solid #28160f;background:var(--u-accent);border-radius:50%
-}
-.u-price-explanation-action{
-  display:flex;align-items:center;flex-wrap:wrap;
-  gap:13px;padding-top:18px;margin-top:18px;
-  border-top:1px solid #64443450
-}
-.u-price-explanation-action .u-price-detail-kicker{width:100%;margin:0}
-.u-price-explanation-action strong{
-  font-size:clamp(27px,2.2vw,34px);font-weight:900;
-  letter-spacing:-.06em;line-height:1.02
-}
-.u-price-detail-cta{
-  display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  margin-left:auto;border-radius:99px;padding:12px 17px;
-  background:var(--u-accent);color:#28160f!important;
-  font-size:12px;font-weight:900;white-space:normal;max-width:100%
-}
-.u-price-detail-cta svg{width:18px;height:18px;flex:none}
-.u-investment-desktop-empty{
-  margin:auto 0;display:flex;flex-direction:column;gap:14px;max-width:410px
-}
-.u-investment-desktop-empty>span{font-size:10px;font-weight:900;letter-spacing:.1em}
-.u-investment-desktop-empty strong{font-size:clamp(36px,3.2vw,52px);letter-spacing:-.06em;line-height:1}
-.u-investment-desktop-empty p{font-size:16px;line-height:1.4}
-.u-investment-v2 .u-price-footer{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:24px;margin-top:24px
-}
-.u-investment-v2 .u-price-footer p{
-  font-size:12px;line-height:1.5;max-width:550px;color:#f8e5d6;margin:0
-}
-.u-investment-v2 .u-price-footer a{
-  display:inline-flex;align-items:center;gap:8px;flex:none;
-  border-bottom:2px solid var(--u-accent);
-  font-size:clamp(14px,1.15vw,18px);padding-bottom:8px
-}
-.u-investment-v2 .u-price-footer a strong{font-weight:900}
-.u-investment-v2 .u-price-footer a svg{width:18px;height:18px;flex:none}
-@keyframes u-investment-reveal{
-  from{opacity:.5;transform:translateY(6px)}
-  to{opacity:1;transform:none}
-}
-@media(max-width:920px){
- .u-investment-explorer{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:13px}
- .u-investment-option-trigger{padding:15px}
- .u-investment-option-grid{gap:10px}
- .u-investment-option-name{font-size:clamp(21px,3vw,28px)}
- .u-investment-option-price strong{font-size:clamp(21px,2.9vw,28px)}
- .u-investment-option--bespoke .u-investment-option-price strong{font-size:clamp(19px,2.45vw,24px)}
- .u-investment-desktop-panel{padding:20px}
- .u-price-detail-cta{margin-left:0}
+/* ÚNICA — cards editoriais, proporcionais às telas grandes.
+   Preserva a marca. Mobile será lista expansível, não miniaturas de desktop. */
+.u-investment-v3{position:relative;background:#673a27;color:#f8f0e5;overflow:hidden;padding:clamp(70px,6.6vw,108px) 0 clamp(65px,6vw,95px)}
+.u-investment-v3:before{content:'';position:absolute;right:-95px;top:-100px;width:315px;height:315px;border:1.5px solid #fff7ee27;border-radius:50%;pointer-events:none}
+.u-investment-v3 .u-price-head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(190px,.7fr);gap:clamp(24px,4vw,65px);align-items:end;margin:0 0 39px}
+.u-investment-v3 .u-price-head .u-kicker{color:#fff0e6}
+.u-investment-v3 .u-price-head h2{font-size:clamp(47px,5.25vw,76px);max-width:780px;letter-spacing:-.073em;line-height:.99}
+.u-investment-title-line{display:block;width:fit-content;max-width:100%}
+.u-investment-v3 .u-price-head h2 mark{display:inline-block;padding:0 .15em .075em;border-radius:12px;line-height:1.02;box-decoration-break:clone;-webkit-box-decoration-break:clone;white-space:nowrap;color:#24160d;background:var(--u-accent)}
+.u-investment-v3 .u-price-head>p{font-size:clamp(16px,1.4vw,20px);line-height:1.45;max-width:340px;margin:0 0 6px;color:#f5e9de}
+.u-investment-card-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(11px,1.25vw,18px);align-items:stretch}
+.u-investment-card{min-width:0;display:flex;flex-direction:column;min-height:475px;border-radius:24px 24px 24px 7px;padding:clamp(19px,2vw,28px);background:#f8efe2;color:#281710;box-shadow:0 12px 24px #25130912;transition:transform .25s,box-shadow .25s}
+.u-investment-card:hover{transform:translateY(-5px);box-shadow:0 18px 32px #2513092d}
+.u-investment-card--entry{background:var(--u-accent);box-shadow:inset 0 -5px 0 #281710}
+.u-investment-card--brand{background:#bd825c}
+.u-investment-card--store{background:#f6eadd}
+.u-investment-card--bespoke{background:#281811;color:#fff4e9;border:1px solid var(--u-accent)}
+.u-investment-card-head{display:flex;align-items:start;justify-content:space-between;gap:10px}
+.u-investment-card-index{font-size:clamp(18px,1.5vw,22px);font-weight:900;line-height:1.05}
+.u-investment-card-tag{font-size:9px;line-height:1.2;letter-spacing:.055em;font-weight:900;border-radius:50px;padding:7px 10px;max-width:125px;text-align:center;background:#281710;color:#f9eee5}
+.u-investment-card--brand .u-investment-card-tag{background:#f5eadc;color:#281710}
+.u-investment-card--store .u-investment-card-tag{background:#a35e38}
+.u-investment-card--bespoke .u-investment-card-tag{background:var(--u-accent);color:#281710}
+.u-investment-card-main{margin-top:clamp(24px,2.7vw,42px)}
+.u-investment-card-main h3{font-size:clamp(27px,2.45vw,38px);line-height:1.02;letter-spacing:-.067em;font-weight:900;margin:0 0 15px}
+.u-investment-card-main p{font-size:clamp(13px,1vw,15px);line-height:1.43;min-height:64px;margin:0}
+.u-investment-card-value{margin-top:clamp(23px,2.5vw,37px);display:flex;flex-direction:column;gap:6px}
+.u-investment-card-value>span{font-size:10px;font-weight:900;letter-spacing:.095em;opacity:.76}
+.u-investment-card-value strong{font-size:clamp(30px,2.7vw,42px);font-weight:900;letter-spacing:-.067em;line-height:1.04;overflow-wrap:anywhere}
+.u-investment-card--bespoke .u-investment-card-value strong{font-size:clamp(24px,2.15vw,34px);color:var(--u-accent)}
+.u-investment-card-examples{border-top:1px solid currentColor;margin-top:19px;padding-top:15px}
+.u-investment-card-examples>span{font-size:9px;letter-spacing:.085em;font-weight:900;opacity:.72}
+.u-investment-card-examples ul{list-style:none;padding:0;margin:11px 0 18px;display:grid;gap:10px}
+.u-investment-card-examples li{font-size:clamp(12px,.9vw,14px);line-height:1.35;padding-left:17px;position:relative}
+.u-investment-card-examples li:before{content:'';position:absolute;left:0;top:.42em;background:currentColor;width:7px;height:7px;border-radius:50%}
+.u-investment-card-toggle{margin-top:auto;width:100%;min-height:47px;border-radius:99px;border:0;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;background:#29170f;color:#f8f0e5;text-align:left;font-family:inherit;font-size:13px;font-weight:900;cursor:pointer;transition:background .2s}
+.u-investment-card-toggle:hover{background:#58341f}
+.u-investment-card--bespoke .u-investment-card-toggle{background:var(--u-accent);color:#281710}
+.u-investment-card--bespoke .u-investment-card-toggle:hover{background:#daff6a}
+.u-investment-card-icon{font-size:19px;line-height:1.0}
+.u-investment-card-mobile-detail{display:none}
+.u-investment-contact{display:flex;align-items:center;justify-content:space-between;gap:28px;background:#281811;color:#f8f0e5;border-radius:23px;padding:26px 34px;margin-top:28px}
+.u-investment-contact>div{display:flex;flex-direction:column;gap:5px}
+.u-investment-contact>div>span{font-size:10px;font-weight:900;letter-spacing:.105em;color:#d8b5a0}
+.u-investment-contact strong{font-size:clamp(22px,2.1vw,31px);font-weight:900;letter-spacing:-.05em}
+.u-investment-contact>a{display:inline-flex;align-items:center;justify-content:center;gap:14px;border-radius:99px;background:var(--u-accent);color:#281710!important;font-weight:900;font-size:14px;padding:16px 19px;white-space:nowrap}
+.u-investment-contact>a svg{width:18px;height:18px}
+.u-investment-disclaimer{font-size:11px;line-height:1.5;color:#e8cdbb;margin:19px 0 0}
+/* Detalhe com sobreposição: não dobra a altura da seção nem repete quatro CTAs. */
+.u-investment-dialog{position:fixed;inset:0;z-index:200;background:#160d0bd9;display:flex;align-items:center;justify-content:center;padding:clamp(15px,5vw,45px);overflow-y:auto}
+.u-investment-dialog-content{width:min(740px,100%);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;background:#f8efe2;color:#291911;border:2px solid var(--u-accent);border-radius:24px 24px 24px 8px;padding:clamp(23px,4vw,42px);box-shadow:0 28px 60px #0007}
+.u-investment-dialog-top{display:flex;justify-content:space-between;align-items:center;gap:18px;border-bottom:1px solid #2817104f;padding-bottom:18px;font-size:10px;font-weight:900;letter-spacing:.12em}
+.u-investment-dialog-top button{width:39px;height:39px;border:1px solid #291911;border-radius:50%;background:transparent;color:#291911;cursor:pointer;font-size:17px}
+.u-investment-dialog-content>h3{font-size:clamp(34px,5vw,60px);font-weight:900;line-height:1;letter-spacing:-.068em;margin:25px 0 5px}
+.u-investment-dialog-content>h3 span{color:#92a800}
+.u-investment-dialog .u-price-explanation{display:grid;grid-template-columns:minmax(0,1fr) minmax(190px,.6fr);gap:28px;align-items:end;padding-top:18px}
+.u-investment-dialog .u-price-detail-kicker{font-size:10px;letter-spacing:.1em;font-weight:900;color:#8c6650;display:block;margin:0 0 10px}
+.u-investment-dialog .u-price-explanation h4{font-size:25px;font-weight:900;letter-spacing:-.045em;margin:0 0 10px}
+.u-investment-dialog .u-price-explanation-copy>p{font-size:15px;line-height:1.5;margin:0 0 20px}
+.u-investment-dialog .u-price-explanation ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.u-investment-dialog .u-price-explanation li{font-size:14px;line-height:1.35;padding-left:18px;position:relative}
+.u-investment-dialog .u-price-explanation li:before{content:'';position:absolute;top:.45em;left:0;width:8px;height:8px;border-radius:50%;background:var(--u-accent);border:1px solid #291911}
+.u-investment-dialog .u-price-explanation-action{display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.u-investment-dialog .u-price-explanation-action strong{font-size:clamp(28px,3vw,41px);font-weight:900;letter-spacing:-.063em;line-height:1.06}
+.u-investment-dialog .u-price-detail-cta{display:inline-flex;align-items:center;gap:10px;margin-top:12px;padding:13px 16px;border-radius:50px;background:var(--u-accent);color:#291911!important;font-size:13px;font-weight:900}
+.u-investment-dialog .u-price-detail-cta svg{width:18px;height:18px}
+/* Tela intermediária: 2x2 continua editorial, sem esmagar títulos em 4 colunas. */
+@media(max-width:1040px) and (min-width:701px){
+ .u-investment-card-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .u-investment-card{min-height:385px}
+ .u-investment-card-main{margin-top:24px}
+ .u-investment-card-main p{min-height:0}
+ .u-investment-card-main h3{font-size:clamp(29px,4vw,38px)}
+ .u-investment-card-examples ul{grid-template-columns:1fr 1fr}
 }
 @media(max-width:700px){
- .u-investment-v2{padding:65px 0 68px}
- .u-investment-v2 .u-price-head{grid-template-columns:1fr;gap:12px;margin-bottom:27px}
- .u-investment-v2 .u-price-head h2{font-size:clamp(38px,9.1vw,55px)}
- .u-investment-v2 .u-price-head>p{font-size:14px}
- .u-investment-explorer{display:block}
- .u-investment-option-grid{display:flex;flex-direction:column;gap:9px}
- .u-investment-option{min-height:0;border-radius:16px 16px 16px 6px}
- .u-investment-option:hover{transform:none}
- .u-investment-option-trigger{height:auto;gap:8px;padding:15px 17px}
- .u-investment-option-top{font-size:9px}
- .u-investment-option-name{font-size:clamp(22px,6vw,28px);margin:1px 0 0}
- .u-investment-option-bottom{align-items:center}
- .u-investment-option-price{display:flex;flex-direction:row;align-items:baseline;gap:7px;flex-wrap:wrap}
- .u-investment-option-price small{font-size:9px}
- .u-investment-option-price strong{font-size:clamp(22px,6.4vw,29px)}
- .u-investment-option--bespoke .u-investment-option-price strong{font-size:clamp(20px,5.75vw,26px)}
- .u-investment-option-indicator{width:31px;height:31px;font-size:21px}
- .u-investment-option-hint{display:none}
- .u-investment-mobile-panel:not(:empty){
-   display:block;padding:0 17px 19px;
-   animation:u-investment-reveal .25s ease both
- }
- .u-investment-mobile-panel .u-price-explanation{
-   padding-top:15px;border-top:1px solid currentColor;
- }
- .u-investment-mobile-panel .u-price-detail-kicker{color:inherit;opacity:.72;font-size:9px}
- .u-investment-mobile-panel .u-price-explanation h4{font-size:20px}
- .u-investment-mobile-panel .u-price-explanation-copy>p{font-size:14px;margin-bottom:14px}
- .u-investment-mobile-panel .u-price-explanation li{font-size:13px}
- .u-investment-mobile-panel .u-price-explanation-action{
-   display:flex;align-items:flex-start;flex-direction:column;
-   border-top:1px solid currentColor;padding-top:15px;margin-top:17px;gap:6px
- }
- .u-investment-mobile-panel .u-price-explanation-action strong{font-size:28px}
- .u-investment-mobile-panel .u-price-detail-cta{
-   width:100%;margin:10px 0 0;
-   background:#28160f;color:#f8f0e5!important;min-height:44px
- }
- .u-investment-option--bespoke .u-price-detail-cta{
-   background:var(--u-accent);color:#28160f!important
- }
- .u-investment-desktop-panel{display:none}
- .u-investment-v2 .u-price-footer{align-items:flex-start;flex-direction:column;gap:17px}
- .u-investment-v2 .u-price-footer a{flex:none}
+ .u-investment-v3{padding:68px 0 70px}
+ .u-investment-v3 .u-price-head{grid-template-columns:1fr;gap:12px;margin-bottom:28px}
+ .u-investment-v3 .u-price-head h2{font-size:clamp(38px,9.25vw,54px)}
+ .u-investment-v3 .u-price-head>p{font-size:14px;max-width:470px}
+ .u-investment-card-grid{display:flex;flex-direction:column;gap:10px}
+ .u-investment-card{min-height:0;padding:18px 19px;border-radius:17px 17px 17px 6px}
+ .u-investment-card:hover{transform:none}
+ .u-investment-card-head{align-items:center}
+ .u-investment-card-index{font-size:15px}
+ .u-investment-card-tag{font-size:9px;padding:6px 9px}
+ .u-investment-card-main{margin-top:14px}
+ .u-investment-card-main h3{font-size:clamp(25px,6.9vw,33px);margin-bottom:5px}
+ .u-investment-card-main p{font-size:13px;min-height:0;margin:0}
+ .u-investment-card-value{margin-top:13px;gap:3px}
+ .u-investment-card-value strong{font-size:clamp(29px,8.3vw,38px)}
+ .u-investment-card--bespoke .u-investment-card-value strong{font-size:clamp(25px,6.9vw,34px)}
+ .u-investment-card-examples{display:none}
+ .u-investment-card-toggle{margin-top:17px;min-height:42px;padding:10px 14px;font-size:12px}
+ .u-investment-card-mobile-detail:not(:empty){display:block;margin-top:17px;border-top:1px solid currentColor;padding-top:15px;animation:u-investment-mobile-enter .22s ease both}
+ .u-investment-card-mobile-detail .u-price-explanation{display:flex;flex-direction:column;gap:14px}
+ .u-investment-card-mobile-detail .u-price-detail-kicker{font-size:9px;color:inherit;opacity:.76;margin-bottom:8px;display:block}
+ .u-investment-card-mobile-detail .u-price-explanation h4{font-size:20px;font-weight:900;margin:0 0 8px}
+ .u-investment-card-mobile-detail .u-price-explanation-copy>p{font-size:14px;line-height:1.43;margin:0 0 12px}
+ .u-investment-card-mobile-detail .u-price-explanation ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
+ .u-investment-card-mobile-detail .u-price-explanation li{font-size:13px;line-height:1.4;padding-left:16px;position:relative}
+ .u-investment-card-mobile-detail .u-price-explanation li:before{content:'';position:absolute;top:.4em;left:0;width:7px;height:7px;border-radius:50%;background:currentColor}
+ .u-investment-card-mobile-detail .u-price-explanation-action{border-top:1px solid currentColor;padding-top:13px;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+ .u-investment-card-mobile-detail .u-price-explanation-action strong{font-size:28px;font-weight:900}
+ .u-investment-card-mobile-detail .u-price-detail-cta{width:100%;min-height:44px;margin-top:6px;display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-radius:99px;background:#281710;color:#f8f0e5!important;font-size:13px;font-weight:900}
+ .u-investment-card--bespoke .u-price-detail-cta{background:var(--u-accent);color:#281710!important}
+ .u-investment-dialog{display:none}
+ .u-investment-contact{flex-direction:column;align-items:stretch;padding:23px 19px;gap:20px;margin-top:18px}
+ .u-investment-contact strong{font-size:23px}
+ .u-investment-contact>a{min-height:46px;white-space:normal}
+ .u-investment-disclaimer{font-size:11px}
 }
 @media(max-width:360px){
- .u-investment-option-trigger{padding:13px}
- .u-investment-mobile-panel:not(:empty){padding:0 13px 16px}
- .u-investment-option-label{font-size:8px}
- .u-investment-option-price strong{font-size:23px}
+ .u-investment-v3 .u-price-head h2{font-size:36px}
+ .u-investment-card{padding:16px}
+ .u-investment-card-tag{font-size:8px}
 }
+@keyframes u-investment-mobile-enter{from{opacity:.55;transform:translateY(-5px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){
- .u-investment-option,.u-investment-desktop-inner{transition:none;animation:none}
- .u-investment-option:hover{transform:none}
- .u-investment-mobile-panel:not(:empty){animation:none}
+ .u-investment-card,.u-investment-card-toggle{transition:none}
+ .u-investment-card:hover{transform:none}
+ .u-investment-card-mobile-detail:not(:empty){animation:none}
 }
 
 /* Segunda composição: perguntas abertas, sem cartões ou mockups.
