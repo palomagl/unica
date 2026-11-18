@@ -5,7 +5,8 @@ from playwright.sync_api import sync_playwright
 
 URL = "http://127.0.0.1:4173/"
 CASES = [(320, 720), (360, 760), (390, 844), (430, 932), (480, 820),
-         (600, 900), (768, 900), (900, 850), (1024, 768), (1440, 900)]
+         (600, 900), (768, 900), (900, 850), (1024, 768), (1280, 800),
+         (1440, 900), (1600, 900), (1920, 1080)]
 PROJECTS = ["Karoane", "Bruto", "Vértice Mármores", "DOE+ RS", "Minha Rotina", "ROXO"]
 OFFERS = [("Landing page", "R$ 700"), ("Site para empresas", "R$ 1.500"),
           ("Loja virtual", "R$ 5.900"), ("Sistemas e apps", "Sob orçamento")]
@@ -61,16 +62,45 @@ with sync_playwright() as playwright:
             check(page.locator(".u-floating-whatsapp").is_visible(),
                   f"{width}px: WhatsApp fixo não aparece")
 
-            # Quatro propostas base, acessíveis pelo mesmo painel.
-            check(page.locator(".u-price-option").count() == 4, "Precisam existir quatro entradas")
+            # Desktop revela painel de explicação; mobile expande um so card.
+            cards = page.locator(".u-price-card")
+            check(cards.count() == 4, f"{width}px: devem aparecer quatro opcoes")
+            check("u-price-card--entry" in cards.first.get_attribute("class"),
+                  f"{width}px: falta destaque no preco de entrada")
+            check("u-price-card--bespoke" in cards.nth(3).get_attribute("class"),
+                  f"{width}px: falta destaque em sistemas/apps")
             for i, (title, expected_value) in enumerate(OFFERS):
-                page.locator(".u-price-option").nth(i).click()
-                check(page.locator(".u-price-stage-content h3").inner_text().strip().rstrip(".") == title,
-                      f"{width}px: título do investimento {i} incorreto")
-                check("".join(expected_value.split()) in "".join(page.locator(".u-price-value strong").inner_text().split()),
-                      f"{width}px: preço incorreto para {title}")
-                check("wa.me/" + PHONE in page.locator(".u-price-cta").get_attribute("href"),
-                      f"{width}px: CTA do investimento não abre WhatsApp profissional")
+                card = cards.nth(i)
+                check(card.locator("h3").inner_text().strip() == title,
+                      f"{width}px: servico errado no card {i}")
+                value = "".join(card.locator(".u-price-card-cost strong").inner_text().split())
+                check("".join(expected_value.split()) in value,
+                      f"{width}px: preco incorreto para {title}")
+                button = card.locator(".u-price-card-cta")
+                if button.get_attribute("aria-expanded") != "true":
+                    button.click()
+                check(button.get_attribute("aria-expanded") == "true",
+                      f"{width}px: detalhes nao abriram para {title}")
+                check(page.locator(".u-price-card.is-open").count() == 1,
+                      f"{width}px: mais de um card expandido")
+                if width <= 700:
+                    detail = card.locator(".u-price-mobile-details")
+                    check(detail.is_visible() and detail.locator("li").count() == 3,
+                          f"{width}px: detalhe mobile nao apareceu")
+                    check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
+                          f"{width}px: WhatsApp do detalhe incorreto")
+                    check(page.locator(".u-price-desktop-detail").is_hidden(),
+                          f"{width}px: painel desktop aparece no celular")
+                else:
+                    detail = page.locator(".u-price-desktop-detail")
+                    check(detail.is_visible() and detail.locator("li").count() == 3,
+                          f"{width}px: painel desktop nao abriu")
+                    check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
+                          f"{width}px: WhatsApp do painel incorreto")
+            cards.nth(3).locator(".u-price-card-cta").click()
+            check(page.locator(".u-price-card.is-open").count() == 0,
+                  f"{width}px: nao foi possivel fechar o detalhe")
+            cards.nth(0).locator(".u-price-card-cta").click()
 
             # FAQ: quatro perguntas com expansão e fechamento.
             questions = page.locator(".u-faq-entry button")
@@ -83,10 +113,10 @@ with sync_playwright() as playwright:
                   f"{width}px: dúvida não fecha")
 
             if width == 390:
-                page.locator(".u-price-option").first.focus()
+                page.locator(".u-price-card-cta").nth(1).focus()
                 page.keyboard.press("Enter")
-                check("Landing page" in page.locator(".u-price-stage-content h3").inner_text(),
-                      "Investimento não responde ao teclado")
+                check(cards.nth(1).locator(".u-price-card-cta").get_attribute("aria-expanded") == "true",
+                      "Detalhe do investimento nao responde ao teclado")
                 page.locator(".u-faq-entry button").first.focus()
                 page.keyboard.press("Enter")
                 check(page.locator(".u-faq-answer").count() == 1,
@@ -128,7 +158,7 @@ with sync_playwright() as playwright:
             page.wait_for_timeout(200)
             check(page.evaluate("window.scrollY") < 10, f"{width}px: voltar ao topo não funciona")
             check(not errors, f"{width}px: erro de runtime: {errors}")
-            if width in (320, 390, 768, 1440):
+            if width in (320, 390, 768, 1440, 1920):
                 folder = Path("visual-check")
                 folder.mkdir(exist_ok=True)
                 page.locator("#investimento").screenshot(path=str(folder / f"investimento-{width}.png"), animations="disabled")
@@ -139,4 +169,4 @@ with sync_playwright() as playwright:
             context.close()
     finally:
         browser.close()
-print("PASS: 10 larguras, com movimento reduzido e sem erros de runtime")
+print("PASS: 13 larguras, com movimento reduzido e sem erros de runtime")
