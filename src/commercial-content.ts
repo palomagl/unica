@@ -12,28 +12,28 @@ export const investments: InvestmentOption[] = [
   {
     id: 'landing',
     title: 'Landing page',
-    summary: 'Uma página para apresentar sua marca, ideia ou serviço e abrir conversas.',
-    startingAtBRL: 700,
+    summary: 'Uma página para mostrar o que você oferece e facilitar o primeiro contato.',
+    startingAtBRL: 699,
     note: 'Soluções personalizadas têm investimento próprio.',
   },
   {
     id: 'site',
-    title: 'Site para empresas',
-    summary: 'Seu negócio com as informações certas, bem organizado e fácil de encontrar.',
-    startingAtBRL: 1500,
-    note: 'Páginas e recursos definidos na proposta.',
+    title: 'Catálogo online',
+    summary: 'Seus produtos organizados em um catálogo bonito, fácil de compartilhar e consultar.',
+    startingAtBRL: 1499,
+    note: 'Sem carrinho ou pagamento online; recursos são definidos na proposta.',
   },
   {
     id: 'loja',
     title: 'Loja virtual',
-    summary: 'Produtos, carrinho, pagamentos e pedidos num só lugar, de acordo com sua operação.',
-    startingAtBRL: 5900,
+    summary: 'Uma loja para apresentar produtos e receber compras online de forma organizada.',
+    startingAtBRL: 4990,
     note: 'Implantação com escopo delimitado.',
   },
   {
     id: 'personalizado',
     title: 'Sistemas e apps',
-    summary: 'Uma solução pensada para processos, necessidades e ideias que não cabem no padrão.',
+    summary: 'Um sistema ou aplicativo feito para resolver algo específico do seu negócio.',
     startingAtBRL: null,
     note: 'Escopo e investimento definidos em conversa.',
   },
@@ -68,6 +68,15 @@ export const faqItems = [
     question: 'Vocês criam algo fora do catálogo?',
     answer: 'Sim. Podemos avaliar ideias, processos e necessidades específicas e propor uma solução personalizada.',
   },
+  {
+    question: 'Preciso ter tudo definido antes de pedir um orçamento?',
+    answer: 'Não. Pode contar sua ideia mesmo que ela ainda esteja no começo. A gente conversa, entende o objetivo e ajuda a definir o que faz sentido desenvolver.',
+  },
+  {
+    question: 'Vocês conseguem melhorar um site que já existe?',
+    answer: 'Podemos avaliar o site atual, entender o que precisa melhorar e indicar o melhor caminho. Isso depende da estrutura existente e dos acessos disponíveis.',
+  },
+
 ]
 
 export const testimonials: Array<{
