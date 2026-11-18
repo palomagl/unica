@@ -8,8 +8,8 @@ CASES = [(320, 720), (360, 760), (390, 844), (430, 932), (480, 820),
          (600, 900), (768, 900), (900, 850), (1024, 768), (1280, 800),
          (1440, 900), (1600, 900), (1920, 1080)]
 PROJECTS = ["Karoane", "Bruto", "Vértice Mármores", "DOE+ RS", "Minha Rotina", "ROXO"]
-OFFERS = [("Landing page", "R$ 700"), ("Site para empresas", "R$ 1.500"),
-          ("Loja virtual", "R$ 5.900"), ("Sistemas e apps", "Sob orçamento")]
+OFFERS = [("Landing page", "R$ 699"), ("Catálogo online", "R$ 1.499"),
+          ("Loja virtual", "R$ 4.990"), ("Sistemas e apps", "Sob orçamento")]
 PHONE = "5551991872507"
 
 
@@ -64,6 +64,13 @@ with sync_playwright() as playwright:
 
             # Nova composicao: 4 cards alongados em desktop, modal de detalhes.
             # No mobile, os detalhes ficam dentro do card selecionado.
+            check(page.locator(".u-investment-contact").count() == 0,
+                  f"{width}px: bloco repetitivo de contato nao deveria existir")
+            check(page.locator("#investimento").evaluate("""el => {
+              const c = getComputedStyle(el).backgroundColor;
+              const a = c.match(/\\d+/g)?.slice(0,3).map(Number) ?? [];
+              return a.length === 3 && a.every(v => v > 170);
+            }"""), f"{width}px: fundo claro do investimento nao aplicado")
             cards = page.locator(".u-investment-card")
             check(cards.count() == 4, f"{width}px: devem existir quatro cards")
             check("u-investment-card--entry" in cards.first.get_attribute("class"),
@@ -116,9 +123,9 @@ with sync_playwright() as playwright:
                 check(page.locator(".u-investment-dialog").count() == 0,
                       "Escape nao fecha detalhes")
 
-            # FAQ: quatro perguntas com expansão e fechamento.
+            # FAQ: seis perguntas, com abertura e fechamento acessíveis.
             questions = page.locator(".u-faq-entry button")
-            check(questions.count() == 4, f"{width}px: perguntas demais")
+            check(questions.count() == 6, f"{width}px: devem ser seis perguntas")
             questions.nth(1).click()
             check(page.locator(".u-faq-answer").count() == 1,
                   f"{width}px: a segunda dúvida não abre")
