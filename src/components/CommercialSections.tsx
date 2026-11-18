@@ -96,16 +96,22 @@ export function FAQSection() {
         <div className="u-faq-layout">
           <div className="u-faq-choices" role="group" aria-label="Escolha uma dúvida">
             {faqItems.map((item, index) => (
-              <button
-                type="button" key={item.question}
-                className={active === index ? 'u-faq-question is-active' : 'u-faq-question'}
-                aria-expanded={active === index}
-                aria-controls="u-faq-answer"
-                onClick={() => setActive(active === index ? null : index)}
-              >
-                <span>{item.question}</span>
-                <span className="u-faq-question-icon" aria-hidden="true">{active === index ? '−' : '+'}</span>
-              </button>
+              <div className="u-faq-entry" key={item.question}>
+                <button
+                  type="button"
+                  className={active === index ? 'u-faq-question is-active' : 'u-faq-question'}
+                  aria-expanded={active === index}
+                  aria-controls={`u-faq-answer-mobile-${index}`}
+                  onClick={() => setActive(active === index ? null : index)}
+                >
+                  <span>{item.question}</span>
+                  <span className="u-faq-question-icon" aria-hidden="true">{active === index ? '−' : '+'}</span>
+                </button>
+                {active === index && <div className="u-faq-mobile-answer" id={`u-faq-answer-mobile-${index}`} role="region">
+                  <span className="u-faq-response-label">ÚNICA RESPONDE / 0{index + 1}</span>
+                  <p>{item.answer}</p>
+                </div>}
+              </div>
             ))}
           </div>
           <div className="u-faq-response" id="u-faq-answer" aria-live="polite" aria-atomic="true">
