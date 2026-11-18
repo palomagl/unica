@@ -23,8 +23,8 @@ jobs:
         run: npm ci
       - name: Validar cabeçalhos, CSP e código
         run: npm run security:check
-      - name: Auditar todas as dependências, inclusive ferramentas de build
-        run: npm audit --audit-level=high
+      - name: Auditar ferramentas de build e bloquear qualquer novo aviso alto
+        run: node scripts/dev-audit-check.mjs
       - name: Auditar vulnerabilidades de produção
         run: npm audit --omit=dev --audit-level=high
       - name: Garantir build estático
