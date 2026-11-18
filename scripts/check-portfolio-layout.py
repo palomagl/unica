@@ -67,7 +67,7 @@ with sync_playwright() as playwright:
                 page.locator(".u-price-option").nth(i).click()
                 check(page.locator(".u-price-stage-content h3").inner_text().strip().rstrip(".") == title,
                       f"{width}px: título do investimento {i} incorreto")
-                check(expected_value in page.locator(".u-price-value strong").inner_text(),
+                check("".join(expected_value.split()) in "".join(page.locator(".u-price-value strong").inner_text().split()),
                       f"{width}px: preço incorreto para {title}")
                 check("wa.me/" + PHONE in page.locator(".u-price-cta").get_attribute("href"),
                       f"{width}px: CTA do investimento não abre WhatsApp profissional")
