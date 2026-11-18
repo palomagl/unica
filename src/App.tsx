@@ -414,9 +414,13 @@ export default function App() {
         </div>
       </section>
       <nav className="u-floating-actions" aria-label="Acessos rápidos">
-        {showBackTop && <button className="u-floating-top" type="button" aria-label="Voltar ao início da página"
+        {showBackTop && <button className="u-floating-top" type="button"
+          aria-label="Voltar ao topo da página" title="Voltar ao topo"
           onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}>
-          ↑ <span>Topo</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+            strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 4.5h14M12 19V8m-5 5 5-5 5 5" />
+          </svg>
         </button>}
         <a className="u-floating-whatsapp" href={QUOTE_LINK} target="_blank" rel="noopener noreferrer"
           aria-label="Conversar com a ÚNICA pelo WhatsApp profissional">
