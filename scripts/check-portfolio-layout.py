@@ -62,50 +62,59 @@ with sync_playwright() as playwright:
             check(page.locator(".u-floating-whatsapp").is_visible(),
                   f"{width}px: WhatsApp fixo não aparece")
 
-            # Novo layout: 2x2 compacto no desktop; opcoes em lista no mobile.
-            cards = page.locator(".u-investment-option")
-            check(cards.count() == 4, f"{width}px: nao encontrou quatro opcoes")
-            check("u-investment-option--entry" in cards.first.get_attribute("class"),
-                  f"{width}px: falta destaque de entrada")
-            check("u-investment-option--bespoke" in cards.nth(3).get_attribute("class"),
-                  f"{width}px: falta destaque do personalizado")
-            if width > 700:
-                left = page.locator(".u-investment-option-grid").bounding_box()
-                right = page.locator(".u-investment-desktop-panel").bounding_box()
-                check(left is not None and right is not None and right["x"] > left["x"] + left["width"] - 2,
-                      f"{width}px: painel deveria estar ao lado das opcoes")
+            # Nova composicao: 4 cards alongados em desktop, modal de detalhes.
+            # No mobile, os detalhes ficam dentro do card selecionado.
+            cards = page.locator(".u-investment-card")
+            check(cards.count() == 4, f"{width}px: devem existir quatro cards")
+            check("u-investment-card--entry" in cards.first.get_attribute("class"),
+                  f"{width}px: landing deve ser destacada")
+            check("u-investment-card--bespoke" in cards.nth(3).get_attribute("class"),
+                  f"{width}px: sistemas devem ter estilo proprio")
+            heading = page.locator("#u-investment-title")
+            check("Escolha como" in heading.inner_text() and "começar." in heading.inner_text(),
+                  f"{width}px: título do investimento errado")
+            if width >= 1041:
+                first = cards.first.bounding_box()
+                fourth = cards.last.bounding_box()
+                check(first is not None and fourth is not None and fourth["x"] > first["x"] + first["width"],
+                      f"{width}px: cards precisam ficar na mesma linha")
             for i, (title, expected_value) in enumerate(OFFERS):
                 card = cards.nth(i)
-                check(card.locator(".u-investment-option-name").inner_text().strip() == title,
-                      f"{width}px: nome de opcao incorreto: {title}")
-                value = "".join(card.locator(".u-investment-option-price strong").inner_text().split())
-                check("".join(expected_value.split()) in value,
-                      f"{width}px: valor incorreto: {title}")
-                button = card.locator(".u-investment-option-trigger")
-                if button.get_attribute("aria-expanded") != "true":
-                    button.click()
-                check(button.get_attribute("aria-expanded") == "true",
-                      f"{width}px: detalhe nao abriu: {title}")
-                check(page.locator(".u-investment-option.is-open").count() == 1,
-                      f"{width}px: mais de uma opcao expandida")
+                check(card.locator("h3").inner_text().strip() == title,
+                      f"{width}px: opcao incorreta: {title}")
+                val = "".join(card.locator(".u-investment-card-value strong").inner_text().split())
+                check("".join(expected_value.split()) in val,
+                      f"{width}px: valor incorreto de {title}")
+                trigger = card.locator(".u-investment-card-toggle")
+                trigger.click()
+                check(trigger.get_attribute("aria-expanded") == "true",
+                      f"{width}px: detalhe nao abriu em {title}")
                 if width <= 700:
-                    detail = card.locator(".u-investment-mobile-panel")
+                    detail = card.locator(".u-investment-card-mobile-detail")
                     check(detail.is_visible() and detail.locator("li").count() == 3,
-                          f"{width}px: painel mobile incorreto: {title}")
-                    check(page.locator(".u-investment-desktop-panel").is_hidden(),
-                          f"{width}px: painel desktop visivel no mobile")
+                          f"{width}px: accordion mobile nao abriu: {title}")
+                    check(page.locator(".u-investment-dialog").is_hidden(),
+                          f"{width}px: modal desktop apareceu no celular")
                 else:
-                    detail = page.locator(".u-investment-desktop-panel")
+                    detail = page.locator(".u-investment-dialog")
                     check(detail.is_visible() and detail.locator("li").count() == 3,
-                          f"{width}px: painel lateral incorreto: {title}")
+                          f"{width}px: modal nao abriu: {title}")
                     check(title in detail.locator("h3").inner_text(),
-                          f"{width}px: titulo no painel incorreto")
+                          f"{width}px: modal apresentou outro serviço")
                 check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
-                      f"{width}px: link WhatsApp incorreto: {title}")
-            cards.nth(3).locator(".u-investment-option-trigger").click()
-            check(page.locator(".u-investment-option.is-open").count() == 0,
-                  f"{width}px: nao conseguiu recolher detalhes")
-            cards.first.locator(".u-investment-option-trigger").click()
+                      f"{width}px: link WhatsApp incorreto em {title}")
+                if width <= 700:
+                    trigger.click()
+                else:
+                    page.locator(".u-investment-dialog-top button").click()
+                check(page.locator(".u-investment-dialog").count() == 0 and
+                      page.locator(".u-investment-card-mobile-detail .u-price-explanation").count() == 0,
+                      f"{width}px: detalhes nao fecharam")
+            if width >= 701 and width == 1440:
+                cards.first.locator(".u-investment-card-toggle").click()
+                page.keyboard.press("Escape")
+                check(page.locator(".u-investment-dialog").count() == 0,
+                      "Escape nao fecha detalhes")
 
             # FAQ: quatro perguntas com expansão e fechamento.
             questions = page.locator(".u-faq-entry button")
@@ -118,11 +127,12 @@ with sync_playwright() as playwright:
                   f"{width}px: dúvida não fecha")
 
             if width == 390:
-                trigger = cards.nth(1).locator(".u-investment-option-trigger")
+                trigger = cards.nth(1).locator(".u-investment-card-toggle")
                 trigger.focus()
                 page.keyboard.press("Enter")
                 check(trigger.get_attribute("aria-expanded") == "true",
-                      "Seletor nao responde ao teclado")
+                      "Accordion nao responde ao teclado")
+                trigger.click()
                 page.locator(".u-faq-entry button").first.focus()
                 page.keyboard.press("Enter")
                 check(page.locator(".u-faq-answer").count() == 1,
