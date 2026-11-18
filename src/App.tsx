@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from
 import { QUOTE_LINK } from './content'
 import { Conversation } from './components/Conversation'
 import { SolutionsShowcase } from './components/SolutionsShowcase'
-import { InvestmentSection, ProcessSection, TestimonialsSection } from './components/CommercialSections'
+import { InvestmentSection, FAQSection, TestimonialsSection } from './components/CommercialSections'
 import { ArrowUpRight } from './components/InterfaceIcons'
 import { BrandSymbol } from './components/BrandSymbol'
 import './studio.css'
@@ -20,13 +20,6 @@ function Icon({ name }: { name: IconName }) {
     </svg>
   )
 }
-
-const services = [
-  { name: 'Sites e experiências digitais', line: 'Uma presença digital que transmite confiança e abre novas oportunidades.', icon: 'laptop' as IconName },
-  { name: 'Lojas virtuais e pedidos', line: 'Seus produtos apresentados de forma profissional, com uma jornada de compra simples.', icon: 'cart' as IconName },
-  { name: 'Sistemas e gestão', line: 'Mais organização para os processos do seu negócio.', icon: 'grid' as IconName },
-  { name: 'Aplicativos e soluções personalizadas', line: 'Experiências digitais pensadas para acompanhar seus clientes.', icon: 'phone' as IconName },
-]
 
 const palettes = [
   { id: 'lima', name: 'Lima elétrico', accent: '#C8FA20' },
@@ -249,7 +242,7 @@ export default function App() {
           </div>
           <div className="u-hero-side">
             <span className="u-arrow" aria-hidden="true"><ArrowUpRight /></span>
-            <p>Planejamento, design e desenvolvimento de soluções digitais para marcas que querem crescer.</p>
+            <p>Do que o cliente vê ao que faz tudo funcionar. Criamos soluções digitais com personalidade, pensadas para a realidade de cada negócio.</p>
             <a className="u-pill u-pill-light" href="#servicos">Conheça nossos serviços <ArrowUpRight /></a>
           </div>
         </div>
@@ -259,7 +252,12 @@ export default function App() {
       <div className="u-service-rail">
         <div className="u-wrap">
           <div className="u-rail-grid">
-            {services.map(s => <a href="#servicos" key={s.name}><Icon name={s.icon} /><span><strong>{s.name.split(' ')[0]}</strong><small>{s.name.substring(s.name.indexOf(' ') + 1)}</small></span></a>)}
+            {[
+              {title: 'Sites', subtitle: 'Institucionais', icon: 'laptop' as IconName},
+              {title: 'Lojas', subtitle: 'Virtuais', icon: 'cart' as IconName},
+              {title: 'Sistemas', subtitle: 'Personalizados', icon: 'grid' as IconName},
+              {title: 'Apps', subtitle: 'Sob medida', icon: 'phone' as IconName},
+            ].map(item => <a href="#servicos" key={item.title}><Icon name={item.icon} /><span><strong>{item.title}</strong><small>{item.subtitle}</small></span></a>)}
           </div>
           <a className="u-scroll" href="#servicos"><span>↓</span> ROLE PARA EXPLORAR</a>
         </div>
@@ -377,13 +375,16 @@ export default function App() {
             </div>
           </div>
           <div className="u-small-projects u-reveal" ref={projectTabsRef} role="group" aria-label="Selecionar projeto">
-            {visibleProjects.map((q,i) => <button key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver exemplo de ${q.name}: ${q.brand}`} onClick={()=>setProject(i)}>{q.name}</button>)}
+            {visibleProjects.map((q,i) => <button className="u-project-preview" key={q.name} type="button" aria-pressed={project===i} aria-label={`Ver projeto ${q.brand}`} onClick={()=>setProject(i)}>
+              <span className="u-project-preview-img"><img src={q.visual === 'doe' ? '/projects/doe/home.webp' : `/screens/${q.visual}-desktop-alpha.svg`} alt="" loading="lazy" decoding="async" /></span>
+              <span className="u-project-preview-label"><strong>{q.brand}</strong><small>{String(i+1).padStart(2,'0')} / {String(visibleProjects.length).padStart(2,'0')}</small></span>
+            </button>)}
           </div>
         </div>
       </section>
 
       <InvestmentSection />
-      <ProcessSection />
+      <FAQSection />
       <TestimonialsSection />
 
       <section id="contato" className="u-final u-final-remake">
