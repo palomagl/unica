@@ -8,7 +8,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 URL = "http://127.0.0.1:4173/"
-CASES = [(320, 720), (390, 844), (768, 900), (1024, 768), (1440, 900)]
+CASES = [(320, 720), (390, 844), (480, 820), (600, 900), (768, 900), (900, 850), (1024, 768), (1440, 900)]
 PROJECTS = ("Karoane", "Bruto", "Vértice Mármores", "DOE+ RS", "Minha Rotina", "ROXO")
 
 def check(condition, message):
