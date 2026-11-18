@@ -71,9 +71,18 @@ const projects = [
     bg: 'linear-gradient(135deg,#dff4ee,#accdc5)',
   },
 ]
-// Sexto trabalho: preencher quando nome, objetivo, status, imagens e link forem confirmados.
-// Até lá, nenhum card ou informação fictícia será renderizado.
-const sixthProject: (typeof projects)[number] | null = null
+// Sexto projeto: ROXO — loja demonstrativa, com catálogo e personalização de pedidos.
+// Prévia vetorial das interfaces, a substituir por capturas reais aprovadas.
+const sixthProject: (typeof projects)[number] = {
+  name: 'Açaiteria',
+  brand: 'ROXO',
+  kind: 'Loja virtual e pedidos personalizados',
+  outcome: 'Uma loja demonstrativa para escolher açaís, montar combinações, acompanhar a sacola e fazer pedidos de forma mais simples.',
+  visual: 'roxo',
+  url: 'https://roxo-acaiteria.vercel.app/roxo',
+  cover: '/screens/roxo-desktop-alpha.svg',
+  bg: 'linear-gradient(135deg,#f3e4f3,#9161a7)',
+}
 const visibleProjects = sixthProject ? [...projects, sixthProject] : projects
 
 function NewLogo() {
@@ -301,7 +310,7 @@ export default function App() {
                   <img
                     className="u-device-laptop"
                     src={`/screens/${p.visual}-desktop-alpha.svg`}
-                    alt={`Interface original do ${p.brand} no computador`}
+                    alt={p.visual === 'roxo' ? 'Prévia ilustrativa do catálogo ROXO no computador' : `Interface original do ${p.brand} no computador`}
                     width={p.visual === 'vertice' ? 1261 : 1237}
                     height={774}
                     decoding="async"
@@ -311,7 +320,7 @@ export default function App() {
                   <img
                     className="u-device-phone"
                     src={`/screens/${p.visual}-mobile-alpha.svg`}
-                    alt={`Interface original do ${p.brand} no celular`}
+                    alt={p.visual === 'roxo' ? 'Prévia ilustrativa do catálogo ROXO no celular' : `Interface original do ${p.brand} no celular`}
                     width={p.visual === 'vertice' ? 419 : 393}
                     height={p.visual === 'vertice' ? 854 : 790}
                     decoding="async"
@@ -358,6 +367,7 @@ export default function App() {
               <span className="u-kicker">{p.kind}</span>
               <h3>{p.brand}</h3><p className="u-project-brand">{p.name}</p>
               <p className="u-project-description">{p.outcome}</p>
+              {p.visual === 'roxo' && <small className="u-project-disclaimer">Prévia ilustrativa das telas. Loja demonstrativa.</small>}
               {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" className="u-pill">Conhecer projeto <ArrowUpRight /></a> : <a href={QUOTE_LINK} target="_blank" rel="noopener noreferrer" className="u-pill">Conversar sobre o projeto <ArrowUpRight /></a>}
               <div className="u-project-controls">
                 <button className="u-control" type="button" aria-label="Projeto anterior" onClick={()=>changeProject(-1)}>←</button>
