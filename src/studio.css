@@ -1246,3 +1246,23 @@ a:hover>.u-vector-arrow,button:hover>.u-vector-arrow{transform:translate(2px,-2p
  .u-floating-actions a,.u-floating-actions button{transition:none}
  .u-floating-actions a:hover,.u-floating-actions button:hover{transform:none}
 }
+
+/* Ajuste após teste visual: hero ocupa a largura do celular e botão não encobre CTAs. */
+.u-floating-wa-icon{width:20px;height:20px;flex:none}
+.u-floating-wa-text{font-size:inherit}
+@media(max-width:600px){
+ .u-heading-mobile>span:first-child{font-size:clamp(33px,10.6vw,58px)}
+ .u-heading-mobile>span:nth-child(2){font-size:clamp(41px,12.4vw,69px)}
+ .u-heading-mobile>span:nth-child(3){font-size:clamp(51px,15vw,81px)}
+ .u-floating-actions a.u-floating-whatsapp{width:49px;height:49px;padding:0;min-height:49px;border-radius:50%}
+ .u-floating-wa-icon{width:26px;height:26px}
+ .u-floating-wa-text,.u-floating-whatsapp>.u-vector-arrow,
+ .u-floating-whatsapp>svg:last-child{display:none}
+ .u-floating-actions button.u-floating-top{width:43px;height:43px;min-height:43px;padding:0;font-size:20px;border-radius:50%}
+ .u-floating-top span{display:none}
+}
+@media(max-width:360px){
+ .u-heading-mobile>span:first-child{font-size:clamp(32px,10.4vw,39px)}
+ .u-heading-mobile>span:nth-child(2){font-size:clamp(40px,12vw,45px)}
+ .u-heading-mobile>span:nth-child(3){font-size:clamp(50px,14.8vw,56px)}
+}
