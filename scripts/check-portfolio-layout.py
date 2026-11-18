@@ -62,45 +62,50 @@ with sync_playwright() as playwright:
             check(page.locator(".u-floating-whatsapp").is_visible(),
                   f"{width}px: WhatsApp fixo não aparece")
 
-            # Desktop revela painel de explicação; mobile expande um so card.
-            cards = page.locator(".u-price-card")
-            check(cards.count() == 4, f"{width}px: devem aparecer quatro opcoes")
-            check("u-price-card--entry" in cards.first.get_attribute("class"),
-                  f"{width}px: falta destaque no preco de entrada")
-            check("u-price-card--bespoke" in cards.nth(3).get_attribute("class"),
-                  f"{width}px: falta destaque em sistemas/apps")
+            # Novo layout: 2x2 compacto no desktop; opcoes em lista no mobile.
+            cards = page.locator(".u-investment-option")
+            check(cards.count() == 4, f"{width}px: nao encontrou quatro opcoes")
+            check("u-investment-option--entry" in cards.first.get_attribute("class"),
+                  f"{width}px: falta destaque de entrada")
+            check("u-investment-option--bespoke" in cards.nth(3).get_attribute("class"),
+                  f"{width}px: falta destaque do personalizado")
+            if width > 700:
+                left = page.locator(".u-investment-option-grid").bounding_box()
+                right = page.locator(".u-investment-desktop-panel").bounding_box()
+                check(left is not None and right is not None and right["x"] > left["x"] + left["width"] - 2,
+                      f"{width}px: painel deveria estar ao lado das opcoes")
             for i, (title, expected_value) in enumerate(OFFERS):
                 card = cards.nth(i)
-                check(card.locator("h3").inner_text().strip() == title,
-                      f"{width}px: servico errado no card {i}")
-                value = "".join(card.locator(".u-price-card-cost strong").inner_text().split())
+                check(card.locator(".u-investment-option-name").inner_text().strip() == title,
+                      f"{width}px: nome de opcao incorreto: {title}")
+                value = "".join(card.locator(".u-investment-option-price strong").inner_text().split())
                 check("".join(expected_value.split()) in value,
-                      f"{width}px: preco incorreto para {title}")
-                button = card.locator(".u-price-card-cta")
+                      f"{width}px: valor incorreto: {title}")
+                button = card.locator(".u-investment-option-trigger")
                 if button.get_attribute("aria-expanded") != "true":
                     button.click()
                 check(button.get_attribute("aria-expanded") == "true",
-                      f"{width}px: detalhes nao abriram para {title}")
-                check(page.locator(".u-price-card.is-open").count() == 1,
-                      f"{width}px: mais de um card expandido")
+                      f"{width}px: detalhe nao abriu: {title}")
+                check(page.locator(".u-investment-option.is-open").count() == 1,
+                      f"{width}px: mais de uma opcao expandida")
                 if width <= 700:
-                    detail = card.locator(".u-price-mobile-details")
+                    detail = card.locator(".u-investment-mobile-panel")
                     check(detail.is_visible() and detail.locator("li").count() == 3,
-                          f"{width}px: detalhe mobile nao apareceu")
-                    check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
-                          f"{width}px: WhatsApp do detalhe incorreto")
-                    check(page.locator(".u-price-desktop-detail").is_hidden(),
-                          f"{width}px: painel desktop aparece no celular")
+                          f"{width}px: painel mobile incorreto: {title}")
+                    check(page.locator(".u-investment-desktop-panel").is_hidden(),
+                          f"{width}px: painel desktop visivel no mobile")
                 else:
-                    detail = page.locator(".u-price-desktop-detail")
+                    detail = page.locator(".u-investment-desktop-panel")
                     check(detail.is_visible() and detail.locator("li").count() == 3,
-                          f"{width}px: painel desktop nao abriu")
-                    check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
-                          f"{width}px: WhatsApp do painel incorreto")
-            cards.nth(3).locator(".u-price-card-cta").click()
-            check(page.locator(".u-price-card.is-open").count() == 0,
-                  f"{width}px: nao foi possivel fechar o detalhe")
-            cards.nth(0).locator(".u-price-card-cta").click()
+                          f"{width}px: painel lateral incorreto: {title}")
+                    check(title in detail.locator("h3").inner_text(),
+                          f"{width}px: titulo no painel incorreto")
+                check("wa.me/" + PHONE in detail.locator(".u-price-detail-cta").get_attribute("href"),
+                      f"{width}px: link WhatsApp incorreto: {title}")
+            cards.nth(3).locator(".u-investment-option-trigger").click()
+            check(page.locator(".u-investment-option.is-open").count() == 0,
+                  f"{width}px: nao conseguiu recolher detalhes")
+            cards.first.locator(".u-investment-option-trigger").click()
 
             # FAQ: quatro perguntas com expansão e fechamento.
             questions = page.locator(".u-faq-entry button")
@@ -113,14 +118,15 @@ with sync_playwright() as playwright:
                   f"{width}px: dúvida não fecha")
 
             if width == 390:
-                page.locator(".u-price-card-cta").nth(1).focus()
+                trigger = cards.nth(1).locator(".u-investment-option-trigger")
+                trigger.focus()
                 page.keyboard.press("Enter")
-                check(cards.nth(1).locator(".u-price-card-cta").get_attribute("aria-expanded") == "true",
-                      "Detalhe do investimento nao responde ao teclado")
+                check(trigger.get_attribute("aria-expanded") == "true",
+                      "Seletor nao responde ao teclado")
                 page.locator(".u-faq-entry button").first.focus()
                 page.keyboard.press("Enter")
                 check(page.locator(".u-faq-answer").count() == 1,
-                      "FAQ não responde à tecla Enter")
+                      "FAQ nao responde ao teclado")
 
             # Carrossel: seis projetos, dispositivos dentro do palco.
             check(page.locator(".u-project-preview").count() == 6, "Faltam projetos")
