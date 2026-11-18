@@ -19,7 +19,7 @@ export const investments: InvestmentOption[] = [
   {
     id: 'site',
     title: 'Catálogo online',
-    summary: 'Seus produtos organizados em um catálogo bonito, fácil de compartilhar e consultar.',
+    summary: 'Mostre seus produtos com fotos, preços e contato para pedidos, sem precisar de uma loja completa.',
     startingAtBRL: 1499,
     note: 'Sem carrinho ou pagamento online; recursos são definidos na proposta.',
   },
@@ -42,7 +42,7 @@ export const investments: InvestmentOption[] = [
 export const faqItems = [
   {
     question: 'Quanto tempo demora para meu projeto ficar pronto?',
-    answer: 'Depende do escopo. Uma landing page simples costuma levar de 5 a 7 dias úteis; um site empresarial, de 10 a 20; e uma loja virtual básica, de 15 a 30. Sistemas e aplicativos têm cronograma próprio. São estimativas confirmadas na proposta, depois de definirmos o escopo e recebermos os materiais.',
+    answer: 'Depende do que você quer construir e dos materiais que já tem. Antes de começarmos, combinamos um prazo realista na proposta e explicamos cada etapa.',
   },
   {
     question: 'Como funciona a contratação?',
@@ -54,7 +54,7 @@ export const faqItems = [
   },
   {
     question: 'Domínio e hospedagem estão incluídos?',
-    answer: 'Domínio, hospedagem, banco de dados e outros serviços externos dependem do projeto. Esses custos são apresentados separadamente e, preferencialmente, contratados em nome do cliente.',
+    answer: 'O domínio é o endereço do seu site (como suamarca.com.br). A hospedagem é o serviço que mantém ele no ar. Quando forem necessários, esses custos são explicados na proposta e, de preferência, ficam no nome do cliente.',
   },
   {
     question: 'E a manutenção depois da entrega?',
