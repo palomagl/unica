@@ -5,7 +5,8 @@ from playwright.sync_api import sync_playwright
 
 URL = "http://127.0.0.1:4173/"
 CASES = [(320, 720), (360, 760), (390, 844), (430, 932), (480, 820),
-         (600, 900), (768, 900), (900, 850), (1024, 768), (1440, 900)]
+         (600, 900), (768, 900), (900, 850), (1024, 768), (1280, 800),
+         (1440, 900), (1600, 900), (1920, 1080)]
 PROJECTS = ["Karoane", "Bruto", "Vértice Mármores", "DOE+ RS", "Minha Rotina", "ROXO"]
 OFFERS = [("Landing page", "R$ 700"), ("Site para empresas", "R$ 1.500"),
           ("Loja virtual", "R$ 5.900"), ("Sistemas e apps", "Sob orçamento")]
@@ -128,7 +129,7 @@ with sync_playwright() as playwright:
             page.wait_for_timeout(200)
             check(page.evaluate("window.scrollY") < 10, f"{width}px: voltar ao topo não funciona")
             check(not errors, f"{width}px: erro de runtime: {errors}")
-            if width in (320, 390, 768, 1440):
+            if width in (320, 390, 768, 1440, 1920):
                 folder = Path("visual-check")
                 folder.mkdir(exist_ok=True)
                 page.locator("#investimento").screenshot(path=str(folder / f"investimento-{width}.png"), animations="disabled")
@@ -139,4 +140,4 @@ with sync_playwright() as playwright:
             context.close()
     finally:
         browser.close()
-print("PASS: 10 larguras, com movimento reduzido e sem erros de runtime")
+print("PASS: 13 larguras, com movimento reduzido e sem erros de runtime")
