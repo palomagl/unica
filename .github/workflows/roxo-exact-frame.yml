@@ -1,0 +1,49 @@
+name: Montar ROXO na mesma moldura da Karoane
+
+on:
+  push:
+    branches: [fix/portfolio-visual-e-rolagem]
+    paths: [scripts/roxo-exact-frame.py, .github/workflows/roxo-exact-frame.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/portfolio-visual-e-rolagem
+          persist-credentials: true
+      - name: Preparar captura em resolução alta
+        run: python3 -m pip install --user playwright pillow
+      - name: Substituir apenas as telas dos frames originais
+        run: python3 scripts/roxo-exact-frame.py
+      - name: Checar formato e dimensões
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for n in ('desktop','mobile'):
+              s=Path(f'public/screens/roxo-{n}-alpha.svg').read_text()
+              k=Path(f'public/screens/karoane-{n}-alpha.svg').read_text()
+              assert k.split('base64,')[1].split('"')[0] == s.split('id="frame"')[1].split('base64,')[1].split('"')[0], f'frame {n} diferente da Karoane'
+              assert len(s.encode())<250*1024
+              print("PASS: mesmo frame de Karoane em",n)
+          PY
+          npm ci
+          npm run perf:check
+          npm run build
+      - name: Gravar resultado na branch de revisão
+        run: |
+          if git diff --quiet -- public/screens/roxo-desktop-alpha.svg public/screens/roxo-mobile-alpha.svg; then
+            echo "Nenhuma mudança de imagem"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/screens/roxo-desktop-alpha.svg public/screens/roxo-mobile-alpha.svg
+          git commit -m "assets: ROXO no frame pixel a pixel da Karoane"
+          git push origin HEAD:fix/portfolio-visual-e-rolagem
