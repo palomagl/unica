@@ -194,3 +194,69 @@
 @media(max-width:600px){
   #projetos .u-project-disclaimer{font-size:10px;margin:-5px 0 12px}
 }
+
+/* Restitui o enquadramento grande dos dispositivos.
+   Só reduz o espaço da coluna de texto, nunca a área visual dos projetos. */
+@media(min-width:901px){
+  #projetos .u-project-feature{height:auto!important;min-height:555px!important}
+  #projetos .u-project-feature>.u-project-visual{min-height:555px!important;height:100%!important}
+  #projetos .u-project-feature>.u-project-copy{min-height:555px!important;height:auto!important}
+}
+#projetos .u-device-laptop{
+  width:92%;height:84%;max-height:none;left:1%;bottom:9%;
+  object-fit:contain;object-position:left bottom;
+}
+#projetos .u-device-phone{
+  width:24%;height:88%;max-height:none;right:2.5%;bottom:5.5%;
+  object-fit:contain;object-position:right bottom;
+}
+/* Sem espaço vazio artificial entre botão e navegação. */
+#projetos .u-project-controls{margin-top:16px!important;padding-top:8px!important}
+#projetos .u-project-copy{justify-content:center!important}
+#projetos .u-project-copy .u-project-description{margin:0 0 15px!important}
+#projetos .u-project-copy>.u-pill{margin-top:4px!important}
+@media(max-width:900px){
+  #projetos .u-project-feature>.u-project-copy{justify-content:flex-start!important}
+  #projetos .u-device-laptop{width:72%;height:84%;left:10%;bottom:4%}
+  #projetos .u-device-phone{width:18%;height:91%;right:12%;bottom:2%}
+}
+@media(max-width:600px){
+  #projetos .u-device-laptop{width:93%;height:84%;left:1%;bottom:6%}
+  #projetos .u-device-phone{width:24%;height:88%;right:2.5%;bottom:3%}
+  #projetos .u-project-controls{margin-top:12px!important;padding-top:5px!important}
+  #projetos .u-project-copy .u-kicker{margin-bottom:10px}
+  #projetos .u-project-copy .u-project-description{margin-bottom:11px!important}
+}
+/* Seletor de trabalhos: miniaturas reais, com indicação de qual está ativo. */
+#projetos .u-small-projects{width:100%;max-width:100%;padding:5px 1px 15px;justify-content:flex-start;gap:10px}
+#projetos .u-small-projects button.u-project-preview{
+  display:flex;align-items:center;gap:11px;min-width:172px;max-width:215px;
+  min-height:64px;padding:7px 11px 7px 7px;border-radius:14px;
+  text-align:left;background:#f9f0e7;border:1px solid #aa948468;
+  transition:transform .22s,background .22s,border-color .22s;
+}
+#projetos .u-small-projects button.u-project-preview[aria-pressed="true"]{
+  background:var(--u-accent);border-color:#25170c;box-shadow:0 0 0 1px #25170c;
+}
+#projetos .u-project-preview-img{
+  width:67px;height:47px;flex:none;border-radius:8px;overflow:hidden;
+  background:#e2d1c3;display:block;position:relative;
+}
+#projetos .u-project-preview-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+#projetos .u-project-preview-label{display:block;min-width:0}
+#projetos .u-project-preview-label strong{
+  display:block;font-size:13px;line-height:1.12;white-space:normal;
+  letter-spacing:-.035em;font-weight:900
+}
+#projetos .u-project-preview-label small{display:block;margin-top:6px;font-size:10px;color:#6e4b3e}
+@media(max-width:600px){
+  #projetos .u-small-projects{margin-top:10px;padding-bottom:11px}
+  #projetos .u-small-projects button.u-project-preview{
+    min-width:156px;max-width:175px;min-height:60px;gap:8px;padding:6px
+  }
+  #projetos .u-project-preview-img{width:58px;height:44px}
+  #projetos .u-project-preview-label strong{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  #projetos .u-small-projects button.u-project-preview{transition:none}
+}
